@@ -15,7 +15,15 @@ const Buildings = () => {
       <Button onClick={() => navigate('/weather')}>
         {t('pages.home.weatherButton')}
       </Button>
-      <BuildingCardComponent />
+      <BuildingCardComponent
+        building={{
+          name: 'B852',
+          address: 'Industriepark Höchst, Gebäude B 852',
+          id: '123',
+          description: 'Hauptgebäude',
+          state: 'open',
+        }}
+      />
       <LanguageSelectorComponent />
     </Box>
   );
