@@ -51,8 +51,8 @@ npm i
 │   │   │   └─ translation.json         # English translation strings
 │   │   └─ index.ts                     # i18n initialization and config
 │   ├─ pages/                           # Top-level route components
-│   │   ├─ Home/                        # Folder for the homepage
-│   │   │   └─ Home.tsx                 # Implementation of the HomePage component
+│   │   ├─ Buildings/                        # Folder for the homepage
+│   │   │   └─ Buildings.tsx                 # Implementation of the HomePage component
 │   ├─ utils/                           # General utility/helper functions
 │   ├─ App.tsx                          # Root app component, sets up routes/layout
 │   └─ main.tsx                         # Application entry point (ReactDOM.render)

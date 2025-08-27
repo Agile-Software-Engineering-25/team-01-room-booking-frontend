@@ -4,15 +4,16 @@ import { createCustomTheme } from '@agile-software/shared-components';
 import { THEME_ID as MATERIAL_THEME_ID, ThemeProvider } from '@mui/material';
 import { CssVarsProvider as JoyCssVarsProvider } from '@mui/joy';
 import './i18n';
-import { Provider } from 'react-redux';
-import store from '@stores/index.ts';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { client } from '@/api/generated/client.gen.ts';
+import { BACKEND_BASE_URL } from '@/config.ts';
 
 const theme = createCustomTheme({
   colorSchemes: {
     light: {
       palette: {
         primary: {
-          500: '#your-primary-color',
+          500: '#1ebfbf',
         },
       },
     },
@@ -28,13 +29,19 @@ const theme = createCustomTheme({
   },
 });
 
+const queryClient = new QueryClient();
+
 type AppProps = {
   basename?: string;
 };
 
+client.setConfig({
+  baseUrl: BACKEND_BASE_URL,
+});
+
 function App({ basename }: AppProps) {
   return (
-    <Provider store={store}>
+    <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={{ [MATERIAL_THEME_ID]: theme }}>
         <JoyCssVarsProvider>
           <BrowserRouter basename={basename}>
@@ -42,7 +49,7 @@ function App({ basename }: AppProps) {
           </BrowserRouter>
         </JoyCssVarsProvider>
       </ThemeProvider>
-    </Provider>
+    </QueryClientProvider>
   );
 }
 

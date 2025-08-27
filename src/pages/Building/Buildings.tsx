@@ -3,8 +3,9 @@ import LanguageSelectorComponent from '@components/LanguageSelectorComponent/Lan
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { Button } from '@mui/material';
+import { BuildingCardComponent } from '@components/BuildingCardComponent/BuildingCardComponent.tsx';
 
-const Home = () => {
+const Buildings = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -14,9 +15,10 @@ const Home = () => {
       <Button onClick={() => navigate('/weather')}>
         {t('pages.home.weatherButton')}
       </Button>
+      <BuildingCardComponent />
       <LanguageSelectorComponent />
     </Box>
   );
 };
 
-export default Home;
+export default Buildings;

@@ -9,7 +9,7 @@ import importPlugin from 'eslint-plugin-import';
 import { globalIgnores } from 'eslint/config';
 
 export default tseslint.config([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', 'src/api']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -50,7 +50,6 @@ export default tseslint.config([
 
       // ---- Arrow functions ----
       'prefer-arrow-callback': 'warn',
-      'func-style': ['warn', 'expression', { allowArrowFunctions: true }],
 
       // ---- Null/undefined handling ----
       '@typescript-eslint/no-non-null-assertion': 'warn',

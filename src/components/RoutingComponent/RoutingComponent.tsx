@@ -1,12 +1,10 @@
-import Weather from '@pages/Weather/Weather';
-import Home from '@pages/Home/Home';
+import Buildings from '@pages/Building/Buildings.tsx';
 import { Route, Routes } from 'react-router';
 
 const RoutingComponent = () => {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/weather" element={<Weather />} />
+      <Route path="/" element={<Buildings />} />
     </Routes>
   );
 };
