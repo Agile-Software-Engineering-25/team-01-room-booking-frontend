@@ -12,7 +12,15 @@ import {
 import { CssBaseline } from '@mui/material';
 import { createCustomTheme } from '@agile-software/shared-components';
 
-const theme = createCustomTheme({});
+const theme = createCustomTheme({
+  colorSchemes: {
+    dark: {
+      palette: {
+        500: '#60a5fa',
+      },
+    },
+  },
+});
 
 const queryClient = new QueryClient();
 

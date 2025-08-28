@@ -9,21 +9,21 @@ const buildings: Building[] = [
   {
     name: 'B852',
     address: 'Industriepark Höchst, Gebäude B 852',
-    id: '123',
+    id: '122',
     description: 'Hauptgebäude Unicampus 123 Test',
     state: 'open',
   },
   {
     name: 'B853',
     address: 'Industriepark Höchst, Gebäude B 853',
-    id: '124',
+    id: '123',
     description: 'Nebengebäude Unicampus 124 Test',
     state: 'open',
   },
   {
     name: 'B854',
     address: 'Industriepark Höchst, Gebäude B 854',
-    id: '125',
+    id: '124',
     description: 'Verwaltung Unicampus 125 Test',
     state: 'open',
   },
@@ -32,7 +32,7 @@ const buildings: Building[] = [
     address: 'Industriepark Höchst, Gebäude B 854',
     id: '125',
     description: 'Verwaltung Unicampus 125 Test',
-    state: 'open',
+    state: 'closed',
   },
 ];
 

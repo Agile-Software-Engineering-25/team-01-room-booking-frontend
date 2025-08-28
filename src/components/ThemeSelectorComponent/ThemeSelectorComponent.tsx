@@ -3,8 +3,12 @@ import { useColorScheme as useJoyColor } from '@mui/joy/styles';
 import { useColorScheme as useMuiColor } from '@mui/material/styles';
 
 function ThemeSelectorComponent() {
-  const { setMode } = useJoyColor();
+  const { mode, setMode } = useJoyColor();
   const { setMode: setMuiMode } = useMuiColor();
+
+  if (!mode) {
+    return null;
+  }
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>

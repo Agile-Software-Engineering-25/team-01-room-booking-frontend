@@ -1,13 +1,5 @@
 import type { Building, BuildingState } from '@/api/generated';
-import {
-  Box,
-  Card,
-  CardContent,
-  CardHeader,
-  Chip,
-  IconButton,
-  Typography,
-} from '@mui/material';
+import { Box, Card, CardContent, Chip, IconButton, Typography } from '@mui/joy';
 import { Edit, Delete, LocationOn, Apartment } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 
@@ -22,65 +14,56 @@ export function BuildingCardComponent({ building }: BuildingCardProps) {
     <Card
       key={building.id}
       sx={{
-        boxShadow: 2,
-        '&:hover': { boxShadow: 4 },
+        boxShadow: 'sm',
+        '&:hover': { boxShadow: 'md' },
         transition: 'box-shadow 0.2s',
       }}
     >
-      <CardHeader
-        title={
-          <Box display="flex" alignItems="center" gap={2}>
-            <Box
-              sx={{
-                width: 40,
-                height: 40,
-                // some lighter color
-                // backgroundColor: '',
-                borderRadius: 2,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <Apartment fontSize="small" color="primary" />
-            </Box>
-            <Box>
-              <Typography variant="h6" color="text.primary" fontWeight="bold">
-                {building.name}
-              </Typography>
-              <Chip
-                color={getStatusColor(building.state)}
-                label={t(getStatusText(building.state))}
-                size="small"
-              />
-            </Box>
+      {/* Header-Bereich (ersetzt CardHeader) */}
+      <Box sx={{ padding: 2, paddingBottom: 0 }}>
+        <Box display="flex" alignItems="center" gap={2}>
+          <Box
+            sx={{
+              width: 40,
+              height: 40,
+              borderRadius: 'sm',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: 'primary.softBg',
+            }}
+          >
+            <Apartment fontSize="small" color="primary" />
           </Box>
-        }
-        action={
+          <Box sx={{ flex: 1 }}>
+            <Typography level="title-lg">{building.name}</Typography>
+            <Chip color={getStatusColor(building.state)} size="sm">
+              {t(getStatusText(building.state))}
+            </Chip>
+          </Box>
           <Box display="flex" gap={1}>
-            <IconButton color="primary">
+            <IconButton variant="plain" color="primary" size="sm">
               <Edit fontSize="small" />
             </IconButton>
-            <IconButton color="error">
+            <IconButton variant="plain" color="danger" size="sm">
               <Delete fontSize="small" />
             </IconButton>
           </Box>
-        }
-        sx={{ paddingBottom: 1 }}
-      />
+        </Box>
+      </Box>
 
-      <CardContent sx={{ paddingTop: 0 }}>
-        <Box display="flex" alignItems="center" gap={1} marginBottom={1}>
+      <CardContent>
+        <Box display="flex" alignItems="center" gap={1} sx={{ mb: 1 }}>
           <LocationOn fontSize="small" color="action" />
-          <Typography variant="body2" color="text.secondary">
+          <Typography level="body-sm" textColor="text.secondary">
             {building.address}
           </Typography>
         </Box>
 
-        <Box display="flex" justifyContent="space-between" marginBottom={1}>
+        <Box display="flex" justifyContent="space-between" sx={{ mb: 1 }}>
           <Box display="flex" alignItems="center" gap={1}>
-            <Apartment fontSize="small" color="action" />
-            <Typography variant="body2" color="text.secondary">
+            <Apartment fontSize="small" />
+            <Typography level="body-sm" textColor="text.secondary">
               10 {t(getRoomCountText(10))}
             </Typography>
           </Box>
@@ -88,8 +71,8 @@ export function BuildingCardComponent({ building }: BuildingCardProps) {
 
         {building.description && (
           <Typography
-            variant="body2"
-            color="text.secondary"
+            level="body-sm"
+            textColor="text.secondary"
             sx={{
               display: '-webkit-box',
               WebkitLineClamp: 2,
@@ -113,12 +96,12 @@ function getRoomCountText(count: number): string {
   return 'pages.buildings.room.plural';
 }
 
-function getStatusColor(status: BuildingState): 'success' | 'warning' {
+function getStatusColor(status: BuildingState): 'success' | 'danger' {
   switch (status) {
     case 'open':
       return 'success';
     case 'closed':
-      return 'warning';
+      return 'danger';
   }
 }
 
