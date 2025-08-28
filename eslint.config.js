@@ -9,7 +9,7 @@ import importPlugin from 'eslint-plugin-import';
 import { globalIgnores } from 'eslint/config';
 
 export default tseslint.config([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', 'src/api']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -50,7 +50,6 @@ export default tseslint.config([
 
       // ---- Arrow functions ----
       'prefer-arrow-callback': 'warn',
-      'func-style': ['warn', 'expression', { allowArrowFunctions: true }],
 
       // ---- Null/undefined handling ----
       '@typescript-eslint/no-non-null-assertion': 'warn',
@@ -66,7 +65,7 @@ export default tseslint.config([
         },
         {
           selector: 'function',
-          format: ['camelCase'],
+          format: ['camelCase', 'PascalCase'],
         },
         {
           selector: 'typeLike',
@@ -75,8 +74,8 @@ export default tseslint.config([
       ],
 
       // ---- Readability ----
-      'id-length': ['warn', { min: 3, exceptions: ['id', 'fs', 'db'] }],
-      'max-lines-per-function': ['warn', { max: 50, skipBlankLines: true }],
+      'id-length': ['warn', { min: 2, exceptions: ['id', 'fs', 'db', 't'] }],
+      'max-lines-per-function': ['warn', { max: 120, skipBlankLines: true }],
 
       // React specific
       'react/react-in-jsx-scope': 'off', // Not needed for React 17+
