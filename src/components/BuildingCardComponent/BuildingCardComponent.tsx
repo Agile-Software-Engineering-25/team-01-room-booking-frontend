@@ -1,4 +1,4 @@
-import type { Building } from '@/api/generated';
+import type { Building, BuildingState } from '@/api/generated';
 import {
   Box,
   Card,
@@ -8,19 +8,16 @@ import {
   IconButton,
   Typography,
 } from '@mui/material';
-import {
-  Edit,
-  Delete,
-  LocationOn,
-  Apartment,
-  Group,
-} from '@mui/icons-material';
+import { Edit, Delete, LocationOn, Apartment } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 export interface BuildingCardProps {
   building: Building;
 }
 
 export function BuildingCardComponent({ building }: BuildingCardProps) {
+  const { t } = useTranslation();
+
   return (
     <Card
       key={building.id}
@@ -37,7 +34,8 @@ export function BuildingCardComponent({ building }: BuildingCardProps) {
               sx={{
                 width: 40,
                 height: 40,
-                backgroundColor: 'primary.light',
+                // some lighter color
+                // backgroundColor: '',
                 borderRadius: 2,
                 display: 'flex',
                 alignItems: 'center',
@@ -50,7 +48,11 @@ export function BuildingCardComponent({ building }: BuildingCardProps) {
               <Typography variant="h6" color="text.primary" fontWeight="bold">
                 {building.name}
               </Typography>
-              <Chip label={'active'} size="small" />
+              <Chip
+                color={getStatusColor(building.state)}
+                label={t(getStatusText(building.state))}
+                size="small"
+              />
             </Box>
           </Box>
         }
@@ -68,24 +70,18 @@ export function BuildingCardComponent({ building }: BuildingCardProps) {
       />
 
       <CardContent sx={{ paddingTop: 0 }}>
-        <Box display="flex" alignItems="center" gap={1} mb={1}>
+        <Box display="flex" alignItems="center" gap={1} marginBottom={1}>
           <LocationOn fontSize="small" color="action" />
           <Typography variant="body2" color="text.secondary">
             {building.address}
           </Typography>
         </Box>
 
-        <Box display="flex" justifyContent="space-between" mb={1}>
+        <Box display="flex" justifyContent="space-between" marginBottom={1}>
           <Box display="flex" alignItems="center" gap={1}>
             <Apartment fontSize="small" color="action" />
             <Typography variant="body2" color="text.secondary">
-              10 Etagen
-            </Typography>
-          </Box>
-          <Box display="flex" alignItems="center" gap={1}>
-            <Group fontSize="small" color="action" />
-            <Typography variant="body2" color="text.secondary">
-              10 Räume
+              10 {t(getRoomCountText(10))}
             </Typography>
           </Box>
         </Box>
@@ -107,4 +103,30 @@ export function BuildingCardComponent({ building }: BuildingCardProps) {
       </CardContent>
     </Card>
   );
+}
+
+function getRoomCountText(count: number): string {
+  if (count === 1) {
+    return 'pages.buildings.room.single';
+  }
+
+  return 'pages.buildings.room.plural';
+}
+
+function getStatusColor(status: BuildingState): 'success' | 'warning' {
+  switch (status) {
+    case 'open':
+      return 'success';
+    case 'closed':
+      return 'warning';
+  }
+}
+
+function getStatusText(status: BuildingState): string {
+  switch (status) {
+    case 'open':
+      return 'pages.buildings.labels.open';
+    case 'closed':
+      return 'pages.buildings.labels.closed';
+  }
 }

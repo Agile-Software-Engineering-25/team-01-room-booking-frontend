@@ -5,12 +5,15 @@
       "description": "Das ist das frontend-template Projekt. Hier werden die Technologien und Tools vorgestellt, die in diesem Projekt verwendet werden.",
       "weatherButton": "WETTER"
     },
-    "weather": {
-      "title": "Wetter",
-      "description": "Hier wird das Wetter des Telekom Büros in der Winterfeldtstraße 21, 10781 Berlin angezeigt.",
-      "getWeatherButton": "WETTER ABRUFEN",
-      "weatherHeader": "Aktuelles Wetter",
-      "temperature": "Temperatur"
+    "buildings": {
+      "labels": {
+        "open": "Geöffnet",
+        "closed": "Geschlossen"
+      },
+      "room": {
+        "single": "Raum",
+        "plural": "Räume"
+      }
     }
   }
 }

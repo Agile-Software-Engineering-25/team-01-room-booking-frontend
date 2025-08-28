@@ -1,33 +1,18 @@
 import { BrowserRouter } from 'react-router';
 import RoutingComponent from '@components/RoutingComponent/RoutingComponent';
-import { createCustomTheme } from '@agile-software/shared-components';
-import { THEME_ID as MATERIAL_THEME_ID, ThemeProvider } from '@mui/material';
 import { CssVarsProvider as JoyCssVarsProvider } from '@mui/joy';
 import './i18n';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { client } from '@/api/generated/client.gen.ts';
 import { BACKEND_BASE_URL } from '@/config.ts';
+import {
+  ThemeProvider,
+  THEME_ID as MATERIAL_THEME_ID,
+} from '@mui/material/styles';
+import { CssBaseline } from '@mui/material';
+import { createCustomTheme } from '@agile-software/shared-components';
 
-const theme = createCustomTheme({
-  colorSchemes: {
-    light: {
-      palette: {
-        primary: {
-          500: '#1ebfbf',
-        },
-      },
-    },
-  },
-  components: {
-    JoyButton: {
-      styleOverrides: {
-        root: {
-          borderRadius: '8px',
-        },
-      },
-    },
-  },
-});
+const theme = createCustomTheme({});
 
 const queryClient = new QueryClient();
 
@@ -44,6 +29,7 @@ function App({ basename }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={{ [MATERIAL_THEME_ID]: theme }}>
         <JoyCssVarsProvider>
+          <CssBaseline enableColorScheme />
           <BrowserRouter basename={basename}>
             <RoutingComponent />
           </BrowserRouter>
