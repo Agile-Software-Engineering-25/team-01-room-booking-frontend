@@ -49,7 +49,11 @@ function Buildings() {
         <Grid container spacing={2}>
           {buildings.map((building) => (
             <Grid key={building.id}>
-              <BuildingCardComponent building={building} />
+              <BuildingCardComponent
+                building={building}
+                onEdit={() => {}}
+                onDelete={() => {}}
+              />
             </Grid>
           ))}
         </Grid>

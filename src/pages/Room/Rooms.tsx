@@ -108,6 +108,8 @@ function Rooms() {
               <RoomCardComponent
                 room={room}
                 building={findBuilding(room.buildingId)}
+                onEdit={() => {}}
+                onDelete={() => {}}
               />
             </Grid>
           ))}

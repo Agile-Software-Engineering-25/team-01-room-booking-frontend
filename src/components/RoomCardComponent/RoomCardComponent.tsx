@@ -1,23 +1,24 @@
 import type { Building, Characteristic, Room } from '@/api/generated';
-import { Box, Card, CardContent, Chip, IconButton, Typography } from '@mui/joy';
-import {
-  Edit,
-  Delete,
-  LocationOn,
-  MeetingRoom,
-  Person,
-} from '@mui/icons-material';
+import { Box, Chip, Typography } from '@mui/joy';
+import { LocationOn, MeetingRoom, Person } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
+import { BaseCardComponent } from '@/components/BaseCardComponent/BaseCardComponent';
 
 export interface RoomCardProps {
   room: Room;
-  building: Building;
+  building?: Building;
+  onEdit: () => void;
+  onDelete: () => void;
 }
 
-export function RoomCardComponent({ room, building }: RoomCardProps) {
+export function RoomCardComponent({
+  room,
+  building,
+  onEdit,
+  onDelete,
+}: RoomCardProps) {
   const { t } = useTranslation();
 
-  // Generisches Characteristic-Handling
   const renderCharacteristics = (characteristics: Characteristic[]) => {
     if (characteristics.length === 0) {
       return (
@@ -59,77 +60,47 @@ export function RoomCardComponent({ room, building }: RoomCardProps) {
 
   const status = 'available';
 
-  return (
-    <Card
-      key={room.id}
-      sx={{
-        boxShadow: 'sm',
-        '&:hover': { boxShadow: 'md' },
-        transition: 'box-shadow 0.2s',
-      }}
-    >
-      <Box sx={{ padding: 2, paddingBottom: 0 }}>
-        <Box display="flex" alignItems="center" gap={2}>
-          <Box
-            sx={{
-              width: 40,
-              height: 40,
-              borderRadius: 'sm',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: 'primary.softBg',
-            }}
-          >
-            <MeetingRoom fontSize="small" color="primary" />
-          </Box>
-          <Box sx={{ flex: 1 }}>
-            <Typography level="title-lg">Raum {room.name}</Typography>
-            <Chip color={getStatusColor(status)} size="sm">
-              {t(getStatusText(status))}
-            </Chip>
-          </Box>
-          <Box display="flex" gap={1}>
-            <IconButton variant="plain" color="primary" size="sm">
-              <Edit fontSize="small" />
-            </IconButton>
-            <IconButton variant="plain" color="danger" size="sm">
-              <Delete fontSize="small" />
-            </IconButton>
-          </Box>
-        </Box>
+  const contentSections = [
+    building && (
+      <Box key="building" display="flex" alignItems="center" gap={1}>
+        <LocationOn fontSize="small" color="action" />
+        <Typography level="body-sm" textColor="text.secondary">
+          Gebäude {building.name}
+        </Typography>
       </Box>
+    ),
+    <Box key="capacity" display="flex" justifyContent="space-between">
+      <Box display="flex" alignItems="center" gap={1}>
+        <Person fontSize="small" />
+        <Typography level="body-sm" textColor="text.secondary">
+          30 {t('pages.rooms.labels.capacity')}
+        </Typography>
+      </Box>
+    </Box>,
 
-      <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-        {building && (
-          <Box display="flex" alignItems="center" gap={1} sx={{ mb: 1 }}>
-            <LocationOn fontSize="small" color="action" />
-            <Typography level="body-sm" textColor="text.secondary">
-              Gebäude {building.name}
-            </Typography>
-          </Box>
-        )}
+    <Box key="equipment">
+      <Typography level="body-sm" textColor="text.secondary" sx={{ mb: 1 }}>
+        {t('pages.rooms.labels.equipment')}:
+      </Typography>
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+        {renderCharacteristics(room.characteristics)}
+      </Box>
+    </Box>,
+  ].filter(Boolean);
 
-        <Box display="flex" justifyContent="space-between" sx={{ mb: 1 }}>
-          <Box display="flex" alignItems="center" gap={1}>
-            <Person fontSize="small" />
-            <Typography level="body-sm" textColor="text.secondary">
-              30 {t('pages.rooms.labels.capacity')}
-            </Typography>
-          </Box>
-        </Box>
-
-        <Box sx={{ mt: 2 }}>
-          <Typography level="body-sm" textColor="text.secondary" sx={{ mb: 1 }}>
-            {t('pages.rooms.labels.equipment')}:
-          </Typography>
-
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-            {renderCharacteristics(room.characteristics)}
-          </Box>
-        </Box>
-      </CardContent>
-    </Card>
+  return (
+    <BaseCardComponent
+      id={room.id}
+      title={`Raum ${room.name}`}
+      statusChip={{
+        label: t(getStatusText(status)),
+        color: getStatusColor(status),
+      }}
+      icon={<MeetingRoom fontSize="small" color="primary" />}
+      contentSections={contentSections}
+      onEdit={onEdit}
+      onDelete={onDelete}
+    />
   );
 }
 
