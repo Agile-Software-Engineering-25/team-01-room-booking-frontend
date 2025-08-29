@@ -5,7 +5,7 @@ import Input from '@mui/joy/Input';
 import Typography from '@mui/joy/Typography';
 import Card from '@mui/joy/Card';
 import CardContent from '@mui/joy/CardContent';
-import { RoomCardComponent } from '@/components/RoomCardComponent/RoomCardComponent';
+import { RoomCard } from '@components/RoomCard/RoomCard.tsx';
 import { useTranslation } from 'react-i18next';
 import { MeetingRoom, Search } from '@mui/icons-material';
 import type { Room, Building } from '@/api/generated';
@@ -17,11 +17,11 @@ const rooms: Room[] = [
     buildingId: '0198f690-75a9-7074-8857-9ffb53f846a0',
     characteristics: [
       {
-        type: 'whiteboard',
+        type: 'Whiteboard',
         value: true,
       },
       {
-        type: 'beamer',
+        type: 'Beamer',
         value: true,
       },
     ],
@@ -32,7 +32,7 @@ const rooms: Room[] = [
     buildingId: '0198f690-75a9-7074-8857-9ffb53f846a1',
     characteristics: [
       {
-        type: 'pc',
+        type: 'PC',
         value: 10,
       },
     ],
@@ -105,7 +105,7 @@ function Rooms() {
         <Grid container spacing={2}>
           {filteredRooms.map((room) => (
             <Grid key={room.id}>
-              <RoomCardComponent
+              <RoomCard
                 room={room}
                 building={findBuilding(room.buildingId)}
                 onEdit={() => {}}

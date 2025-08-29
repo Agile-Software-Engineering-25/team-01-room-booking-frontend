@@ -15,7 +15,7 @@ export interface BaseCardProps {
   onDelete?: () => void;
 }
 
-export function BaseCardComponent({
+export function BaseCard({
   id,
   title,
   statusChip,

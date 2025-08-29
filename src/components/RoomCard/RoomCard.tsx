@@ -1,8 +1,9 @@
 import type { Building, Characteristic, Room } from '@/api/generated';
-import { Box, Chip, Typography } from '@mui/joy';
+import { Box, Typography } from '@mui/joy';
 import { LocationOn, MeetingRoom, Person } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
-import { BaseCardComponent } from '@/components/BaseCardComponent/BaseCardComponent';
+import { BaseCard } from '@components/BaseCard/BaseCard.tsx';
+import { CharacteristicChip } from '@components/RoomCard/CharacteristicChip.tsx';
 
 export interface RoomCardProps {
   room: Room;
@@ -11,12 +12,7 @@ export interface RoomCardProps {
   onDelete: () => void;
 }
 
-export function RoomCardComponent({
-  room,
-  building,
-  onEdit,
-  onDelete,
-}: RoomCardProps) {
+export function RoomCard({ room, building, onEdit, onDelete }: RoomCardProps) {
   const { t } = useTranslation();
 
   const renderCharacteristics = (characteristics: Characteristic[]) => {
@@ -29,32 +25,7 @@ export function RoomCardComponent({
     }
 
     return characteristics
-      .map((char, index) => {
-        if (typeof char.value === 'boolean') {
-          if (char.value) {
-            return (
-              <Chip key={`${char.type}-${index}`} size="sm" variant="soft">
-                {char.type}
-              </Chip>
-            );
-          }
-          return null;
-        } else if (typeof char.value === 'number') {
-          return (
-            <Chip key={`${char.type}-${index}`} size="sm" variant="soft">
-              {char.type}: {char.value}
-            </Chip>
-          );
-        } else if (typeof char.value === 'string') {
-          return (
-            <Chip key={`${char.type}-${index}`} size="sm" variant="soft">
-              {char.type}: {char.value}
-            </Chip>
-          );
-        }
-
-        return null;
-      })
+      .map((char) => <CharacteristicChip characteristic={char} />)
       .filter((value) => value != null);
   };
 
@@ -89,9 +60,9 @@ export function RoomCardComponent({
   ].filter(Boolean);
 
   return (
-    <BaseCardComponent
+    <BaseCard
       id={room.id}
-      title={`Raum ${room.name}`}
+      title={t('pages.buildings.room.single') + ` ${room.name}`}
       statusChip={{
         label: t(getStatusText(status)),
         color: getStatusColor(status),

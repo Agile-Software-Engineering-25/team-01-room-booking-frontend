@@ -2,7 +2,7 @@ import type { Building, BuildingState } from '@/api/generated';
 import { Box, Typography } from '@mui/joy';
 import { LocationOn, Apartment } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
-import { BaseCardComponent } from '@/components/BaseCardComponent/BaseCardComponent';
+import { BaseCard } from '@components/BaseCard/BaseCard.tsx';
 
 export interface BuildingCardProps {
   building: Building;
@@ -10,7 +10,7 @@ export interface BuildingCardProps {
   onDelete: () => void;
 }
 
-export function BuildingCardComponent({
+export function BuildingCard({
   building,
   onEdit,
   onDelete,
@@ -51,7 +51,7 @@ export function BuildingCardComponent({
   ].filter((value) => value != null);
 
   return (
-    <BaseCardComponent
+    <BaseCard
       id={building.id}
       title={building.name}
       statusChip={{
