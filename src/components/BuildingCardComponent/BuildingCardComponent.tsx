@@ -19,7 +19,6 @@ export function BuildingCardComponent({ building }: BuildingCardProps) {
         transition: 'box-shadow 0.2s',
       }}
     >
-      {/* Header-Bereich (ersetzt CardHeader) */}
       <Box sx={{ padding: 2, paddingBottom: 0 }}>
         <Box display="flex" alignItems="center" gap={2}>
           <Box
