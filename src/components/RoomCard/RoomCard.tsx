@@ -36,6 +36,11 @@ export function RoomCard({
       .filter((value) => value != null);
   };
 
+  const availableSeats =
+    (room.characteristics.find(
+      (characteristic) => characteristic.type === 'SEATS'
+    )?.value as number) || -1;
+
   const status = 'available';
 
   const contentSections = [
@@ -51,7 +56,7 @@ export function RoomCard({
       <Box display="flex" alignItems="center" gap={1}>
         <Person fontSize="small" />
         <Typography level="body-sm" textColor="text.secondary">
-          30 {t('pages.rooms.labels.capacity')}
+          {availableSeats} {t('pages.rooms.labels.capacity')}
         </Typography>
       </Box>
     </Box>,

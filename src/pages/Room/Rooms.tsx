@@ -8,58 +8,13 @@ import CardContent from '@mui/joy/CardContent';
 import { RoomCard } from '@components/RoomCard/RoomCard.tsx';
 import { useTranslation } from 'react-i18next';
 import { Add, MeetingRoom, Search } from '@mui/icons-material';
-import type { Room, Building, Characteristic } from '@/api/generated';
+import { type Room, type Building, type Characteristic } from '@/api/generated';
 import { Button, Chip, Stack } from '@mui/joy';
-
-const rooms: Room[] = [
-  {
-    id: '0198f690-226e-741c-95a8-e2a89bb01383',
-    name: '1.21',
-    buildingId: '0198f690-75a9-7074-8857-9ffb53f846a0',
-    characteristics: [
-      {
-        type: 'Whiteboard',
-        value: true,
-      },
-      {
-        type: 'Beamer',
-        value: true,
-      },
-    ],
-  },
-  {
-    id: '0398f690-226e-741c-95a8-e2a89bb01385',
-    name: '3.08',
-    buildingId: '0198f690-75a9-7074-8857-9ffb53f846a1',
-    characteristics: [
-      {
-        type: 'PC',
-        value: 10,
-      },
-    ],
-  },
-  {
-    id: '0498f690-226e-741c-95a8-e2a89bb01386',
-    name: '1.12',
-    buildingId: '0198f690-75a9-7074-8857-9ffb53f846a1',
-    characteristics: [],
-  },
-];
-
-const buildings: Building[] = [
-  {
-    id: '0198f690-75a9-7074-8857-9ffb53f846a0',
-    name: 'B845',
-    address: 'Musterstraße 1, 12345 Musterstadt',
-    state: 'open',
-  },
-  {
-    id: '0198f690-75a9-7074-8857-9ffb53f846a1',
-    name: 'B846',
-    address: 'Musterstraße 2, 12345 Musterstadt',
-    state: 'open',
-  },
-];
+import { useQuery } from '@tanstack/react-query';
+import {
+  getBuildingsOptions,
+  getRoomsOptions,
+} from '@/api/generated/@tanstack/react-query.gen.ts';
 
 interface Filter extends Characteristic {
   label: string;
@@ -69,6 +24,16 @@ function Rooms() {
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const [activeFilters, setActiveFilters] = useState<Filter[]>([]);
+
+  const { data: roomData } = useQuery({
+    ...getRoomsOptions(),
+  });
+  const rooms = roomData?.rooms ?? [];
+
+  const { data: buildingData } = useQuery({
+    ...getBuildingsOptions(),
+  });
+  const buildings = buildingData?.buildings ?? [];
 
   const availableEquipmentTypes = new Set(
     rooms.flatMap((room) =>
@@ -148,9 +113,9 @@ function Rooms() {
     return activeFilters.every((filter) => {
       if (filter.type === 'seats') {
         const capacityChar = room.characteristics.find(
-          (char) => char.type === 'seats' && typeof char.value === 'number'
+          (char) => char.type === 'SEATS' && typeof char.value === 'number'
         );
-        const capacity = capacityChar ? Number(capacityChar.value) : 30;
+        const capacity = capacityChar ? Number(capacityChar.value) : -1;
         switch (filter.value) {
           case 'small':
             return capacity <= 25;
