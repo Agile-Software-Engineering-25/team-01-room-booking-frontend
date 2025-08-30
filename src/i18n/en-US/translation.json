@@ -20,12 +20,24 @@
         "noEquipment": "No equipment available"
       },
       "search": {
-        "placeholder": "Search rooms..."
+        "placeholder": "Search by room name, code or building..."
       },
       "empty": {
         "title": "No rooms found",
         "noRooms": "There are no rooms available yet.",
         "searchNoResults": "No rooms found for this search term."
+      },
+      "actions": {
+        "create": "Create room",
+        "filter": {
+          "selected": "Active filters",
+          "open": "Filter",
+          "equipment": "Equipment",
+          "seats": "Capacity",
+          "seats-small": "Small (up to 25)",
+          "seats-medium": "Medium (26-35)",
+          "seats-large": "Large (36+)"
+        }
       }
     }
   }

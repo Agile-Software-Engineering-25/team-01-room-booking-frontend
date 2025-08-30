@@ -8,8 +8,8 @@ import CardContent from '@mui/joy/CardContent';
 import { RoomCard } from '@components/RoomCard/RoomCard.tsx';
 import { useTranslation } from 'react-i18next';
 import { Add, MeetingRoom, Search } from '@mui/icons-material';
-import type { Room, Building } from '@/api/generated';
-import { Button } from '@mui/joy';
+import type { Room, Building, Characteristic } from '@/api/generated';
+import { Button, Chip, Stack } from '@mui/joy';
 
 const rooms: Room[] = [
   {
@@ -61,13 +61,121 @@ const buildings: Building[] = [
   },
 ];
 
+interface Filter extends Characteristic {
+  label: string;
+}
+
 function Rooms() {
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
+  const [activeFilters, setActiveFilters] = useState<Filter[]>([]);
 
-  const filteredRooms = rooms.filter((room) =>
-    room.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const availableEquipmentTypes = new Set(
+    rooms.flatMap((room) =>
+      room.characteristics
+        .filter((characteristic) => typeof characteristic.value === 'boolean')
+        .map((characteristic) => characteristic.type)
+    )
   );
+
+  const capacityFilters: Filter[] = ['small', 'medium', 'large'].map(
+    (size) => ({
+      type: 'seats',
+      value: size,
+      label:
+        t('pages.rooms.actions.filter.seats') +
+        ': ' +
+        t(`pages.rooms.actions.filter.seats-${size}`),
+    })
+  );
+
+  const equipmentFilters: Filter[] = Array.from(availableEquipmentTypes).map(
+    (type) => ({
+      type: type,
+      value: type,
+      label: t('pages.rooms.actions.filter.equipment') + ': ' + type,
+    })
+  );
+
+  const allFilters = [...equipmentFilters, ...capacityFilters];
+
+  const inactiveFilters = allFilters.filter(
+    (filter) =>
+      !activeFilters.some(
+        (activeFilter) =>
+          activeFilter.type === filter.type &&
+          activeFilter.value === filter.value
+      )
+  );
+
+  const toggleFilter = (filter: Filter) => {
+    const isActive = activeFilters.some(
+      (activeFilter) =>
+        activeFilter.type === filter.type && activeFilter.value === filter.value
+    );
+
+    if (isActive) {
+      setActiveFilters(
+        activeFilters.filter(
+          (activeFilter) =>
+            !(
+              activeFilter.type === filter.type &&
+              activeFilter.value === filter.value
+            )
+        )
+      );
+    } else {
+      setActiveFilters([...activeFilters, filter]);
+    }
+  };
+
+  const clearFilters = () => {
+    setActiveFilters([]);
+  };
+
+  const filterRooms = (room: Room): boolean => {
+    const matchesSearch = room.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    if (!matchesSearch) {
+      return false;
+    }
+
+    if (activeFilters.length === 0) {
+      return true;
+    }
+
+    return activeFilters.every((filter) => {
+      if (filter.type === 'seats') {
+        const capacityChar = room.characteristics.find(
+          (char) => char.type === 'seats' && typeof char.value === 'number'
+        );
+        const capacity = capacityChar ? Number(capacityChar.value) : 30;
+        switch (filter.value) {
+          case 'small':
+            return capacity <= 25;
+          case 'medium':
+            return capacity > 25 && capacity <= 35;
+          case 'large':
+            return capacity > 35;
+          default:
+            return true;
+        }
+      } else {
+        const characteristic = room.characteristics.find(
+          (char) => char.type === filter.value
+        );
+        return (
+          characteristic &&
+          (typeof characteristic.value === 'boolean'
+            ? characteristic.value
+            : characteristic.value !== undefined)
+        );
+      }
+    });
+  };
+
+  const filteredRooms = rooms.filter(filterRooms);
 
   // TODO: buildings
   const findBuilding = (buildingId: string): Building => {
@@ -112,9 +220,57 @@ function Rooms() {
               {t('pages.rooms.actions.create')}
             </Button>
           </Box>
+
           <Box sx={{ marginTop: 1 }}>
-            <Typography>{t('pages.rooms.actions.filter.selected')}</Typography>
-            <Typography>{t('pages.rooms.actions.filter.open')}</Typography>
+            {activeFilters.length > 0 && (
+              <>
+                <Typography level="body-md" sx={{ mb: 1 }}>
+                  Aktive Filter
+                </Typography>
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  sx={{ flexWrap: 'wrap', gap: 0.1, marginBottom: 1 }}
+                >
+                  {activeFilters.map((filter) => (
+                    <Chip
+                      key={`${filter.type}-${filter.value}`}
+                      color="primary"
+                      variant="soft"
+                      onClick={() => toggleFilter(filter)}
+                    >
+                      {filter.label}
+                    </Chip>
+                  ))}
+                  <Chip
+                    variant="outlined"
+                    color="neutral"
+                    onClick={clearFilters}
+                  >
+                    Alle löschen
+                  </Chip>
+                </Stack>
+              </>
+            )}
+            <Typography level="body-md" sx={{ marginBottom: 1 }}>
+              Filter
+            </Typography>
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{ flexWrap: 'wrap', gap: 0.1 }}
+            >
+              {inactiveFilters.map((filter) => (
+                <Chip
+                  key={`inactive-${filter.type}-${filter.value}`}
+                  variant="outlined"
+                  color="neutral"
+                  onClick={() => toggleFilter(filter)}
+                >
+                  {filter.label}
+                </Chip>
+              ))}
+            </Stack>
           </Box>
         </Card>
 
@@ -163,7 +319,7 @@ function Rooms() {
                 {t('pages.rooms.empty.title')}
               </Typography>
               <Typography textColor="text.secondary">
-                {searchTerm
+                {searchTerm || activeFilters.length > 0
                   ? t('pages.rooms.empty.searchNoResults')
                   : t('pages.rooms.empty.noRooms')}
               </Typography>

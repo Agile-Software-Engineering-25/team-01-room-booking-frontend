@@ -31,7 +31,12 @@
         "create": "Raum erstellen",
         "filter": {
           "selected": "Aktive Filter",
-          "open": "Filter"
+          "open": "Filter",
+          "equipment": "Ausstattung",
+          "seats": "Kapazität",
+          "seats-small": "Klein (bis 25)",
+          "seats-medium": "Mittel (26-35)",
+          "seats-large": "Groß (36+)"
         }
       }
     }
