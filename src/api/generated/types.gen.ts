@@ -58,9 +58,7 @@ export type RoomCreateRequest = {
 
 export type Characteristic = {
   type: string;
-  value: {
-    [key: string]: unknown;
-  };
+  value: any;
 };
 
 export type SearchCharacteristic = Characteristic & {
