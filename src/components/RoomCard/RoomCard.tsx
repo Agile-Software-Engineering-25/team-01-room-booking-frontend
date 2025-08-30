@@ -10,9 +10,16 @@ export interface RoomCardProps {
   building?: Building;
   onEdit: () => void;
   onDelete: () => void;
+  onFaulty: () => void;
 }
 
-export function RoomCard({ room, building, onEdit, onDelete }: RoomCardProps) {
+export function RoomCard({
+  room,
+  building,
+  onEdit,
+  onDelete,
+  onFaulty,
+}: RoomCardProps) {
   const { t } = useTranslation();
 
   const renderCharacteristics = (characteristics: Characteristic[]) => {
@@ -57,7 +64,7 @@ export function RoomCard({ room, building, onEdit, onDelete }: RoomCardProps) {
         {renderCharacteristics(room.characteristics)}
       </Box>
     </Box>,
-  ].filter(Boolean);
+  ].filter((value) => value != null);
 
   return (
     <BaseCard
@@ -71,6 +78,7 @@ export function RoomCard({ room, building, onEdit, onDelete }: RoomCardProps) {
       contentSections={contentSections}
       onEdit={onEdit}
       onDelete={onDelete}
+      onFaulty={onFaulty}
     />
   );
 }

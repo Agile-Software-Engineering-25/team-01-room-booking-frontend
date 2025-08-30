@@ -110,6 +110,7 @@ function Rooms() {
                 building={findBuilding(room.buildingId)}
                 onEdit={() => {}}
                 onDelete={() => {}}
+                onFaulty={() => {}}
               />
             </Grid>
           ))}
@@ -122,13 +123,13 @@ function Rooms() {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                py: 6,
+                paddingY: 6,
               }}
             >
               <MeetingRoom
-                sx={{ fontSize: 64, color: 'neutral.softBg', mb: 2 }}
+                sx={{ fontSize: 64, color: 'neutral.softBg', marginBottom: 2 }}
               />
-              <Typography level="h3" sx={{ mb: 1 }}>
+              <Typography level="h3" sx={{ marginBottom: 1 }}>
                 {t('pages.rooms.empty.title')}
               </Typography>
               <Typography textColor="text.secondary">

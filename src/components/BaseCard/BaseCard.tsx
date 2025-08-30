@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { Box, Card, CardContent, Chip, IconButton, Typography } from '@mui/joy';
-import { Edit, Delete } from '@mui/icons-material';
+import { Edit, Delete, Warning } from '@mui/icons-material';
 
 export interface BaseCardProps {
   id: string;
@@ -13,6 +13,7 @@ export interface BaseCardProps {
   contentSections: ReactNode[];
   onEdit?: () => void;
   onDelete?: () => void;
+  onFaulty?: () => void;
 }
 
 export function BaseCard({
@@ -23,6 +24,7 @@ export function BaseCard({
   contentSections,
   onEdit,
   onDelete,
+  onFaulty,
 }: BaseCardProps) {
   return (
     <Card
@@ -56,6 +58,16 @@ export function BaseCard({
             </Chip>
           </Box>
           <Box display="flex" gap={1}>
+            {onFaulty && (
+              <IconButton
+                variant="plain"
+                color="warning"
+                size="sm"
+                onClick={onFaulty}
+              >
+                <Warning fontSize="small" />
+              </IconButton>
+            )}
             {onEdit && (
               <IconButton
                 variant="plain"
