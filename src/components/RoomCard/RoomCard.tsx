@@ -32,6 +32,7 @@ export function RoomCard({
     }
 
     return characteristics
+      .filter((char) => char.type !== 'SEATS')
       .map((char) => <CharacteristicChip characteristic={char} />)
       .filter((value) => value != null);
   };

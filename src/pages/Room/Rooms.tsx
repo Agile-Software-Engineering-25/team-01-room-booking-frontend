@@ -39,7 +39,7 @@ function Rooms() {
     rooms.flatMap((room) =>
       room.characteristics
         .filter((characteristic) => typeof characteristic.value === 'boolean')
-        .map((characteristic) => characteristic.type)
+        .map((characteristic) => characteristic.type.toLowerCase())
     )
   );
 
@@ -58,7 +58,11 @@ function Rooms() {
     (type) => ({
       type: type,
       value: type,
-      label: t('pages.rooms.actions.filter.equipment') + ': ' + type,
+      label:
+        t('pages.rooms.actions.filter.equipment') +
+        ': ' +
+        type.charAt(0).toUpperCase() +
+        type.slice(1).toLowerCase(),
     })
   );
 
@@ -128,7 +132,7 @@ function Rooms() {
         }
       } else {
         const characteristic = room.characteristics.find(
-          (char) => char.type === filter.value
+          (char) => char.type.toLowerCase() === filter.type.toLowerCase()
         );
         return (
           characteristic &&
