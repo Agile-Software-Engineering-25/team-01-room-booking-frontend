@@ -20,12 +20,19 @@
         "noEquipment": "Keine Ausstattung verfügbar"
       },
       "search": {
-        "placeholder": "Räume durchsuchen..."
+        "placeholder": "Nach Raumname, Kürzel oder Gebäude suchen..."
       },
       "empty": {
         "title": "Keine Räume gefunden",
         "noRooms": "Es sind noch keine Räume vorhanden.",
         "searchNoResults": "Keine Räume für diesen Suchbegriff gefunden."
+      },
+      "actions": {
+        "create": "Raum erstellen",
+        "filter": {
+          "selected": "Aktive Filter",
+          "open": "Filter"
+        }
       }
     }
   }

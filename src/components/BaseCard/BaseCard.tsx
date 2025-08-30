@@ -30,6 +30,7 @@ export function BaseCard({
     <Card
       key={id}
       sx={{
+        width: '100%',
         boxShadow: 'sm',
         '&:hover': { boxShadow: 'md' },
         transition: 'box-shadow 0.2s',
@@ -93,7 +94,12 @@ export function BaseCard({
       </Box>
 
       <CardContent
-        sx={{ flex: 1, display: 'flex', flexDirection: 'column', padding: 1 }}
+        sx={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          padding: 1,
+        }}
       >
         {contentSections.map((section, index) => (
           <Box

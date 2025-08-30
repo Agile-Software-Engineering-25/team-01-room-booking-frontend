@@ -7,8 +7,9 @@ import Card from '@mui/joy/Card';
 import CardContent from '@mui/joy/CardContent';
 import { RoomCard } from '@components/RoomCard/RoomCard.tsx';
 import { useTranslation } from 'react-i18next';
-import { MeetingRoom, Search } from '@mui/icons-material';
+import { Add, MeetingRoom, Search } from '@mui/icons-material';
 import type { Room, Building } from '@/api/generated';
+import { Button } from '@mui/joy';
 
 const rooms: Room[] = [
   {
@@ -86,25 +87,54 @@ function Rooms() {
       <Box
         sx={{
           width: '100%',
-          maxWidth: 1200,
           display: 'flex',
           flexDirection: 'column',
           gap: 3,
         }}
       >
-        <Box sx={{ position: 'relative', maxWidth: 400 }}>
-          <Input
-            placeholder={t('pages.rooms.search.placeholder')}
-            value={searchTerm}
-            onChange={(event) => setSearchTerm(event.target.value)}
-            startDecorator={<Search />}
-            sx={{ width: '100%' }}
-          />
-        </Box>
+        <Card>
+          <Typography level={'h4'}>Raumsuche</Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Input
+              placeholder={t('pages.rooms.search.placeholder')}
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
+              startDecorator={<Search />}
+              sx={{ width: '50%' }}
+            />
+            <Button startDecorator={<Add />}>
+              {t('pages.rooms.actions.create')}
+            </Button>
+          </Box>
+          <Box sx={{ marginTop: 1 }}>
+            <Typography>{t('pages.rooms.actions.filter.selected')}</Typography>
+            <Typography>{t('pages.rooms.actions.filter.open')}</Typography>
+          </Box>
+        </Card>
 
-        <Grid container spacing={2}>
+        <Grid
+          container
+          spacing={2}
+          sx={{ justifyContent: { xs: 'flex-start', md: 'center' } }}
+        >
           {filteredRooms.map((room) => (
-            <Grid key={room.id}>
+            <Grid
+              key={room.id}
+              xs={12}
+              sm={6}
+              md={6}
+              lg={4}
+              sx={{
+                display: 'flex',
+                justifyContent: { xs: 'flex-start', md: 'center' },
+              }}
+            >
               <RoomCard
                 room={room}
                 building={findBuilding(room.buildingId)}
