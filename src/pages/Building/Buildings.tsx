@@ -1,9 +1,7 @@
 import Box from '@mui/joy/Box';
 import Grid from '@mui/joy/Grid';
-import LanguageSelectorComponent from '@components/LanguageSelectorComponent/LanguageSelectorComponent';
-import { BuildingCardComponent } from '@components/BuildingCardComponent/BuildingCardComponent.tsx';
+import { BuildingCard } from '@components/BuildingCard/BuildingCard.tsx';
 import type { Building } from '@/api/generated/types.gen';
-import ThemeSelectorComponent from '@components/ThemeSelectorComponent/ThemeSelectorComponent.tsx';
 
 const buildings: Building[] = [
   {
@@ -51,12 +49,14 @@ function Buildings() {
         <Grid container spacing={2}>
           {buildings.map((building) => (
             <Grid key={building.id}>
-              <BuildingCardComponent building={building} />
+              <BuildingCard
+                building={building}
+                onEdit={() => {}}
+                onDelete={() => {}}
+              />
             </Grid>
           ))}
         </Grid>
-        <LanguageSelectorComponent />
-        <ThemeSelectorComponent />
       </Box>
     </Box>
   );

@@ -1,10 +1,5 @@
 {
   "pages": {
-    "home": {
-      "title": "Home",
-      "description": "This is the frontend-template project. Here you can find the technologies and tools used in this project.",
-      "weatherButton": "WEATHER"
-    },
     "buildings": {
       "labels": {
         "open": "open",
@@ -13,6 +8,39 @@
       "room": {
         "single": "Room",
         "plural": "Rooms"
+      }
+    },
+    "rooms": {
+      "labels": {
+        "available": "Available",
+        "occupied": "Occupied",
+        "maintenance": "Maintenance",
+        "capacity": "People",
+        "equipment": "Equipment",
+        "noEquipment": "No equipment available"
+      },
+      "building": "Building",
+      "search": {
+        "title": "Room search",
+        "placeholder": "Search by room name, code or building..."
+      },
+      "empty": {
+        "title": "No rooms found",
+        "noRooms": "There are no rooms available yet.",
+        "searchNoResults": "No rooms found for this search term."
+      },
+      "actions": {
+        "create": "Create room",
+        "filter": {
+          "selected": "Active filters",
+          "clearAll": "Remove all",
+          "open": "Filter",
+          "equipment": "Equipment",
+          "seats": "Capacity",
+          "seats-small": "Small (up to 25)",
+          "seats-medium": "Medium (26-35)",
+          "seats-large": "Large (36+)"
+        }
       }
     }
   }

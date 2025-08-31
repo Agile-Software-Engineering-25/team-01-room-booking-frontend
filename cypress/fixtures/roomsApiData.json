@@ -1,0 +1,61 @@
+{
+  "rooms": [
+    {
+      "id": "room1",
+      "name": "101",
+      "buildingId": "building1",
+      "characteristics": [
+        {
+          "type": "SEATS",
+          "value": 20
+        },
+        {
+          "type": "BEAMER",
+          "value": true
+        },
+        {
+          "type": "WHITEBOARD",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "room2",
+      "name": "202",
+      "buildingId": "building1",
+      "characteristics": [
+        {
+          "type": "SEATS",
+          "value": 30
+        },
+        {
+          "type": "BEAMER",
+          "value": true
+        },
+        {
+          "type": "SMARTBOARD",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "room3",
+      "name": "303",
+      "buildingId": "building2",
+      "characteristics": [
+        {
+          "type": "SEATS",
+          "value": 40
+        },
+        {
+          "type": "WHITEBOARD",
+          "value": true
+        },
+        {
+          "type": "VIDEOCONFERENCE",
+          "value": true
+        }
+      ]
+    }
+  ]
+}

@@ -15,7 +15,11 @@ const NPM_EXTERNALS: string[] = ["react", "react-dom"];
 export default defineConfig(({ command }) => ({
   base: command === "serve" ? "/" : BASE_URL_DEPLOYMENT,
   plugins: [
-    react(),
+    react({
+      babel: {
+        plugins: ['babel-plugin-react-compiler']
+      }
+    }),
     command === "serve" && vitePluginReactHMR(ENTRY_POINT),
     vitePluginSingleSpa({
       type: "mife",

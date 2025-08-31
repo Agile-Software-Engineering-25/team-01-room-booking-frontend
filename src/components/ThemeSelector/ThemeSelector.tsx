@@ -2,7 +2,7 @@ import { Box, Button, ButtonGroup, Typography } from '@mui/joy';
 import { useColorScheme as useJoyColor } from '@mui/joy/styles';
 import { useColorScheme as useMuiColor } from '@mui/material/styles';
 
-function ThemeSelectorComponent() {
+function ThemeSelector() {
   const { mode, setMode } = useJoyColor();
   const { setMode: setMuiMode } = useMuiColor();
 
@@ -34,4 +34,4 @@ function ThemeSelectorComponent() {
   );
 }
 
-export default ThemeSelectorComponent;
+export default ThemeSelector;
