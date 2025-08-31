@@ -49,7 +49,7 @@ export function RoomCard({
       <Box key="building" display="flex" alignItems="center" gap={1}>
         <LocationOn fontSize="small" color="action" />
         <Typography level="body-sm" textColor="text.secondary">
-          Gebäude {building.name}
+          {t('pages.rooms.building')} {building.name}
         </Typography>
       </Box>
     ),

@@ -19,6 +19,7 @@
         "equipment": "Ausstattung",
         "noEquipment": "Keine Ausstattung verfügbar"
       },
+      "building": "Gebäude",
       "search": {
         "title": "Raumsuche",
         "placeholder": "Nach Raumname, Kürzel oder Gebäude suchen..."

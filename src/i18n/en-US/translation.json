@@ -19,6 +19,7 @@
         "equipment": "Equipment",
         "noEquipment": "No equipment available"
       },
+      "building": "Building",
       "search": {
         "title": "Room search",
         "placeholder": "Search by room name, code or building..."
