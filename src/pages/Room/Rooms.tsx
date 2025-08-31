@@ -146,9 +146,8 @@ function Rooms() {
 
   const filteredRooms = rooms.filter(filterRooms);
 
-  // TODO: buildings
-  const findBuilding = (buildingId: string): Building => {
-    return buildings.find((building) => building.id === buildingId)!;
+  const findBuilding = (buildingId: string): Building | undefined => {
+    return buildings.find((building) => building.id === buildingId);
   };
 
   return (
