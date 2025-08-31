@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import Box from '@mui/joy/Box';
 import Grid from '@mui/joy/Grid';
 import Input from '@mui/joy/Input';
@@ -35,46 +35,58 @@ function Rooms() {
   });
   const buildings = buildingData?.buildings ?? [];
 
-  const availableEquipmentTypes = new Set(
-    rooms.flatMap((room) =>
-      room.characteristics
-        .filter((characteristic) => typeof characteristic.value === 'boolean')
-        .map((characteristic) => characteristic.type.toLowerCase())
-    )
+  const availableEquipmentTypes = useMemo(
+    () =>
+      new Set(
+        rooms.flatMap((room) =>
+          room.characteristics
+            .filter(
+              (characteristic) => typeof characteristic.value === 'boolean'
+            )
+            .map((characteristic) => characteristic.type.toLowerCase())
+        )
+      ),
+    [rooms]
   );
 
-  const capacityFilters: Filter[] = ['small', 'medium', 'large'].map(
-    (size) => ({
-      type: 'seats',
-      value: size,
-      label:
-        t('pages.rooms.actions.filter.seats') +
-        ': ' +
-        t(`pages.rooms.actions.filter.seats-${size}`),
-    })
+  const capacityFilters: Filter[] = useMemo(
+    () =>
+      ['small', 'medium', 'large'].map((size) => ({
+        type: 'seats',
+        value: size,
+        label:
+          t('pages.rooms.actions.filter.seats') +
+          ': ' +
+          t(`pages.rooms.actions.filter.seats-${size}`),
+      })),
+    [t]
   );
 
-  const equipmentFilters: Filter[] = Array.from(availableEquipmentTypes).map(
-    (type) => ({
-      type: type,
-      value: type,
-      label:
-        t('pages.rooms.actions.filter.equipment') +
-        ': ' +
-        type.charAt(0).toUpperCase() +
-        type.slice(1).toLowerCase(),
-    })
+  const equipmentFilters: Filter[] = useMemo(
+    () =>
+      Array.from(availableEquipmentTypes).map((type) => ({
+        type: type,
+        value: type,
+        label:
+          t('pages.rooms.actions.filter.equipment') +
+          ': ' +
+          type.charAt(0).toUpperCase() +
+          type.slice(1).toLowerCase(),
+      })),
+    [availableEquipmentTypes, t]
   );
 
-  const allFilters = [...equipmentFilters, ...capacityFilters];
-
-  const inactiveFilters = allFilters.filter(
-    (filter) =>
-      !activeFilters.some(
-        (activeFilter) =>
-          activeFilter.type === filter.type &&
-          activeFilter.value === filter.value
-      )
+  const inactiveFilters = useMemo(
+    () =>
+      [...equipmentFilters, ...capacityFilters].filter(
+        (filter) =>
+          !activeFilters.some(
+            (activeFilter) =>
+              activeFilter.type === filter.type &&
+              activeFilter.value === filter.value
+          )
+      ),
+    [equipmentFilters, capacityFilters, activeFilters]
   );
 
   const toggleFilter = (filter: Filter) => {
