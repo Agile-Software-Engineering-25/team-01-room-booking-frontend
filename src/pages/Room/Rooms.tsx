@@ -28,7 +28,7 @@ function Rooms() {
   const { data: roomData } = useQuery({
     ...getRoomsOptions(),
   });
-  const rooms = roomData?.rooms ?? [];
+  const rooms = useMemo(() => roomData?.rooms ?? [], [roomData]);
 
   const { data: buildingData } = useQuery({
     ...getBuildingsOptions(),

@@ -47,7 +47,7 @@ export function RoomCard({
   const contentSections = [
     building && (
       <Box key="building" display="flex" alignItems="center" gap={1}>
-        <LocationOn fontSize="small" color="action" />
+        <LocationOn fontSize="small" />
         <Typography level="body-sm" textColor="text.secondary">
           {t('pages.rooms.building')} {building.name}
         </Typography>
