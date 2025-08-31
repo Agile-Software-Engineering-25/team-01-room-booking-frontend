@@ -20,6 +20,7 @@
         "noEquipment": "No equipment available"
       },
       "search": {
+        "title": "Room search",
         "placeholder": "Search by room name, code or building..."
       },
       "empty": {
@@ -31,6 +32,7 @@
         "create": "Create room",
         "filter": {
           "selected": "Active filters",
+          "clearAll": "Remove all",
           "open": "Filter",
           "equipment": "Equipment",
           "seats": "Capacity",

@@ -20,6 +20,7 @@
         "noEquipment": "Keine Ausstattung verfügbar"
       },
       "search": {
+        "title": "Raumsuche",
         "placeholder": "Nach Raumname, Kürzel oder Gebäude suchen..."
       },
       "empty": {
@@ -31,6 +32,7 @@
         "create": "Raum erstellen",
         "filter": {
           "selected": "Aktive Filter",
+          "clearAll": "Alle entfernen",
           "open": "Filter",
           "equipment": "Ausstattung",
           "seats": "Kapazität",

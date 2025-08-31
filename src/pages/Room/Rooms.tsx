@@ -170,7 +170,7 @@ function Rooms() {
         }}
       >
         <Card>
-          <Typography level={'h4'}>Raumsuche</Typography>
+          <Typography level={'h4'}>{t('pages.rooms.search.title')}</Typography>
           <Box
             sx={{
               display: 'flex',
@@ -193,8 +193,8 @@ function Rooms() {
           <Box sx={{ marginTop: 1 }}>
             {activeFilters.length > 0 && (
               <>
-                <Typography level="body-md" sx={{ mb: 1 }}>
-                  Aktive Filter
+                <Typography level="body-md" sx={{ marginBottom: 1 }}>
+                  {t('pages.rooms.actions.filter.selected')}
                 </Typography>
                 <Stack
                   direction="row"
@@ -207,6 +207,11 @@ function Rooms() {
                       color="primary"
                       variant="soft"
                       onClick={() => toggleFilter(filter)}
+                      slotProps={{
+                        action: {
+                          'data-testid': `${filter.type}-${filter.value}`,
+                        },
+                      }}
                     >
                       {filter.label}
                     </Chip>
@@ -215,14 +220,19 @@ function Rooms() {
                     variant="outlined"
                     color="neutral"
                     onClick={clearFilters}
+                    slotProps={{
+                      action: {
+                        'data-testid': `delete-all-filters`,
+                      },
+                    }}
                   >
-                    Alle löschen
+                    {t('pages.rooms.actions.filter.clearAll')}
                   </Chip>
                 </Stack>
               </>
             )}
             <Typography level="body-md" sx={{ marginBottom: 1 }}>
-              Filter
+              {t('pages.rooms.actions.filter.open')}
             </Typography>
             <Stack
               direction="row"
@@ -234,6 +244,11 @@ function Rooms() {
                   key={`inactive-${filter.type}-${filter.value}`}
                   variant="outlined"
                   color="neutral"
+                  slotProps={{
+                    action: {
+                      'data-testid': `inactive-${filter.type}-${filter.value}`,
+                    },
+                  }}
                   onClick={() => toggleFilter(filter)}
                 >
                   {filter.label}
