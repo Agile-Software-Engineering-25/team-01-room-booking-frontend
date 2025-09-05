@@ -41,7 +41,29 @@
           "seats-medium": "Mittel (26-35)",
           "seats-large": "Groß (36+)"
         }
+      },
+      "dialogs": {
+        "delete": {
+          "title": "Raum löschen",
+          "confirmation": "Sind Sie sicher, dass Sie den Raum {{roomName}} löschen möchten?",
+          "deleting": "Lösche...",
+          "confirm": "Raum löschen",
+          "forceDelete": "Löschung forcieren (entfernt auch alle Buchungen für diesen Raum)",
+          "warning": {
+            "title": "Achtung!",
+            "permanent": "Diese Aktion kann nicht rückgängig gemacht werden. Der Raum wird permanent aus dem System entfernt.",
+            "checkBookings": "Stellen Sie sicher, dass keine aktiven Buchungen für diesen Raum vorhanden sind.",
+            "deleteBookings": "Alle existierenden Buchungen für diesen Raum werden ebenfalls gelöscht!"
+          },
+          "hasBookings": {
+            "title": "Raum hat aktive Buchungen!",
+            "description": "Dieser Raum kann nicht gelöscht werden, da noch Buchungen vorhanden sind. Aktivieren Sie die Löschung forcieren, um den Raum und alle Buchungen zu entfernen."
+          }
+        }
       }
     }
+  },
+  "common": {
+    "cancel": "Abbrechen"
   }
 }

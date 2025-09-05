@@ -379,7 +379,12 @@ export type DeleteRoomByIdData = {
      */
     roomId: string;
   };
-  query?: never;
+  query?: {
+    /**
+     * Whether to force deletion even if the room has bookings assigned.
+     */
+    force?: boolean;
+  };
   url: '/rooms/{roomId}';
 };
 
@@ -465,6 +470,37 @@ export type UpdateRoomByIdResponses = {
 
 export type UpdateRoomByIdResponse =
   UpdateRoomByIdResponses[keyof UpdateRoomByIdResponses];
+
+export type IsRoomDeletableData = {
+  body?: never;
+  path: {
+    /**
+     * The unique identifier of the room (UUID v7).
+     */
+    roomId: string;
+  };
+  query?: never;
+  url: '/rooms/{roomId}/deletable';
+};
+
+export type IsRoomDeletableErrors = {
+  /**
+   * Room not found.
+   */
+  404: unknown;
+};
+
+export type IsRoomDeletableResponses = {
+  /**
+   * Response whether the room can be deleted without forcing (no bookings assigned).
+   */
+  200: {
+    deletable: boolean;
+  };
+};
+
+export type IsRoomDeletableResponse =
+  IsRoomDeletableResponses[keyof IsRoomDeletableResponses];
 
 export type GetBookingsForRoomData = {
   body?: never;

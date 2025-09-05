@@ -5,7 +5,7 @@ import Input from '@mui/joy/Input';
 import Typography from '@mui/joy/Typography';
 import Card from '@mui/joy/Card';
 import CardContent from '@mui/joy/CardContent';
-import { RoomCard } from '@components/RoomCard/RoomCard.tsx';
+import { RoomCard } from '@components/Room/RoomCard.tsx';
 import { useTranslation } from 'react-i18next';
 import { Add, MeetingRoom, Search } from '@mui/icons-material';
 import { type Room, type Building, type Characteristic } from '@/api/generated';

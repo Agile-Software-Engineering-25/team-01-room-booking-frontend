@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/joy';
 import { LocationOn, MeetingRoom, Person } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { BaseCard } from '@components/BaseCard/BaseCard.tsx';
-import { CharacteristicChip } from '@components/RoomCard/CharacteristicChip.tsx';
+import { CharacteristicChip } from '@components/Room/CharacteristicChip.tsx';
 
 export interface RoomCardProps {
   room: Room;
