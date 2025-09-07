@@ -423,7 +423,12 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
                 marginTop: 2,
               }}
             >
-              <Button variant="outlined" color="neutral" onClick={handleClose}>
+              <Button
+                data-testid="create-room-cancel-button"
+                variant="outlined"
+                color="neutral"
+                onClick={handleClose}
+              >
                 {t('common.action.cancel')}
               </Button>
               <Button
