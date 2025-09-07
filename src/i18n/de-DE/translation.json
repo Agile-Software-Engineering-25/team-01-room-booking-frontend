@@ -55,7 +55,12 @@
         "equipment": "Ausstattung",
         "equipment.standard": "Standard-Ausstattung",
         "equipment.custom": "Benutzerdefiniert",
-        "equipment.custom.add": "Eigene Ausstattung hinzufügen"
+        "equipment.custom.add": "Eigene Ausstattung hinzufügen",
+        "placeholder": {
+          "roomNumber": "z.B. 1.21",
+          "customType": "Typ (z.B. Camera)",
+          "value": "Wert"
+        }
       }
     }
   },

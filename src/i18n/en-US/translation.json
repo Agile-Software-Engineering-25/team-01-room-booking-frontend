@@ -55,7 +55,12 @@
         "equipment": "Equipment",
         "equipment.standard": "Standard equipment",
         "equipment.custom": "Custom",
-        "equipment.custom.add": "Add custom equipment"
+        "equipment.custom.add": "Add custom equipment",
+        "placeholder": {
+          "roomNumber": "e.g. 1.21",
+          "customType": "Type (e.g. Camera)",
+          "value": "Value"
+        }
       }
     }
   },

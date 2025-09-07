@@ -195,9 +195,9 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
         >
           <Stack spacing={2}>
             <FormControl required>
-              <FormLabel>{t('pages.rooms.field.number')} *</FormLabel>
+              <FormLabel>{t('pages.rooms.field.number')}</FormLabel>
               <Input
-                placeholder="z.B. 1.21"
+                placeholder={t('pages.rooms.field.placeholder.roomNumber')}
                 value={roomNumber}
                 onChange={(event) => setRoomNumber(event.target.value)}
                 startDecorator={<PlaceIcon />}
@@ -205,7 +205,7 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
             </FormControl>
 
             <FormControl required>
-              <FormLabel>{t('pages.rooms.field.building')} *</FormLabel>
+              <FormLabel>{t('pages.rooms.field.building')}</FormLabel>
               <Select
                 placeholder={t('pages.rooms.field.building.placeholder')}
                 value={buildingId}
@@ -220,7 +220,7 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
             </FormControl>
 
             <FormControl required>
-              <FormLabel>{t('pages.rooms.field.capacity')} *</FormLabel>
+              <FormLabel>{t('pages.rooms.field.capacity')}</FormLabel>
               <Input
                 placeholder={t('pages.rooms.field.capacity.placeholder')}
                 value={seats || ''}
@@ -324,7 +324,7 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
                   </Typography>
                   <Stack direction="row" spacing={1} sx={{ marginBottom: 1 }}>
                     <Input
-                      placeholder="Typ (z.B. Camera)"
+                      placeholder={t('pages.rooms.field.placeholder.customType')}
                       value={customType}
                       onChange={(event) => setCustomType(event.target.value)}
                       size="sm"
@@ -357,7 +357,7 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
                         onChange={(_event, value) =>
                           setCustomValue(value as string)
                         }
-                        placeholder="Wert"
+                        placeholder={t('pages.rooms.field.placeholder.value')}
                         size="sm"
                       >
                         <Option value="true">{t('common.value.true')}</Option>
@@ -365,7 +365,7 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
                       </Select>
                     ) : (
                       <Input
-                        placeholder="Wert"
+                        placeholder={t('pages.rooms.field.placeholder.value')}
                         value={customValue}
                         onChange={(event) => setCustomValue(event.target.value)}
                         type={customValueType === 'number' ? 'number' : 'text'}
