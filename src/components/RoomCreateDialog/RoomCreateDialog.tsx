@@ -246,7 +246,7 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
                     level="body-sm"
                     sx={{ marginTop: 1, marginBottom: 1 }}
                   >
-                    {t('pages.rooms.actions.filter.selected')}
+                    {t('pages.rooms.field.equipment.selected')}
                   </Typography>
                   <Box
                     sx={{
@@ -354,7 +354,9 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
                     <Select
                       value={customValueType}
                       onChange={(_event, value) =>
-                        setCustomValueType(value as never)
+                        setCustomValueType(
+                          value as 'boolean' | 'number' | 'string'
+                        )
                       }
                       size="sm"
                     >

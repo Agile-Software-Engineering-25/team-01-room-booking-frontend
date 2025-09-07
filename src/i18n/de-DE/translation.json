@@ -53,6 +53,7 @@
         "capacity": "Kapazität",
         "capacity.placeholder": "Anzahl Personen",
         "equipment": "Ausstattung",
+        "equipment.selected": "Ausgewählte Ausstattung",
         "equipment.standard": "Standard-Ausstattung",
         "equipment.custom": "Benutzerdefiniert",
         "equipment.custom.add": "Eigene Ausstattung hinzufügen",

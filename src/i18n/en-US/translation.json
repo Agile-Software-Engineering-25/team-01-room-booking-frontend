@@ -53,6 +53,7 @@
         "capacity": "Capacity",
         "capacity.placeholder": "Number of people",
         "equipment": "Equipment",
+        "equipment.selected": "Selected equipment",
         "equipment.standard": "Standard equipment",
         "equipment.custom": "Custom",
         "equipment.custom.add": "Add custom equipment",

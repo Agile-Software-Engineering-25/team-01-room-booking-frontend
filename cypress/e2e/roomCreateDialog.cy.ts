@@ -50,7 +50,7 @@ describe('RoomCreateDialog tests', () => {
 
   it('should add standard equipment when clicked', () => {
     cy.get('[data-testid="add-equipment-WHITEBOARD-button"]').click();
-    cy.contains(/Aktive Filter|Active filters/).should('be.visible');
+    cy.contains(/Ausgewählte Ausstattung|Selected equipment/).should('be.visible');
     cy.get('[data-testid="remove-equipment-WHITEBOARD-button"]')
       .should('have.css', 'background-color')
       .and('not.equal', 'rgba(0, 0, 0, 0)');
@@ -67,7 +67,7 @@ describe('RoomCreateDialog tests', () => {
       .should('be.visible')
       .click();
 
-    cy.contains(/Aktive Filter|Active filters/).should('not.exist');
+    cy.contains(/Ausgewählte Ausstattung|Selected equipment/).should('not.exist');
   });
 
   it('should open custom equipment form when custom button is clicked', () => {
@@ -190,7 +190,7 @@ describe('RoomCreateDialog tests', () => {
 
     cy.get('input[placeholder*="1.21"]').should('have.value', '');
     cy.get('input[type="number"]').should('have.value', '');
-    cy.contains(/Aktive Filter|Active filters/).should('not.exist');
+    cy.contains(/Ausgewählte Ausstattung|Selected equipment/).should('not.exist');
   });
 
   it('should show all equipment options in dialog even with small viewport', () => {
