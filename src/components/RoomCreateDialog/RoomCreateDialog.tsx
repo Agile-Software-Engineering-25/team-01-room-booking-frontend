@@ -92,11 +92,11 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
 
   const updateCharacteristic = (
     type: string,
-    value: boolean | number | string,
+    value: boolean | number | string
   ) => {
     setCharacteristics((prev) => {
       const existing = prev.findIndex(
-        (characteristic) => characteristic.type === type,
+        (characteristic) => characteristic.type === type
       );
       if (existing >= 0) {
         const updated = [...prev];
@@ -109,7 +109,7 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
 
   const removeCharacteristic = (type: string) => {
     setCharacteristics((prev) =>
-      prev.filter((characteristic) => characteristic.type !== type),
+      prev.filter((characteristic) => characteristic.type !== type)
     );
   };
 
@@ -159,7 +159,7 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
   };
   const availableStandardEquipment = standardEquipment.filter(
     (eq) =>
-      !characteristics.some((characteristic) => characteristic.type === eq.id),
+      !characteristics.some((characteristic) => characteristic.type === eq.id)
   );
 
   return (
@@ -167,10 +167,12 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
       <ModalDialog
         aria-labelledby="room-create-modal-title"
         sx={{
-          maxWidth: 500,
+          maxWidth: 600,
+          maxHeight: '90vh',
           borderRadius: 'md',
           padding: 3,
           boxShadow: 'lg',
+          overflow: 'auto',
         }}
       >
         <ModalClose />
@@ -340,21 +342,16 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
                   <Stack direction="row" spacing={1} sx={{ marginBottom: 1 }}>
                     <Input
                       placeholder={t(
-                        'pages.rooms.field.placeholder.customType',
+                        'pages.rooms.field.placeholder.customType'
                       )}
                       value={customType}
                       onChange={(event) => setCustomType(event.target.value)}
                       size="sm"
                       error={standardEquipmentIds.includes(
-                        customType.toUpperCase(),
-                      )}
-                      size="sm"
-                      error={standardEquipmentIds.includes(
-                        customType.toUpperCase(),
+                        customType.toUpperCase()
                       )}
                     />
                     <Select
-                      sx={{ flexGrow: 1, minWidth: '120px' }}
                       value={customValueType}
                       onChange={(_event, value) =>
                         setCustomValueType(value as never)
@@ -362,27 +359,26 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
                       size="sm"
                     >
                       <Option value="boolean">
-                        sx={{ minWidth: '100px' }}
                         {t('common.value.type.boolean')}
                       </Option>
                       <Option value="number">
                         {t('common.value.type.number')}
                       </Option>
                       <Option value="string">
-                        <Select
+                        {t('common.value.type.string')}
                       </Option>
                     </Select>
-                    setCustomValue(value as string)
-                    }
+                  </Stack>
+                  <Stack direction="row" spacing={1}>
                     {customValueType === 'boolean' ? (
                       <Select
                         value={customValue}
                         onChange={(_event, value) =>
-                        setCustomValue(value as string)
-                      }
+                          setCustomValue(value as string)
+                        }
                         placeholder={t('pages.rooms.field.placeholder.value')}
                         size="sm"
-                        >
+                      >
                         <Option value="true">{t('common.value.true')}</Option>
                         <Option value="false">{t('common.value.false')}</Option>
                       </Select>
