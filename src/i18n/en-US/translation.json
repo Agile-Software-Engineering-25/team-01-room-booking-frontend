@@ -41,7 +41,38 @@
           "seats-medium": "Medium (26-35)",
           "seats-large": "Large (36+)"
         }
+      },
+      "create": {
+        "title": "Create new room",
+        "description": "Add a new room to the Provadis room management system."
+      },
+      "field": {
+        "number": "Room number",
+        "building": "Building",
+        "building.placeholder": "Select building",
+        "capacity": "Capacity",
+        "capacity.placeholder": "Number of people",
+        "equipment": "Equipment",
+        "equipment.standard": "Standard equipment",
+        "equipment.custom": "Custom",
+        "equipment.custom.add": "Add custom equipment"
       }
+    }
+  },
+  "common": {
+    "value": {
+      "type": {
+        "boolean": "Boolean",
+        "number": "Number",
+        "string": "Text"
+      },
+      "true": "Yes",
+      "false": "No"
+    },
+    "action": {
+      "cancel": "Cancel",
+      "create": "Create room",
+      "add": "Add"
     }
   }
 }

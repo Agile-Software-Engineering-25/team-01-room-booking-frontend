@@ -15,6 +15,7 @@ import {
   getBuildingsOptions,
   getRoomsOptions,
 } from '@/api/generated/@tanstack/react-query.gen.ts';
+import { RoomCreateDialog } from '@components/RoomCreateDialog/RoomCreateDialog.tsx';
 
 interface Filter extends Characteristic {
   label: string;
@@ -25,6 +26,7 @@ function Rooms() {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeFilters, setActiveFilters] = useState<Filter[]>([]);
 
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const { data: roomData } = useQuery({
     ...getRoomsOptions(),
   });
@@ -196,7 +198,10 @@ function Rooms() {
               startDecorator={<Search />}
               sx={{ width: '50%' }}
             />
-            <Button startDecorator={<Add />}>
+            <Button
+              startDecorator={<Add />}
+              onClick={() => setIsCreateDialogOpen(true)}
+            >
               {t('pages.rooms.actions.create')}
             </Button>
           </Box>
@@ -322,6 +327,10 @@ function Rooms() {
           </Card>
         )}
       </Box>
+      <RoomCreateDialog
+        open={isCreateDialogOpen}
+        onClose={() => setIsCreateDialogOpen(false)}
+      />
     </Box>
   );
 }

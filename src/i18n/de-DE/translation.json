@@ -41,7 +41,38 @@
           "seats-medium": "Mittel (26-35)",
           "seats-large": "Groß (36+)"
         }
+      },
+      "create": {
+        "title": "Neuen Raum erstellen",
+        "description": "Fügen Sie einen neuen Raum zum Provadis Raummanagement-System hinzu."
+      },
+      "field": {
+        "number": "Raumnummer",
+        "building": "Gebäude",
+        "building.placeholder": "Gebäude auswählen",
+        "capacity": "Kapazität",
+        "capacity.placeholder": "Anzahl Personen",
+        "equipment": "Ausstattung",
+        "equipment.standard": "Standard-Ausstattung",
+        "equipment.custom": "Benutzerdefiniert",
+        "equipment.custom.add": "Eigene Ausstattung hinzufügen"
       }
+    }
+  },
+  "common": {
+    "value": {
+      "type": {
+        "boolean": "Boolean",
+        "number": "Zahl",
+        "string": "Text"
+      },
+      "true": "Ja",
+      "false": "Nein"
+    },
+    "action": {
+      "cancel": "Abbrechen",
+      "create": "Raum erstellen",
+      "add": "Hinzufügen"
     }
   }
 }
