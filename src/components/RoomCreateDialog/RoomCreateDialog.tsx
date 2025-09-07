@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Modal,
@@ -62,6 +62,10 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
     'boolean' | 'number' | 'string'
   >('boolean');
   const [showCustomForm, setShowCustomForm] = useState(false);
+  const customEquipmentError = useMemo(
+    () => standardEquipmentIds.includes(customType.toUpperCase()),
+    [customType]
+  );
 
   // Fetch buildings
   const { data: buildingData } = useQuery({
@@ -347,9 +351,7 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
                       value={customType}
                       onChange={(event) => setCustomType(event.target.value)}
                       size="sm"
-                      error={standardEquipmentIds.includes(
-                        customType.toUpperCase()
-                      )}
+                      error={customEquipmentError}
                     />
                     <Select
                       value={customValueType}
