@@ -1,0 +1,22 @@
+{
+  "room": {
+    "id": "12345",
+    "name": "101",
+    "buildingId": "building-1",
+    "characteristics": [
+      {
+        "type": "SEATS",
+        "value": 20
+      },
+      {
+        "type": "WHITEBOARD",
+        "value": true
+      },
+      {
+        "type": "PC",
+        "value": true
+      }
+    ]
+  }
+}
+
