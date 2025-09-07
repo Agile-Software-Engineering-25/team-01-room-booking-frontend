@@ -92,11 +92,11 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
 
   const updateCharacteristic = (
     type: string,
-    value: boolean | number | string
+    value: boolean | number | string,
   ) => {
     setCharacteristics((prev) => {
       const existing = prev.findIndex(
-        (characteristic) => characteristic.type === type
+        (characteristic) => characteristic.type === type,
       );
       if (existing >= 0) {
         const updated = [...prev];
@@ -109,7 +109,7 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
 
   const removeCharacteristic = (type: string) => {
     setCharacteristics((prev) =>
-      prev.filter((characteristic) => characteristic.type !== type)
+      prev.filter((characteristic) => characteristic.type !== type),
     );
   };
 
@@ -159,7 +159,7 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
   };
   const availableStandardEquipment = standardEquipment.filter(
     (eq) =>
-      !characteristics.some((characteristic) => characteristic.type === eq.id)
+      !characteristics.some((characteristic) => characteristic.type === eq.id),
   );
 
   return (
@@ -260,6 +260,11 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
                         color="primary"
                         variant="soft"
                         onClick={() => removeCharacteristic(char.type)}
+                        slotProps={{
+                          action: {
+                            'data-testid': `remove-equipment-${char.type}-button`,
+                          },
+                        }}
                       >
                         {formatType(char.type)}
                         {typeof char.value !== 'boolean' && `: ${char.value}`}
@@ -295,6 +300,11 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
                             : '';
                       updateCharacteristic(option.id, value);
                     }}
+                    slotProps={{
+                      action: {
+                        'data-testid': `add-equipment-${option.id}-button`,
+                      },
+                    }}
                   >
                     {formatType(option.id)}
                   </Chip>
@@ -305,6 +315,11 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
                   color="primary"
                   startDecorator={<AddIcon />}
                   onClick={() => setShowCustomForm(true)}
+                  slotProps={{
+                    action: {
+                      'data-testid': 'add-custom-equipment-button',
+                    },
+                  }}
                 >
                   {t('pages.rooms.field.equipment.custom')}
                 </Chip>
@@ -324,15 +339,22 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
                   </Typography>
                   <Stack direction="row" spacing={1} sx={{ marginBottom: 1 }}>
                     <Input
-                      placeholder={t('pages.rooms.field.placeholder.customType')}
+                      placeholder={t(
+                        'pages.rooms.field.placeholder.customType',
+                      )}
                       value={customType}
                       onChange={(event) => setCustomType(event.target.value)}
                       size="sm"
                       error={standardEquipmentIds.includes(
-                        customType.toUpperCase()
+                        customType.toUpperCase(),
+                      )}
+                      size="sm"
+                      error={standardEquipmentIds.includes(
+                        customType.toUpperCase(),
                       )}
                     />
                     <Select
+                      sx={{ flexGrow: 1, minWidth: '120px' }}
                       value={customValueType}
                       onChange={(_event, value) =>
                         setCustomValueType(value as never)
@@ -340,26 +362,27 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
                       size="sm"
                     >
                       <Option value="boolean">
+                        sx={{ minWidth: '100px' }}
                         {t('common.value.type.boolean')}
                       </Option>
                       <Option value="number">
                         {t('common.value.type.number')}
                       </Option>
                       <Option value="string">
-                        {t('common.value.type.string')}
+                        <Select
                       </Option>
                     </Select>
-                  </Stack>
-                  <Stack direction="row" spacing={1}>
+                    setCustomValue(value as string)
+                    }
                     {customValueType === 'boolean' ? (
                       <Select
                         value={customValue}
                         onChange={(_event, value) =>
-                          setCustomValue(value as string)
-                        }
+                        setCustomValue(value as string)
+                      }
                         placeholder={t('pages.rooms.field.placeholder.value')}
                         size="sm"
-                      >
+                        >
                         <Option value="true">{t('common.value.true')}</Option>
                         <Option value="false">{t('common.value.false')}</Option>
                       </Select>
@@ -408,6 +431,7 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
                 {t('common.action.cancel')}
               </Button>
               <Button
+                data-testid="create-room-submit-button"
                 type="submit"
                 loading={createRoom.isPending}
                 disabled={!roomNumber || !buildingId || seats <= 0}
