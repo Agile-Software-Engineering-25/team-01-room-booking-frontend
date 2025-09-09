@@ -18,9 +18,6 @@ jobs:
         with:
           version: 10
 
-      - name: Install dependencies
-        run: pnpm i
-
       - name: Clear shared components dir
         run: |
           rm -rf ./shared-components/*
@@ -28,6 +25,9 @@ jobs:
 
       - name: Setup Shared Components
         run: pnpm run init
+
+      - name: Install dependencies
+        run: pnpm i
 
       - name: Build application
         run: pnpm run build
