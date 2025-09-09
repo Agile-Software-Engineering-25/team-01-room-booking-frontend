@@ -20,7 +20,7 @@ jobs:
           version: 10
 
       - name: Install dependencies
-        run: pnpm ci
+        run: pnpm i
 
       - name: Run linting
         run: pnpm run lint
@@ -41,7 +41,7 @@ jobs:
         run: pnpm run init
 
       - name: Install dependencies
-        run: pnpm ci
+        run: pnpm i
 
       - name: Run tests
         run: pnpm run ci
