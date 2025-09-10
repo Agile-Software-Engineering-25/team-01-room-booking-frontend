@@ -5,7 +5,6 @@ import vitePluginSingleSpa from 'vite-plugin-single-spa';
 import vitePluginReactHMR from 'vite-plugin-react-single-spa-hmr';
 
 const PORT = parseInt(process.env.PORT ?? '5173');
-const BASE_URL_DEPLOYMENT = `http://localhost:${PORT}/`;
 
 const ENTRY_POINT = 'src/singleSpa.tsx';
 
@@ -20,7 +19,7 @@ const NPM_EXTERNALS: string[] = [
 
 // https://vite.dev/config/
 export default defineConfig(({ command }) => ({
-  base: command === 'serve' ? '/' : BASE_URL_DEPLOYMENT,
+  base: command === 'serve' ? '/' : '/api/ase-01/',
   plugins: [
     react({
       babel: {
