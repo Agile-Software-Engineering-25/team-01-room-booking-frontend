@@ -47,7 +47,7 @@ export default defineConfig(({ command }) => ({
   },
   build: {
     rollupOptions: {
-      external: [...NPM_EXTERNALS],
+      external: [],
     },
   },
 }));
