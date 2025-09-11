@@ -15,6 +15,7 @@ import {
   deleteRoomById,
   getRoomById,
   updateRoomById,
+  isRoomDeletable,
   getBookingsForRoom,
   getAllBookings,
   bookRoom,
@@ -47,6 +48,7 @@ import type {
   GetRoomByIdData,
   UpdateRoomByIdData,
   UpdateRoomByIdResponse,
+  IsRoomDeletableData,
   GetBookingsForRoomData,
   GetAllBookingsData,
   BookRoomData,
@@ -478,6 +480,29 @@ export const updateRoomByIdMutation = (
     },
   };
   return mutationOptions;
+};
+
+export const isRoomDeletableQueryKey = (
+  options: Options<IsRoomDeletableData>
+) => createQueryKey('isRoomDeletable', options);
+
+/**
+ * Checks whether a room can be deleted without force deleting.
+ */
+export const isRoomDeletableOptions = (
+  options: Options<IsRoomDeletableData>
+) => {
+  return queryOptions({
+    queryFn: async ({ queryKey, signal }) => {
+      return await isRoomDeletable({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true,
+      });
+    },
+    queryKey: isRoomDeletableQueryKey(options),
+  });
 };
 
 export const getBookingsForRoomQueryKey = (

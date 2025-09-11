@@ -8,6 +8,55 @@
       "room": {
         "single": "Raum",
         "plural": "Räume"
+      },
+      "search": {
+        "title": "Gebäudesuche",
+        "placeholder": "Nach Gebäudename suchen..."
+      },
+      "empty": {
+        "title": "Keine Gebäude gefunden",
+        "noBuildings": "Es sind noch keine Gebäude vorhanden.",
+        "searchNoResults": "Keine Gebäude für diesen Suchbegriff gefunden."
+      },
+      "actions": {
+        "create": "Gebäude erstellen"
+      },
+      "create": {
+        "title": "Neues Gebäude erstellen",
+        "description": "Fügen Sie ein neues Gebäude zum Provadis Raummanagement-System hinzu."
+      },
+      "edit": {
+        "title": "Gebäude bearbeiten",
+        "description": "Bearbeiten Sie die Informationen für dieses Gebäude.",
+        "error": {
+          "generic": "Beim Speichern des Gebäudes ist ein Fehler aufgetreten.",
+          "hasRooms": "Ein Gebäude mit Räumen kann nicht geschlossen werden. Bitte verschieben Sie alle Räume, bevor Sie das Gebäude schließen."
+        },
+        "warning": {
+          "hasRooms": "Dieses Gebäude hat Räume und kann nicht geschlossen werden."
+        }
+      },
+      "delete": {
+        "title": "Gebäude löschen",
+        "confirmation": "Sind Sie sicher, dass Sie das Gebäude \"{{name}}\" löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
+        "error": {
+          "generic": "Beim Löschen des Gebäudes ist ein Fehler aufgetreten.",
+          "hasRooms": "Ein Gebäude mit Räumen kann nicht gelöscht werden. Bitte löschen oder verschieben Sie alle Räume zuerst."
+        },
+        "warning": {
+          "hasRooms": "Dieses Gebäude enthält Räume und kann nicht gelöscht werden. Bitte löschen oder verschieben Sie alle Räume, bevor Sie das Gebäude löschen."
+        }
+      },
+      "field": {
+        "name": "Gebäudename",
+        "name.placeholder": "z.B. Hauptgebäude",
+        "address": "Adresse",
+        "address.placeholder": "z.B. Industriepark Höchst",
+        "description": "Beschreibung",
+        "description.placeholder": "Beschreibung des Gebäudes (optional)",
+        "state": "Status",
+        "state.open": "Geöffnet",
+        "state.closed": "Geschlossen"
       }
     },
     "rooms": {
@@ -78,7 +127,10 @@
     "action": {
       "cancel": "Abbrechen",
       "create": "Raum erstellen",
-      "add": "Hinzufügen"
+      "add": "Hinzufügen",
+      "save": "Speichern",
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
     }
   }
 }

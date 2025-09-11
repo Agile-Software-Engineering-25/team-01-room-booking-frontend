@@ -19,7 +19,7 @@ export function BuildingCard({
 
   const contentSections = [
     <Box key="address" display="flex" alignItems="center" gap={1}>
-      <LocationOn fontSize="small" color="action" />
+      <LocationOn fontSize="small" />
       <Typography level="body-sm" textColor="text.secondary">
         {building.address}
       </Typography>
