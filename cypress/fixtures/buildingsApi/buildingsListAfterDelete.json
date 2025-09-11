@@ -1,0 +1,11 @@
+{
+  "buildings": [
+    {
+      "id": "building1",
+      "name": "B1",
+      "address": "Hauptstraße 1",
+      "description": "Hauptgebäude"
+    }
+  ]
+}
+

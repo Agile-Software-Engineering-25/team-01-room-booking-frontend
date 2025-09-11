@@ -1,4 +1,4 @@
-import type { Building, BuildingState } from '@/api/generated';
+import type { Building } from '@/api/generated';
 import { Box, Typography } from '@mui/joy';
 import { LocationOn, Apartment } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
@@ -19,7 +19,7 @@ export function BuildingCard({
 
   const contentSections = [
     <Box key="address" display="flex" alignItems="center" gap={1}>
-      <LocationOn fontSize="small" color="action" />
+      <LocationOn fontSize="small" />
       <Typography level="body-sm" textColor="text.secondary">
         {building.address}
       </Typography>
@@ -52,11 +52,11 @@ export function BuildingCard({
 
   return (
     <BaseCard
-      id={building.id}
+      id={building.name}
       title={building.name}
       statusChip={{
-        label: t(getStatusText(building.state)),
-        color: getStatusColor(building.state),
+        label: t('pages.buildings.labels.open'),
+        color: 'success',
       }}
       icon={<Apartment fontSize="small" color="primary" />}
       contentSections={contentSections}
@@ -72,22 +72,4 @@ function getRoomCountText(count: number): string {
   }
 
   return 'pages.buildings.room.plural';
-}
-
-function getStatusColor(status: BuildingState): 'success' | 'danger' {
-  switch (status) {
-    case 'open':
-      return 'success';
-    case 'closed':
-      return 'danger';
-  }
-}
-
-function getStatusText(status: BuildingState): string {
-  switch (status) {
-    case 'open':
-      return 'pages.buildings.labels.open';
-    case 'closed':
-      return 'pages.buildings.labels.closed';
-  }
 }

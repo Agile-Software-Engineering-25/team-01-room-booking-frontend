@@ -1,0 +1,17 @@
+{
+  "buildings": [
+    {
+      "id": "building1",
+      "name": "B1 Aktualisiert",
+      "address": "Neue Hauptstraße 1A",
+      "description": "Aktualisierte Beschreibung"
+    },
+    {
+      "id": "building2",
+      "name": "B2",
+      "address": "Nebenstraße 2",
+      "description": "Nebengebäude"
+    }
+  ]
+}
+

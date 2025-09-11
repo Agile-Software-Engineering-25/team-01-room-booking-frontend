@@ -3,9 +3,9 @@ describe('RoomCreateDialog tests', () => {
     cy.visit('/rooms');
     cy.wait(['@getRooms', '@getBuildings']);
 
-    cy.intercept('POST', '**/rooms', {
+    cy.intercept('POST', '**/localhost:8080/rooms', {
       statusCode: 201,
-      fixture: 'createRoomApiData.json',
+      fixture: 'roomsApi/createRoomApiData.json',
     }).as('createRoom');
 
     cy.contains('button', /Raum erstellen|Create room/).click();

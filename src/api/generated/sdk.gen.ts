@@ -39,6 +39,9 @@ import type {
   UpdateRoomByIdData,
   UpdateRoomByIdResponses,
   UpdateRoomByIdErrors,
+  IsRoomDeletableData,
+  IsRoomDeletableResponses,
+  IsRoomDeletableErrors,
   GetBookingsForRoomData,
   GetBookingsForRoomResponses,
   GetBookingsForRoomErrors,
@@ -329,6 +332,24 @@ export const updateRoomById = <ThrowOnError extends boolean = false>(
       'Content-Type': 'application/json',
       ...options.headers,
     },
+  });
+};
+
+/**
+ * Checks whether a room can be deleted without force deleting.
+ */
+export const isRoomDeletable = <ThrowOnError extends boolean = false>(
+  options: Options<IsRoomDeletableData, ThrowOnError>
+) => {
+  return (options.client ?? _heyApiClient).get<
+    IsRoomDeletableResponses,
+    IsRoomDeletableErrors,
+    ThrowOnError,
+    'data'
+  >({
+    responseStyle: 'data',
+    url: '/rooms/{roomId}/deletable',
+    ...options,
   });
 };
 

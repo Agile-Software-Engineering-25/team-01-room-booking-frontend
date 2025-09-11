@@ -8,6 +8,58 @@
       "room": {
         "single": "Room",
         "plural": "Rooms"
+      },
+      "search": {
+        "title": "Building search",
+        "placeholder": "Search by building name..."
+      },
+      "empty": {
+        "title": "No buildings found",
+        "noBuildings": "There are no buildings available yet.",
+        "searchNoResults": "No buildings found for this search term."
+      },
+      "actions": {
+        "create": "Create building"
+      },
+      "create": {
+        "title": "Create new building",
+        "description": "Add a new building to the Provadis room management system.",
+        "error": {
+          "generic": "An error occurred while creating the building."
+        }
+      },
+      "edit": {
+        "title": "Edit building",
+        "description": "Edit the information for this building.",
+        "error": {
+          "generic": "An error occurred while saving the building.",
+          "hasRooms": "A building with rooms cannot be closed. Please move all rooms before closing the building."
+        },
+        "warning": {
+          "hasRooms": "This building has rooms and cannot be closed."
+        }
+      },
+      "delete": {
+        "title": "Delete building",
+        "confirmation": "Are you sure you want to delete the building \"{{name}}\"? This action cannot be undone.",
+        "error": {
+          "generic": "An error occurred while deleting the building.",
+          "hasRooms": "A building with rooms cannot be deleted. Please delete or move all rooms first."
+        },
+        "warning": {
+          "hasRooms": "This building contains rooms and cannot be deleted. Please delete or move all rooms before deleting the building."
+        }
+      },
+      "field": {
+        "name": "Building name",
+        "name.placeholder": "e.g. Main Building",
+        "address": "Address",
+        "address.placeholder": "e.g. Industrial Park Höchst",
+        "description": "Description",
+        "description.placeholder": "Description of the building (optional)",
+        "state": "Status",
+        "state.open": "Open",
+        "state.closed": "Closed"
       }
     },
     "rooms": {
@@ -77,8 +129,11 @@
     },
     "action": {
       "cancel": "Cancel",
-      "create": "Create room",
-      "add": "Add"
+      "create": "Create",
+      "add": "Add",
+      "save": "Save",
+      "edit": "Edit",
+      "delete": "Delete"
     }
   }
 }

@@ -75,6 +75,7 @@ export function BaseCard({
                 color="primary"
                 size="sm"
                 onClick={onEdit}
+                data-testid={`${id}-edit-button`}
               >
                 <Edit fontSize="small" />
               </IconButton>
@@ -85,6 +86,7 @@ export function BaseCard({
                 color="danger"
                 size="sm"
                 onClick={onDelete}
+                data-testid={`${id}-delete-button`}
               >
                 <Delete fontSize="small" />
               </IconButton>
