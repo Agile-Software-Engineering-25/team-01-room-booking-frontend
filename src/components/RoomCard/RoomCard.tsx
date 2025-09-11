@@ -74,7 +74,7 @@ export function RoomCard({
 
   return (
     <BaseCard
-      id={room.id}
+      id={room.name}
       title={t('pages.buildings.room.single') + ` ${room.name}`}
       statusChip={{
         label: t(getStatusText(status)),

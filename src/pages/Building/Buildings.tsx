@@ -1,15 +1,15 @@
 import Box from '@mui/joy/Box';
 import Grid from '@mui/joy/Grid';
-import { BuildingCard } from '@components/BuildingCard/BuildingCard.tsx';
+import { BuildingCard } from '@components/Building/BuildingCard.tsx';
 import { useQuery } from '@tanstack/react-query';
 import { getBuildingsOptions } from '@/api/generated/@tanstack/react-query.gen.ts';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Add, Search, Apartment } from '@mui/icons-material';
 import { Button, Card, CardContent, Input, Typography } from '@mui/joy';
-import { BuildingCreateDialog } from '@components/BuildingCreateDialog/BuildingCreateDialog.tsx';
-import { BuildingEditDialog } from '@components/BuildingEditDialog/BuildingEditDialog.tsx';
-import { BuildingDeleteDialog } from '@components/BuildingDeleteDialog/BuildingDeleteDialog.tsx';
+import { BuildingCreateDialog } from '@components/Building/BuildingCreateDialog.tsx';
+import { BuildingEditDialog } from '@components/Building/BuildingEditDialog.tsx';
+import { BuildingDeleteDialog } from '@components/Building/BuildingDeleteDialog.tsx';
 import { type Building } from '@/api/generated';
 
 function Buildings() {

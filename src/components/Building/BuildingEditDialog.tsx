@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Modal,
@@ -9,73 +9,81 @@ import {
   FormLabel,
   Input,
   Button,
-  Select,
-  Option,
   Box,
   Stack,
   Textarea,
+  Alert,
 } from '@mui/joy';
 import {
   Apartment as ApartmentIcon,
   LocationOn as LocationIcon,
+  Warning as WarningIcon,
 } from '@mui/icons-material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { type Building } from '@/api/generated';
 import {
-  type BuildingCreateRequest,
-  type BuildingState,
-} from '@/api/generated';
-import {
-  createBuildingMutation,
+  updateBuildingMutation,
   getBuildingsQueryKey,
 } from '@/api/generated/@tanstack/react-query.gen.ts';
 
-interface BuildingCreateDialogProps {
+interface BuildingEditDialogProps {
   open: boolean;
   onClose: () => void;
+  building: Building | null;
 }
 
-export function BuildingCreateDialog({
+export function BuildingEditDialog({
   open,
   onClose,
-}: BuildingCreateDialogProps) {
+  building,
+}: BuildingEditDialogProps) {
   const { t } = useTranslation();
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [description, setDescription] = useState('');
-  const [state, setState] = useState<BuildingState>('open');
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (building && open) {
+      setName(building.name);
+      setAddress(building.address);
+      setDescription(building.description || '');
+      setError(null);
+    }
+  }, [building, open]);
 
   const queryClient = useQueryClient();
-  const createBuilding = useMutation({
-    ...createBuildingMutation(),
+  const updateBuilding = useMutation({
+    ...updateBuildingMutation(),
     onSuccess: () => {
       queryClient
         .invalidateQueries({ queryKey: getBuildingsQueryKey() })
         .then();
       handleClose();
     },
+    onError: (error) => {
+      setError(error.message || t('pages.buildings.edit.error.generic'));
+    },
   });
 
   const handleClose = () => {
-    setName('');
-    setAddress('');
-    setDescription('');
-    setState('open');
+    setError(null);
     onClose();
   };
 
   const handleSubmit = () => {
-    if (!name || !address) {
+    if (!building || !name || !address) {
       return;
     }
 
-    const buildingData: BuildingCreateRequest = {
+    const buildingData = {
       name,
       address,
       description: description || undefined,
-      state,
     };
 
-    createBuilding.mutate({
+    updateBuilding.mutate({
+      path: { buildingId: building.id },
       body: buildingData,
     });
   };
@@ -83,7 +91,7 @@ export function BuildingCreateDialog({
   return (
     <Modal open={open} onClose={handleClose}>
       <ModalDialog
-        aria-labelledby="building-create-modal-title"
+        aria-labelledby="building-edit-modal-title"
         sx={{
           maxWidth: 600,
           maxHeight: '90vh',
@@ -95,17 +103,28 @@ export function BuildingCreateDialog({
       >
         <ModalClose />
         <Typography
-          id="building-create-modal-title"
+          id="building-edit-modal-title"
           component="h2"
           level="title-lg"
           startDecorator={<ApartmentIcon />}
           sx={{ marginBottom: 1 }}
         >
-          {t('pages.buildings.create.title')}
+          {t('pages.buildings.edit.title')}
         </Typography>
         <Typography level="body-md" sx={{ marginBottom: 3 }}>
-          {t('pages.buildings.create.description')}
+          {t('pages.buildings.edit.description')}
         </Typography>
+
+        {error && (
+          <Alert
+            color="danger"
+            variant="soft"
+            startDecorator={<WarningIcon />}
+            sx={{ mb: 2 }}
+          >
+            {error}
+          </Alert>
+        )}
 
         <form
           onSubmit={(event) => {
@@ -145,21 +164,6 @@ export function BuildingCreateDialog({
               />
             </FormControl>
 
-            <FormControl required>
-              <FormLabel>{t('pages.buildings.field.state')}</FormLabel>
-              <Select
-                value={state}
-                onChange={(_event, value) => setState(value as BuildingState)}
-              >
-                <Option value="open">
-                  {t('pages.buildings.field.state.open')}
-                </Option>
-                <Option value="closed">
-                  {t('pages.buildings.field.state.closed')}
-                </Option>
-              </Select>
-            </FormControl>
-
             <Box
               sx={{
                 display: 'flex',
@@ -169,7 +173,7 @@ export function BuildingCreateDialog({
               }}
             >
               <Button
-                data-testid="create-building-cancel-button"
+                data-testid="edit-building-cancel-button"
                 variant="outlined"
                 color="neutral"
                 onClick={handleClose}
@@ -177,12 +181,12 @@ export function BuildingCreateDialog({
                 {t('common.action.cancel')}
               </Button>
               <Button
-                data-testid="create-building-submit-button"
+                data-testid="edit-building-submit-button"
                 type="submit"
-                loading={createBuilding.isPending}
+                loading={updateBuilding.isPending}
                 disabled={!name || !address}
               >
-                {t('common.action.create')}
+                {t('common.action.save')}
               </Button>
             </Box>
           </Stack>

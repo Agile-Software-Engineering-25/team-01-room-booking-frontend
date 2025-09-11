@@ -23,7 +23,10 @@
       },
       "create": {
         "title": "Neues Gebäude erstellen",
-        "description": "Fügen Sie ein neues Gebäude zum Provadis Raummanagement-System hinzu."
+        "description": "Fügen Sie ein neues Gebäude zum Provadis Raummanagement-System hinzu.",
+        "error": {
+          "generic": "Beim Erstellen des Gebäudes ist ein Fehler aufgetreten."
+        }
       },
       "edit": {
         "title": "Gebäude bearbeiten",
@@ -126,7 +129,7 @@
     },
     "action": {
       "cancel": "Abbrechen",
-      "create": "Raum erstellen",
+      "create": "Erstellen",
       "add": "Hinzufügen",
       "save": "Speichern",
       "edit": "Bearbeiten",

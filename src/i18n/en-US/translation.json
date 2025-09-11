@@ -23,7 +23,10 @@
       },
       "create": {
         "title": "Create new building",
-        "description": "Add a new building to the Provadis room management system."
+        "description": "Add a new building to the Provadis room management system.",
+        "error": {
+          "generic": "An error occurred while creating the building."
+        }
       },
       "edit": {
         "title": "Edit building",
@@ -126,7 +129,7 @@
     },
     "action": {
       "cancel": "Cancel",
-      "create": "Create room",
+      "create": "Create",
       "add": "Add",
       "save": "Save",
       "edit": "Edit",

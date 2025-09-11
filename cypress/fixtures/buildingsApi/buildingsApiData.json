@@ -4,15 +4,13 @@
       "id": "building1",
       "name": "B1",
       "address": "Hauptstraße 1",
-      "description": "Hauptgebäude",
-      "state": "open"
+      "description": "Hauptgebäude"
     },
     {
       "id": "building2",
       "name": "B2",
       "address": "Nebenstraße 2",
-      "description": "Nebengebäude",
-      "state": "open"
+      "description": "Nebengebäude"
     }
   ]
 }

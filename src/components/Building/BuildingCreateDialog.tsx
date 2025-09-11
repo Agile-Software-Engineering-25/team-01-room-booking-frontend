@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Modal,
@@ -9,8 +9,6 @@ import {
   FormLabel,
   Input,
   Button,
-  Select,
-  Option,
   Box,
   Stack,
   Textarea,
@@ -22,93 +20,63 @@ import {
   Warning as WarningIcon,
 } from '@mui/icons-material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { type BuildingCreateRequest } from '@/api/generated';
 import {
-  type Building,
-  type BuildingState,
-} from '@/api/generated';
-import {
-  updateBuildingMutation,
+  createBuildingMutation,
   getBuildingsQueryKey,
-  getRoomsForBuildingOptions,
 } from '@/api/generated/@tanstack/react-query.gen.ts';
-import { useQuery } from '@tanstack/react-query';
 
-interface BuildingEditDialogProps {
+interface BuildingCreateDialogProps {
   open: boolean;
   onClose: () => void;
-  building: Building | null;
 }
 
-export function BuildingEditDialog({
+export function BuildingCreateDialog({
   open,
   onClose,
-  building,
-}: BuildingEditDialogProps) {
+}: BuildingCreateDialogProps) {
   const { t } = useTranslation();
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [description, setDescription] = useState('');
-  const [state, setState] = useState<BuildingState>('open');
   const [error, setError] = useState<string | null>(null);
 
-  // Check if building has rooms and the state is being changed to closed
-  const { data: roomData } = useQuery({
-    ...getRoomsForBuildingOptions({ path: { buildingId: building?.id || '' } }),
-    enabled: !!building && open,
-  });
-
-  const hasRooms = roomData?.rooms && roomData.rooms.length > 0;
-
-  useEffect(() => {
-    if (building && open) {
-      setName(building.name);
-      setAddress(building.address);
-      setDescription(building.description || '');
-      setState(building.state);
-      setError(null);
-    }
-  }, [building, open]);
-
   const queryClient = useQueryClient();
-  const updateBuilding = useMutation({
-    ...updateBuildingMutation(),
+  const createBuilding = useMutation({
+    ...createBuildingMutation(),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: getBuildingsQueryKey() }).then();
+      queryClient
+        .invalidateQueries({ queryKey: getBuildingsQueryKey() })
+        .then();
       handleClose();
     },
-    onError: (error) => {
-      // Handle API errors
-      setError(
-        error.message || t('pages.buildings.edit.error.generic')
-      );
+    onError: () => {
+      setError(t('pages.buildings.create.error.generic'));
     },
   });
 
   const handleClose = () => {
+    setName('');
+    setAddress('');
+    setDescription('');
     setError(null);
     onClose();
   };
 
   const handleSubmit = () => {
-    if (!building || !name || !address) {
+    if (!name || !address) {
       return;
     }
 
-    // Validate state change if the building has rooms
-    if (hasRooms && state === 'closed' && building.state === 'open') {
-      setError(t('pages.buildings.edit.error.hasRooms'));
-      return;
-    }
+    setError(null);
 
-    const buildingData = {
+    const buildingData: BuildingCreateRequest = {
       name,
       address,
       description: description || undefined,
-      state,
     };
 
-    updateBuilding.mutate({
-      path: { buildingId: building.id },
+    createBuilding.mutate({
       body: buildingData,
     });
   };
@@ -116,7 +84,7 @@ export function BuildingEditDialog({
   return (
     <Modal open={open} onClose={handleClose}>
       <ModalDialog
-        aria-labelledby="building-edit-modal-title"
+        aria-labelledby="building-create-modal-title"
         sx={{
           maxWidth: 600,
           maxHeight: '90vh',
@@ -128,16 +96,16 @@ export function BuildingEditDialog({
       >
         <ModalClose />
         <Typography
-          id="building-edit-modal-title"
+          id="building-create-modal-title"
           component="h2"
           level="title-lg"
           startDecorator={<ApartmentIcon />}
           sx={{ marginBottom: 1 }}
         >
-          {t('pages.buildings.edit.title')}
+          {t('pages.buildings.create.title')}
         </Typography>
         <Typography level="body-md" sx={{ marginBottom: 3 }}>
-          {t('pages.buildings.edit.description')}
+          {t('pages.buildings.create.description')}
         </Typography>
 
         {error && (
@@ -165,6 +133,7 @@ export function BuildingEditDialog({
                 value={name}
                 onChange={(event) => setName(event.target.value)}
                 startDecorator={<ApartmentIcon />}
+                error={error != null && error.toLowerCase().includes('name')}
               />
             </FormControl>
 
@@ -189,36 +158,6 @@ export function BuildingEditDialog({
               />
             </FormControl>
 
-            <FormControl required>
-              <FormLabel>{t('pages.buildings.field.state')}</FormLabel>
-              <Select
-                value={state}
-                onChange={(_event, value) => {
-                  setState(value as BuildingState);
-                  // Clear error when changing state back to open
-                  if (value === 'open') {
-                    setError(null);
-                  }
-                }}
-              >
-                <Option value="open">
-                  {t('pages.buildings.field.state.open')}
-                </Option>
-                <Option value="closed">
-                  {t('pages.buildings.field.state.closed')}
-                </Option>
-              </Select>
-              {hasRooms && state === 'closed' && building?.state === 'open' && (
-                <Typography
-                  level="body-xs"
-                  color="danger"
-                  sx={{ mt: 0.5 }}
-                >
-                  {t('pages.buildings.edit.warning.hasRooms')}
-                </Typography>
-              )}
-            </FormControl>
-
             <Box
               sx={{
                 display: 'flex',
@@ -228,7 +167,7 @@ export function BuildingEditDialog({
               }}
             >
               <Button
-                data-testid="edit-building-cancel-button"
+                data-testid="create-building-cancel-button"
                 variant="outlined"
                 color="neutral"
                 onClick={handleClose}
@@ -236,12 +175,12 @@ export function BuildingEditDialog({
                 {t('common.action.cancel')}
               </Button>
               <Button
-                data-testid="edit-building-submit-button"
+                data-testid="create-building-submit-button"
                 type="submit"
-                loading={updateBuilding.isPending}
+                loading={createBuilding.isPending}
                 disabled={!name || !address}
               >
-                {t('common.action.save')}
+                {t('common.action.create')}
               </Button>
             </Box>
           </Stack>
