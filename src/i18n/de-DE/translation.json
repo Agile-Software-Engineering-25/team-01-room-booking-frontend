@@ -8,58 +8,6 @@
       "room": {
         "single": "Raum",
         "plural": "Räume"
-      },
-      "search": {
-        "title": "Gebäudesuche",
-        "placeholder": "Nach Gebäudename suchen..."
-      },
-      "empty": {
-        "title": "Keine Gebäude gefunden",
-        "noBuildings": "Es sind noch keine Gebäude vorhanden.",
-        "searchNoResults": "Keine Gebäude für diesen Suchbegriff gefunden."
-      },
-      "actions": {
-        "create": "Gebäude erstellen"
-      },
-      "create": {
-        "title": "Neues Gebäude erstellen",
-        "description": "Fügen Sie ein neues Gebäude zum Provadis Raummanagement-System hinzu.",
-        "error": {
-          "generic": "Beim Erstellen des Gebäudes ist ein Fehler aufgetreten."
-        }
-      },
-      "edit": {
-        "title": "Gebäude bearbeiten",
-        "description": "Bearbeiten Sie die Informationen für dieses Gebäude.",
-        "error": {
-          "generic": "Beim Speichern des Gebäudes ist ein Fehler aufgetreten.",
-          "hasRooms": "Ein Gebäude mit Räumen kann nicht geschlossen werden. Bitte verschieben Sie alle Räume, bevor Sie das Gebäude schließen."
-        },
-        "warning": {
-          "hasRooms": "Dieses Gebäude hat Räume und kann nicht geschlossen werden."
-        }
-      },
-      "delete": {
-        "title": "Gebäude löschen",
-        "confirmation": "Sind Sie sicher, dass Sie das Gebäude \"{{name}}\" löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
-        "error": {
-          "generic": "Beim Löschen des Gebäudes ist ein Fehler aufgetreten.",
-          "hasRooms": "Ein Gebäude mit Räumen kann nicht gelöscht werden. Bitte löschen oder verschieben Sie alle Räume zuerst."
-        },
-        "warning": {
-          "hasRooms": "Dieses Gebäude enthält Räume und kann nicht gelöscht werden. Bitte löschen oder verschieben Sie alle Räume, bevor Sie das Gebäude löschen."
-        }
-      },
-      "field": {
-        "name": "Gebäudename",
-        "name.placeholder": "z.B. Hauptgebäude",
-        "address": "Adresse",
-        "address.placeholder": "z.B. Industriepark Höchst",
-        "description": "Beschreibung",
-        "description.placeholder": "Beschreibung des Gebäudes (optional)",
-        "state": "Status",
-        "state.open": "Geöffnet",
-        "state.closed": "Geschlossen"
       }
     },
     "rooms": {
@@ -94,46 +42,28 @@
           "seats-large": "Groß (36+)"
         }
       },
-      "create": {
-        "title": "Neuen Raum erstellen",
-        "description": "Fügen Sie einen neuen Raum zum Provadis Raummanagement-System hinzu."
-      },
-      "field": {
-        "number": "Raumnummer",
-        "building": "Gebäude",
-        "building.placeholder": "Gebäude auswählen",
-        "capacity": "Kapazität",
-        "capacity.placeholder": "Anzahl Personen",
-        "equipment": "Ausstattung",
-        "equipment.selected": "Ausgewählte Ausstattung",
-        "equipment.standard": "Standard-Ausstattung",
-        "equipment.custom": "Benutzerdefiniert",
-        "equipment.custom.add": "Eigene Ausstattung hinzufügen",
-        "placeholder": {
-          "roomNumber": "z.B. 1.21",
-          "customType": "Typ (z.B. Camera)",
-          "value": "Wert"
+      "dialogs": {
+        "delete": {
+          "title": "Raum löschen",
+          "confirmation": "Sind Sie sicher, dass Sie den Raum {{roomName}} löschen möchten?",
+          "deleting": "Lösche...",
+          "confirm": "Raum löschen",
+          "forceDelete": "Löschung forcieren (entfernt auch alle Buchungen für diesen Raum)",
+          "warning": {
+            "title": "Achtung!",
+            "permanent": "Diese Aktion kann nicht rückgängig gemacht werden. Der Raum wird permanent aus dem System entfernt.",
+            "checkBookings": "Stellen Sie sicher, dass keine aktiven Buchungen für diesen Raum vorhanden sind.",
+            "deleteBookings": "Alle existierenden Buchungen für diesen Raum werden ebenfalls gelöscht!"
+          },
+          "hasBookings": {
+            "title": "Raum hat aktive Buchungen!",
+            "description": "Dieser Raum kann nicht gelöscht werden, da noch Buchungen vorhanden sind. Aktivieren Sie die Löschung forcieren, um den Raum und alle Buchungen zu entfernen."
+          }
         }
       }
     }
   },
   "common": {
-    "value": {
-      "type": {
-        "boolean": "Boolean",
-        "number": "Zahl",
-        "string": "Text"
-      },
-      "true": "Ja",
-      "false": "Nein"
-    },
-    "action": {
-      "cancel": "Abbrechen",
-      "create": "Erstellen",
-      "add": "Hinzufügen",
-      "save": "Speichern",
-      "edit": "Bearbeiten",
-      "delete": "Löschen"
-    }
+    "cancel": "Abbrechen"
   }
 }

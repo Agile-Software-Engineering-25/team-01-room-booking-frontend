@@ -8,58 +8,6 @@
       "room": {
         "single": "Room",
         "plural": "Rooms"
-      },
-      "search": {
-        "title": "Building search",
-        "placeholder": "Search by building name..."
-      },
-      "empty": {
-        "title": "No buildings found",
-        "noBuildings": "There are no buildings available yet.",
-        "searchNoResults": "No buildings found for this search term."
-      },
-      "actions": {
-        "create": "Create building"
-      },
-      "create": {
-        "title": "Create new building",
-        "description": "Add a new building to the Provadis room management system.",
-        "error": {
-          "generic": "An error occurred while creating the building."
-        }
-      },
-      "edit": {
-        "title": "Edit building",
-        "description": "Edit the information for this building.",
-        "error": {
-          "generic": "An error occurred while saving the building.",
-          "hasRooms": "A building with rooms cannot be closed. Please move all rooms before closing the building."
-        },
-        "warning": {
-          "hasRooms": "This building has rooms and cannot be closed."
-        }
-      },
-      "delete": {
-        "title": "Delete building",
-        "confirmation": "Are you sure you want to delete the building \"{{name}}\"? This action cannot be undone.",
-        "error": {
-          "generic": "An error occurred while deleting the building.",
-          "hasRooms": "A building with rooms cannot be deleted. Please delete or move all rooms first."
-        },
-        "warning": {
-          "hasRooms": "This building contains rooms and cannot be deleted. Please delete or move all rooms before deleting the building."
-        }
-      },
-      "field": {
-        "name": "Building name",
-        "name.placeholder": "e.g. Main Building",
-        "address": "Address",
-        "address.placeholder": "e.g. Industrial Park Höchst",
-        "description": "Description",
-        "description.placeholder": "Description of the building (optional)",
-        "state": "Status",
-        "state.open": "Open",
-        "state.closed": "Closed"
       }
     },
     "rooms": {
@@ -94,46 +42,28 @@
           "seats-large": "Large (36+)"
         }
       },
-      "create": {
-        "title": "Create new room",
-        "description": "Add a new room to the Provadis room management system."
-      },
-      "field": {
-        "number": "Room number",
-        "building": "Building",
-        "building.placeholder": "Select building",
-        "capacity": "Capacity",
-        "capacity.placeholder": "Number of people",
-        "equipment": "Equipment",
-        "equipment.selected": "Selected equipment",
-        "equipment.standard": "Standard equipment",
-        "equipment.custom": "Custom",
-        "equipment.custom.add": "Add custom equipment",
-        "placeholder": {
-          "roomNumber": "e.g. 1.21",
-          "customType": "Type (e.g. Camera)",
-          "value": "Value"
+      "dialogs": {
+        "delete": {
+          "title": "Delete Room",
+          "confirmation": "Are you sure you want to delete the room {{roomName}}?",
+          "deleting": "Deleting...",
+          "confirm": "Delete Room",
+          "forceDelete": "Force deletion (also removes all bookings for this room)",
+          "warning": {
+            "title": "Attention!",
+            "permanent": "This action cannot be undone. The room will be permanently removed from the system.",
+            "checkBookings": "Make sure there are no active bookings for this room.",
+            "deleteBookings": "All existing bookings for this room will also be deleted!"
+          },
+          "hasBookings": {
+            "title": "Room has active bookings!",
+            "description": "This room cannot be deleted because it still has bookings. Enable force deletion to remove the room and all bookings."
+          }
         }
       }
     }
   },
   "common": {
-    "value": {
-      "type": {
-        "boolean": "Boolean",
-        "number": "Number",
-        "string": "Text"
-      },
-      "true": "Yes",
-      "false": "No"
-    },
-    "action": {
-      "cancel": "Cancel",
-      "create": "Create",
-      "add": "Add",
-      "save": "Save",
-      "edit": "Edit",
-      "delete": "Delete"
-    }
+    "cancel": "Cancel"
   }
 }
