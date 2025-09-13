@@ -17,7 +17,6 @@ import {
 } from '@/api/generated/@tanstack/react-query.gen.ts';
 import { RoomCreateDialog } from '@components/RoomCreateDialog/RoomCreateDialog.tsx';
 import RoomDeleteDialog from '@components/Room/RoomDeleteDialog.tsx';
-import RoomEditDialog from '@components/Room/RoomEditDialog.tsx';
 
 interface Filter extends Characteristic {
   label: string;
@@ -30,7 +29,6 @@ function Rooms() {
 
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState<Room>();
   const { data: roomData } = useQuery({
     ...getRoomsOptions(),
@@ -181,18 +179,6 @@ function Rooms() {
     }
   }
 
-  const handleEditClick = (room: Room) => {
-    setSelectedRoom(room);
-    setIsEditDialogOpen(true);
-  };
-
-  const handleEditConfirm = () => {
-    if (selectedRoom) {
-      setIsEditDialogOpen(false);
-      setSelectedRoom(undefined);
-    }
-  }
-
   return (
     <Box
       sx={{
@@ -323,11 +309,10 @@ function Rooms() {
               <RoomCard
                 room={room}
                 building={findBuilding(room.buildingId)}
-                onEdit={() => {handleEditClick(room)}}
+                onEdit={() => {}}
                 onDelete={() => {handleDeleteClick(room)}}
                 onFaulty={() => {}}
               />
-
             </Grid>
           ))}
         </Grid>
@@ -338,14 +323,6 @@ function Rooms() {
             open={isDeleteDialogOpen}
             onOpenChange={setIsDeleteDialogOpen}
             onConfirm={handleDeleteConfirm}
-          />
-        )}
-
-        {isEditDialogOpen && selectedRoom && (
-          <RoomEditDialog
-            room={selectedRoom}
-            open={isDeleteDialogOpen}
-            onClose={handleEditConfirm}
           />
         )}
 
