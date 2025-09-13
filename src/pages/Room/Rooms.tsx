@@ -16,6 +16,8 @@ import {
   getRoomsOptions,
 } from '@/api/generated/@tanstack/react-query.gen.ts';
 import { RoomCreateDialog } from '@components/RoomCreateDialog/RoomCreateDialog.tsx';
+import RoomDeleteDialog from '@components/Room/RoomDeleteDialog.tsx';
+import RoomEditDialog from '@components/Room/RoomEditDialog.tsx';
 
 interface Filter extends Characteristic {
   label: string;
@@ -27,6 +29,9 @@ function Rooms() {
   const [activeFilters, setActiveFilters] = useState<Filter[]>([]);
 
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [selectedRoom, setSelectedRoom] = useState<Room>();
   const { data: roomData } = useQuery({
     ...getRoomsOptions(),
   });
@@ -164,6 +169,30 @@ function Rooms() {
     return buildings.find((building) => building.id === buildingId);
   };
 
+  const handleDeleteClick = (room: Room) => {
+    setSelectedRoom(room);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const handleDeleteConfirm = () => {
+    if (selectedRoom) {
+      setIsDeleteDialogOpen(false);
+      setSelectedRoom(undefined);
+    }
+  }
+
+  const handleEditClick = (room: Room) => {
+    setSelectedRoom(room);
+    setIsEditDialogOpen(true);
+  };
+
+  const handleEditConfirm = () => {
+    if (selectedRoom) {
+      setIsEditDialogOpen(false);
+      setSelectedRoom(undefined);
+    }
+  }
+
   return (
     <Box
       sx={{
@@ -294,13 +323,31 @@ function Rooms() {
               <RoomCard
                 room={room}
                 building={findBuilding(room.buildingId)}
-                onEdit={() => {}}
-                onDelete={() => {}}
+                onEdit={() => {handleEditClick(room)}}
+                onDelete={() => {handleDeleteClick(room)}}
                 onFaulty={() => {}}
               />
+
             </Grid>
           ))}
         </Grid>
+
+        {isDeleteDialogOpen && selectedRoom && (
+          <RoomDeleteDialog
+            room={selectedRoom}
+            open={isDeleteDialogOpen}
+            onOpenChange={setIsDeleteDialogOpen}
+            onConfirm={handleDeleteConfirm}
+          />
+        )}
+
+        {isEditDialogOpen && selectedRoom && (
+          <RoomEditDialog
+            room={selectedRoom}
+            open={isDeleteDialogOpen}
+            onClose={handleEditConfirm}
+          />
+        )}
 
         {filteredRooms.length === 0 && (
           <Card sx={{ width: '100%', boxShadow: 'sm' }}>
