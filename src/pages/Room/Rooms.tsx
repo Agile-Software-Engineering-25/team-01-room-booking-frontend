@@ -16,7 +16,6 @@ import {
   getRoomsOptions,
 } from '@/api/generated/@tanstack/react-query.gen.ts';
 import { RoomCreateDialog } from '@components/RoomCreateDialog/RoomCreateDialog.tsx';
-import RoomDeleteDialog from '@components/Room/RoomDeleteDialog.tsx';
 import RoomEditDialog from '@components/Room/RoomEditDialog.tsx';
 
 interface Filter extends Characteristic {
@@ -29,7 +28,6 @@ function Rooms() {
   const [activeFilters, setActiveFilters] = useState<Filter[]>([]);
 
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState<Room>();
   const { data: roomData } = useQuery({
@@ -168,18 +166,6 @@ function Rooms() {
   const findBuilding = (buildingId: string): Building | undefined => {
     return buildings.find((building) => building.id === buildingId);
   };
-
-  const handleDeleteClick = (room: Room) => {
-    setSelectedRoom(room);
-    setIsDeleteDialogOpen(true);
-  };
-
-  const handleDeleteConfirm = () => {
-    if (selectedRoom) {
-      setIsDeleteDialogOpen(false);
-      setSelectedRoom(undefined);
-    }
-  }
 
   const handleEditClick = (room: Room) => {
     setSelectedRoom(room);
@@ -324,7 +310,7 @@ function Rooms() {
                 room={room}
                 building={findBuilding(room.buildingId)}
                 onEdit={() => {handleEditClick(room)}}
-                onDelete={() => {handleDeleteClick(room)}}
+                onDelete={() => {}}
                 onFaulty={() => {}}
               />
 
@@ -332,19 +318,10 @@ function Rooms() {
           ))}
         </Grid>
 
-        {isDeleteDialogOpen && selectedRoom && (
-          <RoomDeleteDialog
-            room={selectedRoom}
-            open={isDeleteDialogOpen}
-            onOpenChange={setIsDeleteDialogOpen}
-            onConfirm={handleDeleteConfirm}
-          />
-        )}
-
         {isEditDialogOpen && selectedRoom && (
           <RoomEditDialog
             room={selectedRoom}
-            open={isDeleteDialogOpen}
+            open={isEditDialogOpen}
             onClose={handleEditConfirm}
           />
         )}
