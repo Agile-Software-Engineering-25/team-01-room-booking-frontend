@@ -26,12 +26,14 @@ interface DeleteRoomDialogProps {
   room: Room;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onConfirm: () => void;
 }
 
 const RoomDeleteDialog = ({
   room,
   open,
   onOpenChange,
+  onConfirm
 }: DeleteRoomDialogProps) => {
   const [loading, setLoading] = useState(false);
   const [forceDelete, setForceDelete] = useState(false);
@@ -68,6 +70,7 @@ const RoomDeleteDialog = ({
       path: { roomId: room.id },
       query: { force: forceDelete },
     });
+    onConfirm();
   };
 
   return (
