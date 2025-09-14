@@ -41,6 +41,7 @@ export type BuildingCreateRequest = {
 export type Room = {
   id: string;
   name: string;
+  chemSymbol?: string;
   /**
    * The building this room belongs to
    */
@@ -50,6 +51,7 @@ export type Room = {
 
 export type RoomCreateRequest = {
   name: string;
+  chemSymbol: string;
   buildingId: string;
   characteristics: Array<Characteristic>;
 };

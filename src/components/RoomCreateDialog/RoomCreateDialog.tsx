@@ -19,6 +19,7 @@ import {
   Place as PlaceIcon,
   Person as PersonIcon,
   Add as AddIcon,
+  Science,
 } from '@mui/icons-material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
@@ -53,6 +54,7 @@ function formatType(type: string) {
 export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
   const { t } = useTranslation();
   const [roomNumber, setRoomNumber] = useState('');
+  const [chemSymbol, setChemSymbol] = useState('');
   const [buildingId, setBuildingId] = useState<string>('');
   const [seats, setSeats] = useState<number>(0);
   const [characteristics, setCharacteristics] = useState<Characteristic[]>([]);
@@ -84,6 +86,7 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
 
   const handleClose = () => {
     setRoomNumber('');
+    setChemSymbol('');
     setBuildingId('');
     setSeats(0);
     setCharacteristics([]);
@@ -153,6 +156,7 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
 
     const roomData: RoomCreateRequest = {
       name: roomNumber,
+      chemSymbol: chemSymbol,
       buildingId,
       characteristics: allCharacteristics,
     };
@@ -207,6 +211,15 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
                 value={roomNumber}
                 onChange={(event) => setRoomNumber(event.target.value)}
                 startDecorator={<PlaceIcon />}
+              />
+            </FormControl>
+            <FormControl required>
+              <FormLabel>{t('pages.rooms.field.chemSymbol')}</FormLabel>
+              <Input
+                placeholder={t('pages.rooms.field.placeholder.chemSymbol')}
+                value={chemSymbol}
+                onChange={(event) => setChemSymbol(event.target.value)}
+                startDecorator={<Science />}
               />
             </FormControl>
 
