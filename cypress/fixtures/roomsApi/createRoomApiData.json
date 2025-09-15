@@ -2,6 +2,7 @@
   "room": {
     "id": "12345",
     "name": "101",
+    "chemSymbol": "Ferrum",
     "buildingId": "building-1",
     "characteristics": [
       {

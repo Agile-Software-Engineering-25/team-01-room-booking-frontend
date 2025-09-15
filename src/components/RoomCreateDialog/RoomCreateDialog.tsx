@@ -1,24 +1,24 @@
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  Modal,
-  ModalClose,
-  ModalDialog,
-  Typography,
+  Box,
+  Button,
+  Chip,
   FormControl,
   FormLabel,
   Input,
-  Button,
-  Select,
+  Modal,
+  ModalClose,
+  ModalDialog,
   Option,
-  Box,
+  Select,
   Stack,
-  Chip,
+  Typography,
 } from '@mui/joy';
 import {
-  Place as PlaceIcon,
-  Person as PersonIcon,
   Add as AddIcon,
+  Person as PersonIcon,
+  Place as PlaceIcon,
   Science,
 } from '@mui/icons-material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -269,7 +269,7 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
                     sx={{
                       display: 'flex',
                       flexWrap: 'wrap',
-                      gap: 1,
+                      gap: 0.5,
                       marginBottom: 2,
                     }}
                   >
@@ -301,7 +301,7 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
                 sx={{
                   display: 'flex',
                   flexWrap: 'wrap',
-                  gap: 1,
+                  gap: 0.5,
                   marginBottom: 2,
                 }}
               >
@@ -452,7 +452,9 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
                 data-testid="create-room-submit-button"
                 type="submit"
                 loading={createRoom.isPending}
-                disabled={!roomNumber || !buildingId || seats <= 0}
+                disabled={
+                  !roomNumber || !chemSymbol || !buildingId || seats <= 0
+                }
               >
                 {t('common.action.create')}
               </Button>

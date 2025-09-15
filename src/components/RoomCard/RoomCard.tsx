@@ -1,6 +1,6 @@
 import type { Building, Characteristic, Room } from '@/api/generated';
 import { Box, Typography } from '@mui/joy';
-import { LocationOn, MeetingRoom, Person } from '@mui/icons-material';
+import { LocationOn, MeetingRoom, Person, Science } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { BaseCard } from '@components/BaseCard/BaseCard.tsx';
 import { CharacteristicChip } from '@components/RoomCard/CharacteristicChip.tsx';
@@ -13,6 +13,10 @@ export interface RoomCardProps {
   onFaulty: () => void;
 }
 
+function formatType(type: string) {
+  return type.charAt(0).toUpperCase() + type.slice(1).toLowerCase();
+}
+
 export function RoomCard({
   room,
   building,
@@ -23,7 +27,10 @@ export function RoomCard({
   const { t } = useTranslation();
 
   const renderCharacteristics = (characteristics: Characteristic[]) => {
-    if (characteristics.length === 0) {
+    const nonSeatsCharacteristics = characteristics.filter(
+      (char) => char.type !== 'SEATS'
+    );
+    if (nonSeatsCharacteristics.length === 0) {
       return (
         <Typography level="body-sm" textColor="text.tertiary">
           {t('pages.rooms.labels.noEquipment')}
@@ -31,8 +38,7 @@ export function RoomCard({
       );
     }
 
-    return characteristics
-      .filter((char) => char.type !== 'SEATS')
+    return nonSeatsCharacteristics
       .map((char) => <CharacteristicChip characteristic={char} />)
       .filter((value) => value != null);
   };
@@ -45,6 +51,14 @@ export function RoomCard({
   const status = 'available';
 
   const contentSections = [
+    <Box key="chemSymbol" display="flex" justifyContent="space-between">
+      <Box display="flex" alignItems="center" gap={1}>
+        <Science fontSize="small" />
+        <Typography level="body-sm" textColor="text.secondary">
+          {formatType(room.chemSymbol)}
+        </Typography>
+      </Box>
+    </Box>,
     building && (
       <Box key="building" display="flex" alignItems="center" gap={1}>
         <LocationOn fontSize="small" />
@@ -61,7 +75,6 @@ export function RoomCard({
         </Typography>
       </Box>
     </Box>,
-
     <Box key="equipment">
       <Typography level="body-sm" textColor="text.secondary" sx={{ mb: 1 }}>
         {t('pages.rooms.labels.equipment')}:

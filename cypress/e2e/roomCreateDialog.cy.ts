@@ -42,6 +42,7 @@ describe('RoomCreateDialog tests', () => {
       .click();
     cy.contains('li', /B1/).click();
     cy.get('input[type="number"]').type('20');
+    cy.get('input[placeholder="z.B. Ferrum"]').type('Ferrum');
 
     cy.get('[data-testid="create-room-submit-button"]').should(
       'not.be.disabled'
@@ -156,6 +157,7 @@ describe('RoomCreateDialog tests', () => {
       .click();
     cy.contains('li', /B1/).click();
     cy.get('input[type="number"]').type('20');
+    cy.get('input[placeholder="z.B. Ferrum"]').type('Ferrum');
 
     cy.get('[data-testid="add-equipment-WHITEBOARD-button"]').click();
     cy.get('[data-testid="add-equipment-PC-button"]').click();
@@ -356,6 +358,7 @@ describe('RoomCreateDialog tests', () => {
       .parent()
       .click();
     cy.contains('li', /B1/).click();
+    cy.get('input[placeholder="z.B. Ferrum"]').type('Ferrum');
 
     cy.get('[data-testid="create-room-submit-button"]').should('be.disabled');
 
