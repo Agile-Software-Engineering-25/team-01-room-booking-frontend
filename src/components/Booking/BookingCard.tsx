@@ -11,6 +11,7 @@ import {
   Typography,
 } from '@mui/joy';
 import { AccessTime, CalendarMonth, LocationOn } from '@mui/icons-material';
+import type { DefaultColorPalette } from '@mui/joy/styles/types';
 
 interface EnhancedBooking {
   id: string;
@@ -42,26 +43,14 @@ const BookingCard = ({ booking }: BookingCardProps) => {
     return 'completed';
   };
 
-  const getStatusColor = (status: string) => {
+  const getStatusColor = (status: string): DefaultColorPalette => {
     switch (status) {
       case 'scheduled':
-        return {
-          bg: 'primary.softBg',
-          text: 'primary.solidColor',
-          border: 'primary.outlinedBorder',
-        };
+        return 'primary';
       case 'active':
-        return {
-          bg: 'success.softBg',
-          text: 'success.solidColor',
-          border: 'success.outlinedBorder',
-        };
+        return 'success';
       default:
-        return {
-          bg: 'neutral.softBg',
-          text: 'neutral.solidColor',
-          border: 'neutral.outlinedBorder',
-        };
+        return 'warning';
     }
   };
 
@@ -69,7 +58,7 @@ const BookingCard = ({ booking }: BookingCardProps) => {
   const formatDate = (iso: string) => dayjs(iso).format('ddd, DD. MMM YYYY');
 
   const status = getBookingStatus(booking);
-  const statusColors = getStatusColor(status);
+  const statusColor = getStatusColor(status);
 
   return (
     <Card
@@ -112,15 +101,7 @@ const BookingCard = ({ booking }: BookingCardProps) => {
             </Box>
           </Box>
 
-          <Chip
-            variant="soft"
-            size="md"
-            sx={{
-              bgcolor: statusColors.bg,
-              color: statusColors.text,
-              borderColor: statusColors.border,
-            }}
-          >
+          <Chip variant="soft" size="md" color={statusColor}>
             {status === 'active'
               ? t('components.bookingCard.status.active')
               : status === 'scheduled'
@@ -132,10 +113,10 @@ const BookingCard = ({ booking }: BookingCardProps) => {
         <Grid container spacing={2} sx={{ mb: 2 }}>
           <Grid xs={12} md={4}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <LocationOn fontSize="small" color="action" />
+              <LocationOn fontSize="small" />
               <Box>
                 <Typography level="body-sm" fontWeight="md">
-                  {t('components.bookingCard.roomLabel', 'Raum')}
+                  {t('components.bookingCard.roomLabel')}
                 </Typography>
                 <Typography level="body-sm">
                   {booking.buildingName}-{booking.roomName}
@@ -146,10 +127,10 @@ const BookingCard = ({ booking }: BookingCardProps) => {
 
           <Grid xs={12} md={4}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <AccessTime fontSize="small" color="action" />
+              <AccessTime fontSize="small" />
               <Box>
                 <Typography level="body-sm" fontWeight="md">
-                  {t('components.bookingCard.timeLabel', 'Zeit')}
+                  {t('components.bookingCard.timeLabel')}
                 </Typography>
                 <Typography level="body-sm">
                   {formatTime(booking.startTime)} -{' '}
@@ -162,7 +143,7 @@ const BookingCard = ({ booking }: BookingCardProps) => {
           <Grid xs={12} md={4}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
               <Typography level="body-sm" fontWeight="md">
-                {t('components.bookingCard.groupLabel', 'Gruppe')}
+                {t('components.bookingCard.groupLabel')}
               </Typography>
               <Typography level="body-sm" sx={{ ml: 1 }}>
                 {booking.studentGroupCount}
@@ -170,7 +151,6 @@ const BookingCard = ({ booking }: BookingCardProps) => {
             </Box>
           </Grid>
         </Grid>
-
         <Divider />
       </CardContent>
     </Card>

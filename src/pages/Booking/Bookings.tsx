@@ -199,7 +199,9 @@ function Bookings() {
           matchesDateTime
         );
       })
-      .sort((a, b) => dayjs(a.startTime).diff(dayjs(b.startTime)));
+      .sort((left, right) =>
+        dayjs(left.startTime).diff(dayjs(right.startTime))
+      );
   }, [
     enhancedBookings,
     searchTerm,
