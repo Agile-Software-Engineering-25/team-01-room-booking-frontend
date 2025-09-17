@@ -117,6 +117,62 @@
           "value": "Value"
         }
       }
+    },
+    "bookings": {
+      "title": "Bookings",
+      "defaultTitle": "Booking",
+      "search": {
+        "placeholder": "Search by room, lecturer, group or subject..."
+      },
+      "filters": {
+        "statusAll": "All statuses",
+        "status": {
+          "scheduled": "Scheduled",
+          "active": "Active",
+          "completed": "Completed",
+          "cancelled": "Cancelled"
+        },
+        "buildingAll": "All buildings",
+        "roomAll": "All rooms",
+        "dateRange": "Date range:",
+        "fromDate": "From date",
+        "fromTime": "From time",
+        "to": "to",
+        "toDate": "To date",
+        "toTime": "To time"
+      },
+      "roomLabel": "Room",
+      "timeLabel": "Time",
+      "lecturerLabel": "Lecturer",
+      "groupLabel": "Group",
+      "actions": {
+        "cancel": "Cancel",
+        "book": "Book"
+      },
+      "empty": {
+        "title": "No bookings found",
+        "noBookings": "There are no bookings available yet.",
+        "withFilters": "Try different filter criteria."
+      },
+      "cancel": {
+        "title": "Cancel booking",
+        "confirmation": "Are you sure you want to cancel this booking? This action cannot be undone.",
+        "confirm": "Cancel"
+      }
+    }
+  },
+  "components": {
+    "bookingCard": {
+      "title": "Booking",
+      "status": {
+        "scheduled": "Scheduled",
+        "active": "Active",
+        "completed": "Completed",
+        "cancelled": "Cancelled"
+      },
+      "roomLabel": "Room",
+      "timeLabel": "Time",
+      "groupLabel": "Group"
     }
   },
   "common": {
@@ -136,6 +192,10 @@
       "save": "Save",
       "edit": "Edit",
       "delete": "Delete"
+    },
+    "error": {
+      "loading": "Error loading data",
+      "tryAgain": "Please try again later"
     }
   }
 }

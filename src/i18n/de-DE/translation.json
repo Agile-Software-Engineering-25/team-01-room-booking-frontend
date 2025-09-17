@@ -117,6 +117,62 @@
           "value": "Wert"
         }
       }
+    },
+    "bookings": {
+      "title": "Buchungen",
+      "defaultTitle": "Buchung",
+      "search": {
+        "placeholder": "Nach Raum, Dozent, Gruppe oder Betreff suchen..."
+      },
+      "filters": {
+        "statusAll": "Alle Status",
+        "status": {
+          "scheduled": "Geplant",
+          "active": "Aktiv",
+          "completed": "Abgeschlossen",
+          "cancelled": "Storniert"
+        },
+        "buildingAll": "Alle Gebäude",
+        "roomAll": "Alle Räume",
+        "dateRange": "Zeitraum:",
+        "fromDate": "Von Datum",
+        "fromTime": "Von Zeit",
+        "to": "bis",
+        "toDate": "Bis Datum",
+        "toTime": "Bis Zeit"
+      },
+      "roomLabel": "Raum",
+      "timeLabel": "Zeit",
+      "lecturerLabel": "Dozent",
+      "groupLabel": "Gruppe",
+      "actions": {
+        "cancel": "Stornieren",
+        "book": "Buchen"
+      },
+      "empty": {
+        "title": "Keine Buchungen gefunden",
+        "noBookings": "Es sind noch keine Buchungen vorhanden.",
+        "withFilters": "Versuchen Sie andere Filterkriterien."
+      },
+      "cancel": {
+        "title": "Buchung stornieren",
+        "confirmation": "Sind Sie sicher, dass Sie die Buchung stornieren möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
+        "confirm": "Stornieren"
+      }
+    }
+  },
+  "components": {
+    "bookingCard": {
+      "title": "Buchung",
+      "status": {
+        "scheduled": "Geplant",
+        "active": "Aktiv",
+        "completed": "Abgeschlossen",
+        "cancelled": "Storniert"
+      },
+      "roomLabel": "Raum",
+      "timeLabel": "Zeit",
+      "groupLabel": "Gruppe"
     }
   },
   "common": {
@@ -136,6 +192,10 @@
       "save": "Speichern",
       "edit": "Bearbeiten",
       "delete": "Löschen"
+    },
+    "error": {
+      "loading": "Fehler beim Laden der Daten",
+      "tryAgain": "Bitte versuchen Sie es später erneut"
     }
   }
 }
