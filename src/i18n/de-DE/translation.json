@@ -126,10 +126,12 @@
       },
       "filters": {
         "statusAll": "Alle Status",
-        "statusScheduled": "Geplant",
-        "statusActive": "Aktiv",
-        "statusCompleted": "Abgeschlossen",
-        "statusCancelled": "Storniert",
+        "status": {
+          "scheduled": "Geplant",
+          "active": "Aktiv",
+          "completed": "Abgeschlossen",
+          "cancelled": "Storniert"
+        },
         "buildingAll": "Alle Gebäude",
         "roomAll": "Alle Räume",
         "dateRange": "Zeitraum:",
@@ -157,6 +159,20 @@
         "confirmation": "Sind Sie sicher, dass Sie die Buchung stornieren möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
         "confirm": "Stornieren"
       }
+    }
+  },
+  "components": {
+    "bookingCard": {
+      "title": "Buchung",
+      "status": {
+        "scheduled": "Geplant",
+        "active": "Aktiv",
+        "completed": "Abgeschlossen",
+        "cancelled": "Storniert"
+      },
+      "roomLabel": "Raum",
+      "timeLabel": "Zeit",
+      "groupLabel": "Gruppe"
     }
   },
   "common": {

@@ -8,7 +8,36 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 export default function JoyDateTimePicker(props: DateTimePickerProps) {
-  const joyTheme = useMemo(() => createTheme({}), []);
+  const joyTheme = useMemo(
+    () =>
+      createTheme({
+        components: {
+          MuiPaper: {
+            styleOverrides: {
+              root: {
+                backgroundColor: 'var(--joy-palette-background-level1)',
+                color: 'var(--joy-palette-text-primary)',
+              },
+            },
+          },
+          MuiDialogActions: {
+            styleOverrides: {
+              root: {
+                backgroundColor: 'var(--joy-palette-background-level1)',
+              },
+            },
+          },
+          MuiButton: {
+            styleOverrides: {
+              root: {
+                color: 'var(--joy-palette-primary-500)',
+              },
+            },
+          },
+        },
+      }),
+    []
+  );
 
   const defaultSlotProps = useMemo(
     () => ({
@@ -24,7 +53,8 @@ export default function JoyDateTimePicker(props: DateTimePickerProps) {
           },
           '&& .MuiPickersOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline':
             {
-              borderColor: 'var(--joy-palette-neutral-outlinedBorder)',
+              borderColor:
+                'var(--joy-palette-neutral-outlinedBorder) !important',
             },
           '&& .MuiInputLabel-root': {
             color:
@@ -36,6 +66,37 @@ export default function JoyDateTimePicker(props: DateTimePickerProps) {
             },
           '&& .MuiSvgIcon-root': {
             fill: 'var(--joy-palette-text-icon)',
+          },
+        },
+      },
+      popper: {
+        sx: {
+          '& .MuiPaper-root': {
+            backgroundColor: 'var(--joy-palette-background-level1) !important',
+            color: 'var(--joy-palette-text-primary) !important',
+          },
+          '& .MuiPickersCalendarHeader-label': {
+            color: 'var(--joy-palette-text-primary) !important',
+          },
+          '& .MuiIconButton-root': {
+            color: 'var(--joy-palette-text-secondary) !important',
+          },
+          '& .MuiPickersDay-root': {
+            color: 'var(--joy-palette-text-primary) !important',
+          },
+          '& .MuiPickersDay-root.Mui-selected': {
+            backgroundColor: 'var(--joy-palette-primary-500) !important',
+            color: 'var(--joy-palette-common-white) !important',
+          },
+          '& .MuiClock-clock': {
+            backgroundColor: 'var(--joy-palette-background-level2) !important',
+            color: 'var(--joy-palette-text-primary) !important',
+          },
+          '& .MuiClockNumber-root': {
+            color: 'var(--joy-palette-text-primary) !important',
+          },
+          '& .MuiDialogActions-root': {
+            backgroundColor: 'var(--joy-palette-background-level1) !important',
           },
         },
       },

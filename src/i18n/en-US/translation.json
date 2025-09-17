@@ -126,10 +126,12 @@
       },
       "filters": {
         "statusAll": "All statuses",
-        "statusScheduled": "Scheduled",
-        "statusActive": "Active",
-        "statusCompleted": "Completed",
-        "statusCancelled": "Cancelled",
+        "status": {
+          "scheduled": "Scheduled",
+          "active": "Active",
+          "completed": "Completed",
+          "cancelled": "Cancelled"
+        },
         "buildingAll": "All buildings",
         "roomAll": "All rooms",
         "dateRange": "Date range:",
@@ -157,6 +159,20 @@
         "confirmation": "Are you sure you want to cancel this booking? This action cannot be undone.",
         "confirm": "Cancel"
       }
+    }
+  },
+  "components": {
+    "bookingCard": {
+      "title": "Booking",
+      "status": {
+        "scheduled": "Scheduled",
+        "active": "Active",
+        "completed": "Completed",
+        "cancelled": "Cancelled"
+      },
+      "roomLabel": "Room",
+      "timeLabel": "Time",
+      "groupLabel": "Group"
     }
   },
   "common": {

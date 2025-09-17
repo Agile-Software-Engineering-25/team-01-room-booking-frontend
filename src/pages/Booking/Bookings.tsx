@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
@@ -7,20 +8,15 @@ import {
   Box,
   Card,
   CardContent,
-  Chip,
   CircularProgress,
-  Divider,
-  Grid,
   IconButton,
   Input,
   Option,
   Select,
-  Sheet,
   Stack,
   Typography,
 } from '@mui/joy';
 import {
-  AccessTime,
   Apartment,
   CalendarMonth,
   Close,
@@ -28,6 +24,7 @@ import {
   LocationOn,
   Search,
 } from '@mui/icons-material';
+import BookingCard from '@/components/Booking/BookingCard';
 import JoyDateTimePicker from '@/components/DateTimePickers/JoyDateTimePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -142,50 +139,67 @@ function Bookings() {
     return labels.sort((left, right) => left.localeCompare(right));
   }, [roomsResp, buildingsResp, buildingFilter]);
 
+  const getBookingStatus = (
+    booking: EnhancedBooking
+  ): 'active' | 'scheduled' | 'completed' => {
+    const now = dayjs();
+    const start = dayjs(booking.startTime);
+    const end = dayjs(booking.endTime);
+
+    if (now.isAfter(start) && now.isBefore(end)) return 'active';
+    if (now.isSame(start) || now.isSame(end)) return 'active';
+    if (now.isBefore(start)) return 'scheduled';
+    return 'completed';
+  };
+
   const filteredBookings = useMemo(() => {
-    return enhancedBookings.filter((booking) => {
-      const matchesSearch =
-        booking.roomName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        booking.buildingName.toLowerCase().includes(searchTerm.toLowerCase());
+    return enhancedBookings
+      .filter((booking) => {
+        const matchesSearch =
+          booking.roomName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          booking.buildingName.toLowerCase().includes(searchTerm.toLowerCase());
 
-      const matchesStatus = statusFilter === 'all';
+        const status = getBookingStatus(booking);
+        const matchesStatus = statusFilter === 'all' || status === statusFilter;
 
-      const matchesBuilding =
-        buildingFilter === 'all' || booking.buildingName === buildingFilter;
+        const matchesBuilding =
+          buildingFilter === 'all' || booking.buildingName === buildingFilter;
 
-      const matchesRoom =
-        roomFilter === 'all' ||
-        `${booking.buildingName}-${booking.roomName}` === roomFilter;
+        const matchesRoom =
+          roomFilter === 'all' ||
+          `${booking.buildingName}-${booking.roomName}` === roomFilter;
 
-      // Zeitfilter
-      let matchesDateTime = true;
-      if (dateTimeFrom || dateTimeTo) {
-        const bookingStart = dayjs(booking.startTime);
-        const bookingEnd = dayjs(booking.endTime);
-        const filterStart = dateTimeFrom ?? null;
-        const filterEnd = dateTimeTo ?? null;
+        let matchesDateTime = true;
+        if (dateTimeFrom || dateTimeTo) {
+          const bookingStart = dayjs(booking.startTime);
+          const bookingEnd = dayjs(booking.endTime);
+          const filterStart = dateTimeFrom ?? null;
+          const filterEnd = dateTimeTo ?? null;
 
-        if (filterStart && filterEnd) {
-          matchesDateTime =
-            bookingStart.isBefore(filterEnd) && bookingEnd.isAfter(filterStart);
-        } else if (filterStart) {
-          matchesDateTime =
-            bookingStart.isAfter(filterStart) ||
-            bookingStart.isSame(filterStart);
-        } else if (filterEnd) {
-          matchesDateTime =
-            bookingStart.isBefore(filterEnd) || bookingStart.isSame(filterEnd);
+          if (filterStart && filterEnd) {
+            matchesDateTime =
+              bookingStart.isBefore(filterEnd) &&
+              bookingEnd.isAfter(filterStart);
+          } else if (filterStart) {
+            matchesDateTime =
+              bookingStart.isAfter(filterStart) ||
+              bookingStart.isSame(filterStart);
+          } else if (filterEnd) {
+            matchesDateTime =
+              bookingStart.isBefore(filterEnd) ||
+              bookingStart.isSame(filterEnd);
+          }
         }
-      }
 
-      return (
-        matchesSearch &&
-        matchesStatus &&
-        matchesBuilding &&
-        matchesRoom &&
-        matchesDateTime
-      );
-    });
+        return (
+          matchesSearch &&
+          matchesStatus &&
+          matchesBuilding &&
+          matchesRoom &&
+          matchesDateTime
+        );
+      })
+      .sort((a, b) => dayjs(a.startTime).diff(dayjs(b.startTime)));
   }, [
     enhancedBookings,
     searchTerm,
@@ -201,32 +215,6 @@ function Bookings() {
     setDateTimeTo(null);
   };
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'scheduled':
-        return {
-          bg: 'primary.softBg',
-          text: 'primary.solidColor',
-          border: 'primary.outlinedBorder',
-        };
-      case 'active':
-        return {
-          bg: 'success.softBg',
-          text: 'success.solidColor',
-          border: 'success.outlinedBorder',
-        };
-      default:
-        return {
-          bg: 'neutral.softBg',
-          text: 'neutral.solidColor',
-          border: 'neutral.outlinedBorder',
-        };
-    }
-  };
-
-  const formatTime = (iso: string) => dayjs(iso).format('HH:mm');
-  const formatDate = (iso: string) => dayjs(iso).format('ddd, DD. MMM YYYY');
-
   if (isLoadingBookings || isLoadingRooms || isLoadingBuildings) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', padding: 4 }}>
@@ -238,12 +226,8 @@ function Bookings() {
   if (isErrorBookings || isErrorRooms || isErrorBuildings) {
     return (
       <Box sx={{ padding: 4 }}>
-        <Typography color="danger">
-          {t('common.error.loading', 'Fehler beim Laden der Daten')}
-        </Typography>
-        <Typography>
-          {t('common.error.tryAgain', 'Bitte versuchen Sie es später erneut')}
-        </Typography>
+        <Typography color="danger">{t('common.error.loading')}</Typography>
+        <Typography>{t('common.error.tryAgain')}</Typography>
       </Box>
     );
   }
@@ -268,10 +252,7 @@ function Bookings() {
           }}
         >
           <Card>
-            <Typography level="h4">
-              {t('pages.bookings.title', 'Buchungen')}
-            </Typography>
-
+            <Typography level="h4">{t('pages.bookings.title')}</Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               <Box
                 sx={{
@@ -282,10 +263,7 @@ function Bookings() {
                 }}
               >
                 <Input
-                  placeholder={t(
-                    'pages.bookings.search.placeholder',
-                    'Buchungen durchsuchen...'
-                  )}
+                  placeholder={t('pages.bookings.search.placeholder')}
                   value={searchTerm}
                   onChange={(event) => setSearchTerm(event.target.value)}
                   startDecorator={<Search />}
@@ -300,13 +278,13 @@ function Bookings() {
                   sx={{ minWidth: 150 }}
                 >
                   <Option value="all">
-                    {t('pages.bookings.filters.statusAll', 'Alle Status')}
+                    {t('pages.bookings.filters.statusAll')}
                   </Option>
                   <Option value="scheduled">
-                    {t('pages.bookings.filters.statusScheduled', 'Geplant')}
+                    {t('pages.bookings.filters.status.scheduled')}
                   </Option>
                   <Option value="active">
-                    {t('pages.bookings.filters.statusActive', 'Aktiv')}
+                    {t('pages.bookings.filters.status.active')}
                   </Option>
                 </Select>
 
@@ -320,7 +298,7 @@ function Bookings() {
                   sx={{ minWidth: 150 }}
                 >
                   <Option value="all">
-                    {t('pages.bookings.filters.buildingAll', 'Alle Gebäude')}
+                    {t('pages.bookings.filters.buildingAll')}
                   </Option>
                   {sortedBuildings.map((buildings) => (
                     <Option key={buildings} value={buildings}>
@@ -337,7 +315,7 @@ function Bookings() {
                   sx={{ minWidth: 150 }}
                 >
                   <Option value="all">
-                    {t('pages.bookings.filters.roomAll', 'Alle Räume')}
+                    {t('pages.bookings.filters.roomAll')}
                   </Option>
                   {uniqueRooms.map((room) => (
                     <Option key={room} value={room}>
@@ -356,7 +334,7 @@ function Bookings() {
                   }}
                 >
                   <Typography level="body-sm" sx={{ whiteSpace: 'nowrap' }}>
-                    {t('pages.bookings.filters.dateRange', 'Zeitraum:')}
+                    {t('pages.bookings.filters.dateRange')}
                   </Typography>
 
                   <Stack
@@ -365,12 +343,12 @@ function Bookings() {
                     alignItems="center"
                   >
                     <JoyDateTimePicker
-                      label={t('pages.bookings.filters.fromDate', 'Von Datum')}
+                      label={t('pages.bookings.filters.fromDate')}
                       value={dateTimeFrom}
                       onChange={setDateTimeFrom}
                     />
                     <JoyDateTimePicker
-                      label={t('pages.bookings.filters.toDate', 'Bis Datum')}
+                      label={t('pages.bookings.filters.toDate')}
                       value={dateTimeTo}
                       onChange={setDateTimeTo}
                     />
@@ -391,122 +369,10 @@ function Bookings() {
             </Box>
           </Card>
           <Stack spacing={2}>
-            {filteredBookings.map((booking) => {
-              const statusColors = getStatusColor('active');
-              return (
-                <Card
-                  key={booking.id}
-                  sx={{
-                    boxShadow: 'md',
-                    transition: 'box-shadow 0.3s',
-                    '&:hover': { boxShadow: 'lg' },
-                  }}
-                >
-                  <CardContent sx={{ padding: 3 }}>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        mb: 2,
-                      }}
-                    >
-                      <Box
-                        sx={{ display: 'flex', alignItems: 'center', gap: 2 }}
-                      >
-                        <Sheet
-                          color="primary"
-                          variant="soft"
-                          sx={{
-                            borderRadius: 'md',
-                            width: 48,
-                            height: 48,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                          }}
-                        >
-                          <CalendarMonth />
-                        </Sheet>
-                        <Box>
-                          <Typography level="title-lg">
-                            {t('pages.bookings.defaultTitle', 'Buchung')}
-                          </Typography>
-                          <Typography level="body-sm" textColor="text.tertiary">
-                            {formatDate(booking.startTime)}
-                          </Typography>
-                        </Box>
-                      </Box>
-
-                      <Chip
-                        variant="soft"
-                        size="md"
-                        sx={{
-                          bgcolor: statusColors.bg,
-                          color: statusColors.text,
-                          borderColor: statusColors.border,
-                        }}
-                      >
-                        {t('pages.bookings.filters.statusScheduled', 'Geplant')}
-                      </Chip>
-                    </Box>
-
-                    <Grid container spacing={2} sx={{ mb: 2 }}>
-                      <Grid xs={12} md={4}>
-                        <Box
-                          sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
-                        >
-                          <LocationOn fontSize="small" color="action" />
-                          <Box>
-                            <Typography level="body-sm" fontWeight="md">
-                              {t('pages.bookings.roomLabel', 'Raum')}
-                            </Typography>
-                            <Typography level="body-sm">
-                              {booking.buildingName}-{booking.roomName}
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-
-                      <Grid xs={12} md={4}>
-                        <Box
-                          sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
-                        >
-                          <AccessTime fontSize="small" color="action" />
-                          <Box>
-                            <Typography level="body-sm" fontWeight="md">
-                              {t('pages.bookings.timeLabel', 'Zeit')}
-                            </Typography>
-                            <Typography level="body-sm">
-                              {formatTime(booking.startTime)} -{' '}
-                              {formatTime(booking.endTime)}
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Grid>
-
-                      <Grid xs={12} md={4}>
-                        <Box
-                          sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
-                        >
-                          {/* Statt Dozenten-/Gruppennamen zählen wir IDs */}
-                          <Typography level="body-sm" fontWeight="md">
-                            {t('pages.bookings.groupLabel', 'Gruppe')}
-                          </Typography>
-                          <Typography level="body-sm" sx={{ ml: 1 }}>
-                            {booking.studentGroupCount}
-                          </Typography>
-                        </Box>
-                      </Grid>
-                    </Grid>
-
-                    <Divider />
-                  </CardContent>
-                </Card>
-              );
-            })}
+            {filteredBookings.map((booking) => (
+              <BookingCard key={booking.id} booking={booking} />
+            ))}
           </Stack>
-
-          {/* Empty State */}
           {filteredBookings.length === 0 && (
             <Card sx={{ boxShadow: 'sm' }}>
               <CardContent
@@ -521,7 +387,7 @@ function Bookings() {
                   sx={{ fontSize: 64, color: 'neutral.softBg', mb: 2 }}
                 />
                 <Typography level="h3" sx={{ mb: 1 }}>
-                  {t('pages.bookings.empty.title', 'Keine Buchungen gefunden')}
+                  {t('pages.bookings.empty.title')}
                 </Typography>
                 <Typography textColor="text.secondary">
                   {searchTerm ||
@@ -530,14 +396,8 @@ function Bookings() {
                   roomFilter !== 'all' ||
                   dateTimeFrom ||
                   dateTimeTo
-                    ? t(
-                        'pages.bookings.empty.withFilters',
-                        'Versuchen Sie andere Filterkriterien.'
-                      )
-                    : t(
-                        'pages.bookings.empty.noBookings',
-                        'Erstellen Sie Ihre erste Buchung.'
-                      )}
+                    ? t('pages.bookings.empty.withFilters')
+                    : t('pages.bookings.empty.noBookings')}
                 </Typography>
               </CardContent>
             </Card>
