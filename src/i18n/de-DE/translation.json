@@ -98,6 +98,10 @@
         "title": "Neuen Raum erstellen",
         "description": "Fügen Sie einen neuen Raum zum Provadis Raummanagement-System hinzu."
       },
+      "update": {
+        "title": "Raum bearbeiten",
+        "description": "Bearbeiten Sie Raum {{roomName}}."
+      },
       "field": {
         "number": "Raumnummer",
         "chemSymbol": "Raumname",

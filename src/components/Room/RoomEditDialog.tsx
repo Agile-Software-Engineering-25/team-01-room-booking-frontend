@@ -181,7 +181,7 @@ export function RoomEditDialog({ room, open, onClose }: RoomEditDialogProps) {
   return (
     <Modal open={open} onClose={handleClose}>
       <ModalDialog
-        aria-labelledby="room-create-modal-title"
+        aria-labelledby="room-update-modal-title"
         sx={{
           maxWidth: 600,
           maxHeight: '90vh',
@@ -193,16 +193,16 @@ export function RoomEditDialog({ room, open, onClose }: RoomEditDialogProps) {
       >
         <ModalClose />
         <Typography
-          id="room-create-modal-title"
+          id="room-update-modal-title"
           component="h2"
           level="title-lg"
           startDecorator={<PlaceIcon />}
           sx={{ marginBottom: 1 }}
         >
-          {t('pages.rooms.create.title')}
+          {t('pages.rooms.update.title')}
         </Typography>
         <Typography level="body-md" sx={{ marginBottom: 3 }}>
-          {t('pages.rooms.create.description')}
+          {t('pages.rooms.update.description', { roomName: room?.name })}
         </Typography>
 
         <form
@@ -449,7 +449,7 @@ export function RoomEditDialog({ room, open, onClose }: RoomEditDialogProps) {
               }}
             >
               <Button
-                data-testid="create-room-cancel-button"
+                data-testid="update-room-cancel-button"
                 variant="outlined"
                 color="neutral"
                 onClick={handleClose}
@@ -457,14 +457,14 @@ export function RoomEditDialog({ room, open, onClose }: RoomEditDialogProps) {
                 {t('common.action.cancel')}
               </Button>
               <Button
-                data-testid="create-room-submit-button"
+                data-testid="update-room-submit-button"
                 type="submit"
                 loading={updateRoom.isPending}
                 disabled={
                   !roomNumber || !chemSymbol || !buildingId || seats <= 0
                 }
               >
-                {t('common.action.create')}
+                {t('common.action.save')}
               </Button>
             </Box>
           </Stack>
