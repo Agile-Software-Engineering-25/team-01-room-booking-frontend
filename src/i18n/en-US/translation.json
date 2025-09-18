@@ -66,7 +66,7 @@
       "dialogs": {
         "delete": {
           "title": "Delete Room",
-          "confirmation": "Are you sure you want to delete the room \"{{roomName}}\" ?",
+          "confirmation": "Are you sure you want to delete the room {{roomName}}?",
           "warning": {
             "title": "Warning!",
             "permanent": "This action cannot be undone. The room will be permanently removed from the system.",
