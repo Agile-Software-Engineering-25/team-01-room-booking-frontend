@@ -63,6 +63,25 @@
       }
     },
     "rooms": {
+      "dialogs": {
+        "delete": {
+          "title": "Delete Room",
+          "confirmation": "Are you sure you want to delete the room \"{{name}}\" ?",
+          "warning": {
+            "title": "Warning!",
+            "permanent": "This action cannot be undone. The room will be permanently removed from the system.",
+            "checkBookings": "Make sure there are no active bookings for this room.",
+            "deleteBookings": "Please note that this action will also permanently delete any active bookings."
+          },
+          "hasBookings": {
+            "title": "Active Bookings!",
+            "description": "The selected room has active bookings. Please note that these active bookings will also be deleted."
+          },
+          "forceDelete": "Force delete (also removes all bookings for this room)",
+          "deleting": "Deleting...",
+          "confirm": "Delete Room"
+        }
+      },
       "labels": {
         "available": "Available",
         "occupied": "Occupied",

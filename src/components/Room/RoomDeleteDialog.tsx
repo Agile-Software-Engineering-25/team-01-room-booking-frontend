@@ -168,7 +168,6 @@ const RoomDeleteDialog = ({
             <Typography
               level="body-sm"
               fontWeight="md"
-              sx={{ color: 'warning.solidColor' }}
             >
               {t('pages.rooms.dialogs.delete.forceDelete')}
             </Typography>
@@ -183,7 +182,7 @@ const RoomDeleteDialog = ({
               onClick={() => onOpenChange(false)}
               disabled={loading}
             >
-              {t('common.cancel')}
+              {t('common.action.cancel')}
             </Button>
             <Button
               variant="solid"
