@@ -20,7 +20,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   isRoomDeletableOptions,
   deleteRoomByIdMutation,
-  getBuildingsQueryKey,
+  getRoomsQueryKey,
 } from '@/api/generated/@tanstack/react-query.gen';
 
 interface DeleteRoomDialogProps {
@@ -56,7 +56,7 @@ const RoomDeleteDialog = ({
     ...deleteRoomByIdMutation(),
     onSuccess: () => {
       // Nach erfolgreicher Löschung den Cache aktualisieren
-      queryClient.invalidateQueries({ queryKey: getBuildingsQueryKey() }).then();
+      queryClient.invalidateQueries({ queryKey: getRoomsQueryKey() }).then();
       setForceDelete(false);
       onOpenChange(false);
     },
