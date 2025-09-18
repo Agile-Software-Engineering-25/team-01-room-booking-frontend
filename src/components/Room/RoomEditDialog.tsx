@@ -18,7 +18,7 @@ import {
 import {
   Place as PlaceIcon,
   Person as PersonIcon,
-  Add as AddIcon,
+  Add as AddIcon, Science,
 } from '@mui/icons-material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
@@ -53,6 +53,7 @@ function formatType(type: string) {
 export function RoomEditDialog({ room, open, onClose }: RoomEditDialogProps) {
   const { t } = useTranslation();
   const [roomNumber, setRoomNumber] = useState('');
+  const [chemSymbol, setChemSymbol] = useState('');
   const [buildingId, setBuildingId] = useState<string>('');
   const [seats, setSeats] = useState<number>(0);
   const [characteristics, setCharacteristics] = useState<Characteristic[]>([]);
@@ -75,6 +76,7 @@ export function RoomEditDialog({ room, open, onClose }: RoomEditDialogProps) {
       const seatsValue = seatsCharacteristic ? seatsCharacteristic.value : null;
 
       setRoomNumber(room.name);
+      setChemSymbol(room.chemSymbol);
       setBuildingId(room.buildingId);
       setSeats(seatsValue);
       setCharacteristics(room.characteristics);
@@ -161,6 +163,7 @@ export function RoomEditDialog({ room, open, onClose }: RoomEditDialogProps) {
 
     const roomData: RoomCreateRequest = {
       name: roomNumber,
+      chemSymbol: chemSymbol,
       buildingId,
       characteristics: allCharacteristics,
     };
@@ -218,6 +221,15 @@ export function RoomEditDialog({ room, open, onClose }: RoomEditDialogProps) {
                 startDecorator={<PlaceIcon />}
               />
             </FormControl>
+            <FormControl required>
+              <FormLabel>{t('pages.rooms.field.chemSymbol')}</FormLabel>
+              <Input
+                placeholder={t('pages.rooms.field.placeholder.chemSymbol')}
+                value={chemSymbol}
+                onChange={(event) => setChemSymbol(event.target.value)}
+                startDecorator={<Science />}
+              />
+            </FormControl>
 
             <FormControl required>
               <FormLabel>{t('pages.rooms.field.building')}</FormLabel>
@@ -265,7 +277,7 @@ export function RoomEditDialog({ room, open, onClose }: RoomEditDialogProps) {
                     sx={{
                       display: 'flex',
                       flexWrap: 'wrap',
-                      gap: 1,
+                      gap: 0.5,
                       marginBottom: 2,
                     }}
                   >
@@ -297,7 +309,7 @@ export function RoomEditDialog({ room, open, onClose }: RoomEditDialogProps) {
                 sx={{
                   display: 'flex',
                   flexWrap: 'wrap',
-                  gap: 1,
+                  gap: 0.5,
                   marginBottom: 2,
                 }}
               >
@@ -448,7 +460,9 @@ export function RoomEditDialog({ room, open, onClose }: RoomEditDialogProps) {
                 data-testid="create-room-submit-button"
                 type="submit"
                 loading={updateRoom.isPending}
-                disabled={!roomNumber || !buildingId || seats <= 0}
+                disabled={
+                  !roomNumber || !chemSymbol || !buildingId || seats <= 0
+                }
               >
                 {t('common.action.create')}
               </Button>
