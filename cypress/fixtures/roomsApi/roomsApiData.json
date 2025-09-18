@@ -3,6 +3,7 @@
     {
       "id": "room1",
       "name": "101",
+      "chemSymbol": "Ferrum",
       "buildingId": "building1",
       "characteristics": [
         {
@@ -22,6 +23,7 @@
     {
       "id": "room2",
       "name": "202",
+      "chemSymbol": "Oxygen",
       "buildingId": "building1",
       "characteristics": [
         {
@@ -41,6 +43,7 @@
     {
       "id": "room3",
       "name": "303",
+      "chemSymbol": "Argon",
       "buildingId": "building2",
       "characteristics": [
         {
