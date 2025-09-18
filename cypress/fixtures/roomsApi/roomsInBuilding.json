@@ -2,6 +2,7 @@
   {
     "id": "room1",
     "name": "Raum 101",
+    "chemSymbol": "Ferrum",
     "buildingId": "building1"
   }
 ]
