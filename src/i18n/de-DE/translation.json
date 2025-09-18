@@ -63,6 +63,25 @@
       }
     },
     "rooms": {
+      "dialogs": {
+        "delete": {
+          "title": "Raum Löschen",
+          "confirmation": "Sind Sie sicher, dass Sie den Raum \"{{name}}\" löschen möchten?",
+          "warning": {
+            "title": "Achtung!",
+            "permanent": "Diese Aktion kann nicht rückgängig gemacht werden. Der Raum wird permanent aus dem System entfernt.",
+            "checkBookings": "Stellen Sie sicher, dass keine aktiven Buchungen für diesen Raum vorhanden sind.",
+            "deleteBookings": "Bitte beachten Sie, dass mit dieser Aktion auch aktive Buchungen entgültig gelöscht werden."
+          },
+          "hasBookings": {
+            "title": "Aktive Buchungen!",
+            "description": "Für den ausgewählten Raum sind aktive Buchungen vorhanden. Bitte beachten Sie, dass die aktiven Buchungen mitgelöscht werden."
+          },
+          "forceDelete": "Löschung forcieren (entfernt auch alle Buchungen für diesen Raum)",
+          "deleting": "Löschung läuft...",
+          "confirm": "Raum löschen"
+        }
+      },
       "labels": {
         "available": "Verfügbar",
         "occupied": "Belegt",
