@@ -5,7 +5,7 @@ import Input from '@mui/joy/Input';
 import Typography from '@mui/joy/Typography';
 import Card from '@mui/joy/Card';
 import CardContent from '@mui/joy/CardContent';
-import { RoomCard } from '@components/RoomCard/RoomCard.tsx';
+import { RoomCard } from '@components/Room/RoomCard.tsx';
 import { useTranslation } from 'react-i18next';
 import { Add, MeetingRoom, Search } from '@mui/icons-material';
 import { type Room, type Building, type Characteristic } from '@/api/generated';
@@ -16,6 +16,7 @@ import {
   getRoomsOptions,
 } from '@/api/generated/@tanstack/react-query.gen.ts';
 import { RoomCreateDialog } from '@components/RoomCreateDialog/RoomCreateDialog.tsx';
+import RoomDeleteDialog from '@components/Room/RoomDeleteDialog.tsx';
 
 interface Filter extends Characteristic {
   label: string;
@@ -27,6 +28,8 @@ function Rooms() {
   const [activeFilters, setActiveFilters] = useState<Filter[]>([]);
 
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [selectedRoom, setSelectedRoom] = useState<Room>();
   const { data: roomData } = useQuery({
     ...getRoomsOptions(),
   });
@@ -164,6 +167,18 @@ function Rooms() {
     return buildings.find((building) => building.id === buildingId);
   };
 
+  const handleDeleteClick = (room: Room) => {
+    setSelectedRoom(room);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const handleDeleteConfirm = () => {
+    if (selectedRoom) {
+      setIsDeleteDialogOpen(false);
+      setSelectedRoom(undefined);
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -295,12 +310,23 @@ function Rooms() {
                 room={room}
                 building={findBuilding(room.buildingId)}
                 onEdit={() => {}}
-                onDelete={() => {}}
+                onDelete={() => {
+                  handleDeleteClick(room);
+                }}
                 onFaulty={() => {}}
               />
             </Grid>
           ))}
         </Grid>
+
+        {isDeleteDialogOpen && selectedRoom && (
+          <RoomDeleteDialog
+            room={selectedRoom}
+            open={isDeleteDialogOpen}
+            onOpenChange={setIsDeleteDialogOpen}
+            onConfirm={handleDeleteConfirm}
+          />
+        )}
 
         {filteredRooms.length === 0 && (
           <Card sx={{ width: '100%', boxShadow: 'sm' }}>
