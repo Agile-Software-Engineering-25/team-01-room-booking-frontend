@@ -323,7 +323,9 @@ function Rooms() {
               <RoomCard
                 room={room}
                 building={findBuilding(room.buildingId)}
-                onEdit={() => {handleEditClick(room)}}
+                onEdit={() => {
+                  handleEditClick(room)
+                }}
                 onDelete={() => {
                   handleDeleteClick(room);
                 }}

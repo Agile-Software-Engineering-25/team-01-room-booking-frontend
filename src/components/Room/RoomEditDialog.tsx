@@ -50,7 +50,7 @@ function formatType(type: string) {
   return type.charAt(0).toUpperCase() + type.slice(1).toLowerCase();
 }
 
-export function RoomEditDialog({ room, open, onClose }: RoomEditDialogProps) {
+export function RoomEditDialog({ room, open, onClose, }: RoomEditDialogProps) {
   const { t } = useTranslation();
   const [roomNumber, setRoomNumber] = useState('');
   const [chemSymbol, setChemSymbol] = useState('');
