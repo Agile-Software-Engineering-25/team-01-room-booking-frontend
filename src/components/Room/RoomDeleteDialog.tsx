@@ -20,18 +20,21 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   isRoomDeletableOptions,
   deleteRoomByIdMutation,
+  getRoomsQueryKey,
 } from '@/api/generated/@tanstack/react-query.gen';
 
 interface DeleteRoomDialogProps {
   room: Room;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onConfirm: () => void;
 }
 
 const RoomDeleteDialog = ({
   room,
   open,
   onOpenChange,
+  onConfirm,
 }: DeleteRoomDialogProps) => {
   const [loading, setLoading] = useState(false);
   const [forceDelete, setForceDelete] = useState(false);
@@ -53,7 +56,7 @@ const RoomDeleteDialog = ({
     ...deleteRoomByIdMutation(),
     onSuccess: () => {
       // Nach erfolgreicher Löschung den Cache aktualisieren
-      queryClient.invalidateQueries({ queryKey: ['getRooms'] });
+      queryClient.invalidateQueries({ queryKey: getRoomsQueryKey() }).then();
       setForceDelete(false);
       onOpenChange(false);
     },
@@ -68,6 +71,7 @@ const RoomDeleteDialog = ({
       path: { roomId: room.id },
       query: { force: forceDelete },
     });
+    onConfirm();
   };
 
   return (
@@ -162,11 +166,7 @@ const RoomDeleteDialog = ({
               onChange={(event) => setForceDelete(event.target.checked)}
               color="warning"
             />
-            <Typography
-              level="body-sm"
-              fontWeight="md"
-              sx={{ color: 'warning.solidColor' }}
-            >
+            <Typography level="body-sm" fontWeight="md">
               {t('pages.rooms.dialogs.delete.forceDelete')}
             </Typography>
           </Box>
@@ -180,7 +180,7 @@ const RoomDeleteDialog = ({
               onClick={() => onOpenChange(false)}
               disabled={loading}
             >
-              {t('common.cancel')}
+              {t('common.action.cancel')}
             </Button>
             <Button
               variant="solid"
