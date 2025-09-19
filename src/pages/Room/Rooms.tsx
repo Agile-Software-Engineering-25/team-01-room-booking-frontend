@@ -17,6 +17,7 @@ import {
 } from '@/api/generated/@tanstack/react-query.gen.ts';
 import { RoomCreateDialog } from '@components/RoomCreateDialog/RoomCreateDialog.tsx';
 import RoomEditDialog from '@components/Room/RoomEditDialog.tsx';
+import RoomDeleteDialog from '@components/Room/RoomDeleteDialog.tsx';
 
 interface Filter extends Characteristic {
   label: string;
@@ -29,6 +30,8 @@ function Rooms() {
 
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [selectedRoom, setSelectedRoom] = useState<Room>();
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState<Room>();
   const { data: roomData } = useQuery({
     ...getRoomsOptions(),
@@ -179,6 +182,18 @@ function Rooms() {
     }
   }
 
+  const handleDeleteClick = (room: Room) => {
+    setSelectedRoom(room);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const handleDeleteConfirm = () => {
+    if (selectedRoom) {
+      setIsDeleteDialogOpen(false);
+      setSelectedRoom(undefined);
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -311,9 +326,12 @@ function Rooms() {
                 building={findBuilding(room.buildingId)}
                 onEdit={() => {handleEditClick(room)}}
                 onDelete={() => {}}
+                onEdit={() => {}}
+                onDelete={() => {
+                  handleDeleteClick(room);
+                }}
                 onFaulty={() => {}}
               />
-
             </Grid>
           ))}
         </Grid>
@@ -323,6 +341,15 @@ function Rooms() {
             room={selectedRoom}
             open={isEditDialogOpen}
             onClose={handleEditConfirm}
+          />
+        )}
+
+        {isDeleteDialogOpen && selectedRoom && (
+          <RoomDeleteDialog
+            room={selectedRoom}
+            open={isDeleteDialogOpen}
+            onOpenChange={setIsDeleteDialogOpen}
+            onConfirm={handleDeleteConfirm}
           />
         )}
 
