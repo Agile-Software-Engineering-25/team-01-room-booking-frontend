@@ -177,7 +177,7 @@ function Rooms() {
       setIsDeleteDialogOpen(false);
       setSelectedRoom(undefined);
     }
-  }
+  };
 
   return (
     <Box
@@ -310,7 +310,9 @@ function Rooms() {
                 room={room}
                 building={findBuilding(room.buildingId)}
                 onEdit={() => {}}
-                onDelete={() => {handleDeleteClick(room)}}
+                onDelete={() => {
+                  handleDeleteClick(room);
+                }}
                 onFaulty={() => {}}
               />
             </Grid>

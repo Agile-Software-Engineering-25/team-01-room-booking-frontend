@@ -34,7 +34,7 @@ const RoomDeleteDialog = ({
   room,
   open,
   onOpenChange,
-  onConfirm
+  onConfirm,
 }: DeleteRoomDialogProps) => {
   const [loading, setLoading] = useState(false);
   const [forceDelete, setForceDelete] = useState(false);
@@ -166,10 +166,7 @@ const RoomDeleteDialog = ({
               onChange={(event) => setForceDelete(event.target.checked)}
               color="warning"
             />
-            <Typography
-              level="body-sm"
-              fontWeight="md"
-            >
+            <Typography level="body-sm" fontWeight="md">
               {t('pages.rooms.dialogs.delete.forceDelete')}
             </Typography>
           </Box>
