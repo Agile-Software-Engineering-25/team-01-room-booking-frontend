@@ -30,7 +30,6 @@ function Rooms() {
 
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
-  const [selectedRoom, setSelectedRoom] = useState<Room>();
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState<Room>();
   const { data: roomData } = useQuery({
@@ -325,8 +324,6 @@ function Rooms() {
                 room={room}
                 building={findBuilding(room.buildingId)}
                 onEdit={() => {handleEditClick(room)}}
-                onDelete={() => {}}
-                onEdit={() => {}}
                 onDelete={() => {
                   handleDeleteClick(room);
                 }}
