@@ -198,9 +198,9 @@ describe('RoomCreateDialog tests', () => {
   it('should show all equipment options in dialog even with small viewport', () => {
     cy.viewport(400, 600);
 
-    cy.get('[data-testid="add-equipment-PC-button"]').should('be.visible');
+    cy.get('[data-testid="add-equipment-PC-button"]').scrollIntoView()
+      .should('be.visible');
     cy.get('[data-testid="add-equipment-WHITEBOARD-button"]')
-      .scrollIntoView()
       .should('be.visible');
     cy.get('[data-testid="add-equipment-BEAMER-button"]').should('be.visible');
     cy.get('[data-testid="add-equipment-TELEVISION-button"]').should(
