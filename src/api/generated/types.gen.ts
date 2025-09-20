@@ -47,6 +47,10 @@ export type Room = {
    */
   buildingId: string;
   characteristics: Array<Characteristic>;
+  /**
+   * List of rooms this room is made of.
+   */
+  composedOf: Array<Room>;
 };
 
 export type RoomCreateRequest = {
@@ -54,6 +58,10 @@ export type RoomCreateRequest = {
   chemSymbol: string;
   buildingId: string;
   characteristics: Array<Characteristic>;
+  /**
+   * List of room IDs that this room is made of.
+   */
+  composedOf: Array<string>;
 };
 
 export type Characteristic = {
@@ -306,7 +314,12 @@ export type GetBookingsForBuildingResponse =
 export type GetRoomsData = {
   body?: never;
   path?: never;
-  query?: never;
+  query?: {
+    /**
+     * If true, only returns rooms that can be used to compose a new room.
+     */
+    composable?: boolean;
+  };
   url: '/rooms';
 };
 
