@@ -117,6 +117,10 @@
         "title": "Create new room",
         "description": "Add a new room to the Provadis room management system."
       },
+      "update": {
+        "title": "Update room",
+        "description": "Update room {{roomName}}."
+      },
       "field": {
         "number": "Room number",
         "chemSymbol": "Raumname",
