@@ -41,7 +41,7 @@
       },
       "delete": {
         "title": "Delete building",
-        "confirmation": "Are you sure you want to delete the building \"{{name}}\"? This action cannot be undone.",
+        "confirmation": "Are you sure you want to delete the building {{name}}? This action cannot be undone.",
         "error": {
           "generic": "An error occurred while deleting the building.",
           "hasRooms": "A building with rooms cannot be deleted. Please delete or move all rooms first."
@@ -116,6 +116,10 @@
       "create": {
         "title": "Create new room",
         "description": "Add a new room to the Provadis room management system."
+      },
+      "update": {
+        "title": "Update room",
+        "description": "Update room {{roomName}}."
       },
       "field": {
         "number": "Room number",

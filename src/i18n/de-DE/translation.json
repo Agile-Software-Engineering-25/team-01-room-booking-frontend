@@ -41,7 +41,7 @@
       },
       "delete": {
         "title": "Gebäude löschen",
-        "confirmation": "Sind Sie sicher, dass Sie das Gebäude \"{{roomName}}\" löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
+        "confirmation": "Sind Sie sicher, dass Sie das Gebäude {{name}} löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
         "error": {
           "generic": "Beim Löschen des Gebäudes ist ein Fehler aufgetreten.",
           "hasRooms": "Ein Gebäude mit Räumen kann nicht gelöscht werden. Bitte löschen oder verschieben Sie alle Räume zuerst."
@@ -116,6 +116,10 @@
       "create": {
         "title": "Neuen Raum erstellen",
         "description": "Fügen Sie einen neuen Raum zum Provadis Raummanagement-System hinzu."
+      },
+      "update": {
+        "title": "Raum bearbeiten",
+        "description": "Bearbeiten Sie Raum {{roomName}}."
       },
       "field": {
         "number": "Raumnummer",

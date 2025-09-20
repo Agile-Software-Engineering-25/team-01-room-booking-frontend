@@ -16,6 +16,7 @@ import {
   getRoomsOptions,
 } from '@/api/generated/@tanstack/react-query.gen.ts';
 import { RoomCreateDialog } from '@components/RoomCreateDialog/RoomCreateDialog.tsx';
+import RoomEditDialog from '@components/Room/RoomEditDialog.tsx';
 import RoomDeleteDialog from '@components/Room/RoomDeleteDialog.tsx';
 
 interface Filter extends Characteristic {
@@ -28,6 +29,7 @@ function Rooms() {
   const [activeFilters, setActiveFilters] = useState<Filter[]>([]);
 
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState<Room>();
   const { data: roomData } = useQuery({
@@ -165,6 +167,18 @@ function Rooms() {
 
   const findBuilding = (buildingId: string): Building | undefined => {
     return buildings.find((building) => building.id === buildingId);
+  };
+
+  const handleEditClick = (room: Room) => {
+    setSelectedRoom(room);
+    setIsEditDialogOpen(true);
+  };
+
+  const handleEditConfirm = () => {
+    if (selectedRoom) {
+      setIsEditDialogOpen(false);
+      setSelectedRoom(undefined);
+    }
   };
 
   const handleDeleteClick = (room: Room) => {
@@ -309,7 +323,9 @@ function Rooms() {
               <RoomCard
                 room={room}
                 building={findBuilding(room.buildingId)}
-                onEdit={() => {}}
+                onEdit={() => {
+                  handleEditClick(room);
+                }}
                 onDelete={() => {
                   handleDeleteClick(room);
                 }}
@@ -318,6 +334,14 @@ function Rooms() {
             </Grid>
           ))}
         </Grid>
+
+        {isEditDialogOpen && selectedRoom && (
+          <RoomEditDialog
+            room={selectedRoom}
+            open={isEditDialogOpen}
+            onClose={handleEditConfirm}
+          />
+        )}
 
         {isDeleteDialogOpen && selectedRoom && (
           <RoomDeleteDialog
