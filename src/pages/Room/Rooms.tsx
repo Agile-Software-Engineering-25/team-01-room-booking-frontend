@@ -179,7 +179,7 @@ function Rooms() {
       setIsEditDialogOpen(false);
       setSelectedRoom(undefined);
     }
-  }
+  };
 
   const handleDeleteClick = (room: Room) => {
     setSelectedRoom(room);
@@ -324,7 +324,7 @@ function Rooms() {
                 room={room}
                 building={findBuilding(room.buildingId)}
                 onEdit={() => {
-                  handleEditClick(room)
+                  handleEditClick(room);
                 }}
                 onDelete={() => {
                   handleDeleteClick(room);

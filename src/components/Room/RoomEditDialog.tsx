@@ -18,17 +18,20 @@ import {
 import {
   Place as PlaceIcon,
   Person as PersonIcon,
-  Add as AddIcon, Science,
+  Add as AddIcon,
+  Science,
 } from '@mui/icons-material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   type Building,
-  type Characteristic, type Room,
+  type Characteristic,
+  type Room,
   type RoomCreateRequest,
 } from '@/api/generated';
 import {
   getBuildingsOptions,
-  getRoomsQueryKey, updateRoomByIdMutation,
+  getRoomsQueryKey,
+  updateRoomByIdMutation,
 } from '@/api/generated/@tanstack/react-query.gen.ts';
 
 interface RoomEditDialogProps {
@@ -50,7 +53,7 @@ function formatType(type: string) {
   return type.charAt(0).toUpperCase() + type.slice(1).toLowerCase();
 }
 
-export function RoomEditDialog({ room, open, onClose, }: RoomEditDialogProps) {
+export function RoomEditDialog({ room, open, onClose }: RoomEditDialogProps) {
   const { t } = useTranslation();
   const [roomNumber, setRoomNumber] = useState('');
   const [chemSymbol, setChemSymbol] = useState('');
