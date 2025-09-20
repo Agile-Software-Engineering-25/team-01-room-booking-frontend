@@ -77,12 +77,15 @@ export function RoomEditDialog({ room, open, onClose }: RoomEditDialogProps) {
         (characteristic) => characteristic.type === 'SEATS'
       );
       const seatsValue = seatsCharacteristic ? seatsCharacteristic.value : null;
+      const characteristicsWithoutSeats = room.characteristics.filter(
+        (characteristic) => characteristic.type !== 'SEATS'
+      );
 
       setRoomNumber(room.name);
       setChemSymbol(room.chemSymbol);
       setBuildingId(room.buildingId);
       setSeats(seatsValue);
-      setCharacteristics(room.characteristics);
+      setCharacteristics(characteristicsWithoutSeats);
     }
   }, [room, open]);
 
