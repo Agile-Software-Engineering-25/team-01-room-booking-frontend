@@ -7,6 +7,7 @@ import {
   Typography,
   FormControl,
   FormLabel,
+  FormHelperText,
   Input,
   Button,
   Select,
@@ -20,6 +21,7 @@ import {
   Person as PersonIcon,
   Add as AddIcon,
   Science,
+  MeetingRoom as RoomIcon,
 } from '@mui/icons-material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
@@ -31,6 +33,7 @@ import {
 import {
   getBuildingsOptions,
   getRoomsQueryKey,
+  getRoomsOptions,
   updateRoomByIdMutation,
 } from '@/api/generated/@tanstack/react-query.gen.ts';
 
@@ -66,34 +69,52 @@ export function RoomEditDialog({ room, open, onClose }: RoomEditDialogProps) {
     'boolean' | 'number' | 'string'
   >('boolean');
   const [showCustomForm, setShowCustomForm] = useState(false);
+  const [composedOfRoomIds, setComposedOfRoomIds] = useState<string[]>([]);
   const customEquipmentError = useMemo(
     () => standardEquipmentIds.includes(customType.toUpperCase()),
     [customType]
   );
 
   useEffect(() => {
-    if (room && open) {
-      const seatsCharacteristic = room.characteristics.find(
-        (characteristic) => characteristic.type === 'SEATS'
-      );
-      const seatsValue = seatsCharacteristic ? seatsCharacteristic.value : null;
-      const characteristicsWithoutSeats = room.characteristics.filter(
-        (characteristic) => characteristic.type !== 'SEATS'
-      );
+    const seatsCharacteristic = room.characteristics.find(
+      (characteristic) => characteristic.type === 'SEATS'
+    );
+    const seatsValue = seatsCharacteristic ? seatsCharacteristic.value : null;
+    const characteristicsWithoutSeats = room.characteristics.filter(
+      (characteristic) => characteristic.type !== 'SEATS'
+    );
 
-      setRoomNumber(room.name);
-      setChemSymbol(room.chemSymbol);
-      setBuildingId(room.buildingId);
-      setSeats(seatsValue);
-      setCharacteristics(characteristicsWithoutSeats);
-    }
+    setRoomNumber(room.name);
+    setChemSymbol(room.chemSymbol);
+    setBuildingId(room.buildingId);
+    setSeats(seatsValue);
+    setCharacteristics(characteristicsWithoutSeats);
+    setComposedOfRoomIds(room.composedOf.map((composed) => composed.id));
   }, [room, open]);
 
-  // Fetch buildings
   const { data: buildingData } = useQuery({
     ...getBuildingsOptions(),
   });
   const buildings = buildingData?.buildings ?? [];
+
+  const { data: roomsData } = useQuery({
+    ...getRoomsOptions({
+      query: {
+        composable: true,
+      },
+    }),
+  });
+
+  const availableRooms = useMemo(() => {
+    if (!roomsData) {
+      return [];
+    }
+
+    return [
+      ...room.composedOf,
+      ...roomsData.rooms.filter((r) => r.id !== room.id),
+    ];
+  }, [roomsData, room]);
 
   const queryClient = useQueryClient();
   const updateRoom = useMutation({
@@ -107,6 +128,7 @@ export function RoomEditDialog({ room, open, onClose }: RoomEditDialogProps) {
   const handleClose = () => {
     setCustomValueType('boolean');
     setShowCustomForm(false);
+    setComposedOfRoomIds([]);
     onClose();
   };
 
@@ -159,9 +181,16 @@ export function RoomEditDialog({ room, open, onClose }: RoomEditDialogProps) {
   };
 
   const handleSubmit = () => {
-    if (!roomNumber || !buildingId || seats <= 0) {
+    if (
+      !roomNumber ||
+      !chemSymbol ||
+      !buildingId ||
+      seats <= 0 ||
+      composedOfRoomIds.length === 1
+    ) {
       return;
     }
+
     const allCharacteristics: Characteristic[] = [
       { type: 'SEATS', value: seats },
       ...characteristics,
@@ -172,6 +201,7 @@ export function RoomEditDialog({ room, open, onClose }: RoomEditDialogProps) {
       chemSymbol: chemSymbol,
       buildingId,
       characteristics: allCharacteristics,
+      composedOf: composedOfRoomIds,
     };
 
     updateRoom.mutate({
@@ -266,6 +296,40 @@ export function RoomEditDialog({ room, open, onClose }: RoomEditDialogProps) {
                 error={seats === 0}
                 required
               />
+            </FormControl>
+
+            <FormControl required>
+              <FormLabel>{t('pages.rooms.field.composedOf')}</FormLabel>
+              <Typography level="body-sm" sx={{ marginBottom: 1 }}>
+                {t('pages.rooms.field.composedOf.description')}
+              </Typography>
+
+              <Select
+                placeholder={t('pages.rooms.field.composedOf.placeholder')}
+                multiple
+                value={composedOfRoomIds}
+                onChange={(_event, value) => setComposedOfRoomIds(value)}
+                startDecorator={<RoomIcon />}
+                data-testid="composed-of-rooms-select"
+              >
+                {availableRooms.length > 0 ? (
+                  availableRooms.map((room: Room) => (
+                    <Option key={room.id} value={room.id}>
+                      {room.name} ({room.chemSymbol})
+                    </Option>
+                  ))
+                ) : (
+                  <Option value={'noAvailableRooms'} disabled>
+                    {t('pages.rooms.field.composedOf.noAvailableRooms')}
+                  </Option>
+                )}
+              </Select>
+
+              {composedOfRoomIds.length === 1 && (
+                <FormHelperText sx={{ color: 'var(--joy-palette-danger-500)' }}>
+                  {t('pages.rooms.field.composedOf.error.atLeastTwo')}
+                </FormHelperText>
+              )}
             </FormControl>
 
             <FormControl>

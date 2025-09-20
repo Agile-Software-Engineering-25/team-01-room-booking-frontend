@@ -5,6 +5,7 @@ import {
   Button,
   Chip,
   FormControl,
+  FormHelperText,
   FormLabel,
   Input,
   Modal,
@@ -20,16 +21,19 @@ import {
   Person as PersonIcon,
   Place as PlaceIcon,
   Science,
+  MeetingRoom as RoomIcon,
 } from '@mui/icons-material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   type Building,
   type Characteristic,
   type RoomCreateRequest,
+  type Room,
 } from '@/api/generated';
 import {
   createRoomMutation,
   getBuildingsOptions,
+  getRoomsOptions,
   getRoomsQueryKey,
 } from '@/api/generated/@tanstack/react-query.gen.ts';
 
@@ -64,16 +68,25 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
     'boolean' | 'number' | 'string'
   >('boolean');
   const [showCustomForm, setShowCustomForm] = useState(false);
+  const [composedOfRoomIds, setComposedOfRoomIds] = useState<string[]>([]);
   const customEquipmentError = useMemo(
     () => standardEquipmentIds.includes(customType.toUpperCase()),
     [customType]
   );
 
-  // Fetch buildings
   const { data: buildingData } = useQuery({
     ...getBuildingsOptions(),
   });
   const buildings = buildingData?.buildings ?? [];
+
+  const { data: roomsData } = useQuery({
+    ...getRoomsOptions({
+      query: {
+        composable: true,
+      },
+    }),
+  });
+  const availableRooms = roomsData?.rooms ?? [];
 
   const queryClient = useQueryClient();
   const createRoom = useMutation({
@@ -94,6 +107,7 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
     setCustomValue('');
     setCustomValueType('boolean');
     setShowCustomForm(false);
+    setComposedOfRoomIds([]);
     onClose();
   };
 
@@ -146,9 +160,15 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
   };
 
   const handleSubmit = () => {
-    if (!roomNumber || !buildingId || seats <= 0) {
+    if (
+      !roomNumber ||
+      !buildingId ||
+      seats <= 0 ||
+      composedOfRoomIds.length === 1
+    ) {
       return;
     }
+
     const allCharacteristics: Characteristic[] = [
       { type: 'SEATS', value: seats },
       ...characteristics,
@@ -159,6 +179,7 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
       chemSymbol: chemSymbol,
       buildingId,
       characteristics: allCharacteristics,
+      composedOf: composedOfRoomIds,
     };
 
     createRoom.mutate({
@@ -252,6 +273,40 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
                 error={seats === 0}
                 required
               />
+            </FormControl>
+
+            <FormControl required>
+              <FormLabel>{t('pages.rooms.field.composedOf')}</FormLabel>
+              <Typography level="body-sm" sx={{ marginBottom: 1 }}>
+                {t('pages.rooms.field.composedOf.description')}
+              </Typography>
+
+              <Select
+                placeholder={t('pages.rooms.field.composedOf.placeholder')}
+                multiple
+                value={composedOfRoomIds}
+                onChange={(_event, value) => setComposedOfRoomIds(value)}
+                startDecorator={<RoomIcon />}
+                data-testid="composed-of-rooms-select"
+              >
+                {availableRooms.length > 0 ? (
+                  availableRooms.map((room: Room) => (
+                    <Option key={room.id} value={room.id}>
+                      {room.name} ({room.chemSymbol})
+                    </Option>
+                  ))
+                ) : (
+                  <Option value={'noAvailableRooms'} disabled>
+                    {t('pages.rooms.field.composedOf.noAvailableRooms')}
+                  </Option>
+                )}
+              </Select>
+
+              {composedOfRoomIds.length === 1 && (
+                <FormHelperText sx={{ color: 'var(--joy-palette-danger-500)' }}>
+                  {t('pages.rooms.field.composedOf.error.atLeastTwo')}
+                </FormHelperText>
+              )}
             </FormControl>
 
             <FormControl>
@@ -453,7 +508,11 @@ export function RoomCreateDialog({ open, onClose }: RoomCreateDialogProps) {
                 type="submit"
                 loading={createRoom.isPending}
                 disabled={
-                  !roomNumber || !chemSymbol || !buildingId || seats <= 0
+                  !roomNumber ||
+                  !chemSymbol ||
+                  !buildingId ||
+                  seats <= 0 ||
+                  composedOfRoomIds.length === 1
                 }
               >
                 {t('common.action.create')}

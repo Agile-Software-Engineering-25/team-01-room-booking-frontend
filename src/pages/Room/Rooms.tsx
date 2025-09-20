@@ -15,7 +15,7 @@ import {
   getBuildingsOptions,
   getRoomsOptions,
 } from '@/api/generated/@tanstack/react-query.gen.ts';
-import { RoomCreateDialog } from '@components/RoomCreateDialog/RoomCreateDialog.tsx';
+import { RoomCreateDialog } from '@components/Room/RoomCreateDialog.tsx';
 import RoomEditDialog from '@components/Room/RoomEditDialog.tsx';
 import RoomDeleteDialog from '@components/Room/RoomDeleteDialog.tsx';
 
