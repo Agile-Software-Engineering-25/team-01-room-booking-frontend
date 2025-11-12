@@ -20,12 +20,12 @@ export function BuildingCard({
   const { t } = useTranslation();
 
   const { data } = useQuery({
-      ...getRoomsForBuildingOptions({
-        path: {
-          buildingId: building.id,
-        },
-      }),
-    });
+    ...getRoomsForBuildingOptions({
+      path: {
+        buildingId: building.id,
+      },
+    }),
+  });
 
   const contentSections = [
     <Box key="address" display="flex" alignItems="center" gap={1}>
