@@ -3,8 +3,6 @@ import { Box, Typography } from '@mui/joy';
 import { LocationOn, Apartment } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { BaseCard } from '@components/BaseCard/BaseCard.tsx';
-import { useQuery } from '@tanstack/react-query';
-import { getRoomsForBuildingOptions } from '@/api/generated/@tanstack/react-query.gen.ts';
 
 export interface BuildingCardProps {
   building: Building;
@@ -19,14 +17,6 @@ export function BuildingCard({
 }: BuildingCardProps) {
   const { t } = useTranslation();
 
-  const { data } = useQuery({
-    ...getRoomsForBuildingOptions({
-      path: {
-        buildingId: building.id,
-      },
-    }),
-  });
-
   const contentSections = [
     <Box key="address" display="flex" alignItems="center" gap={1}>
       <LocationOn fontSize="small" />
@@ -38,7 +28,7 @@ export function BuildingCard({
       <Box display="flex" alignItems="center" gap={1}>
         <Apartment fontSize="small" />
         <Typography level="body-sm" textColor="text.secondary">
-          {data?.length ?? 0} {t(getRoomCountText(data?.length ?? 0))}
+          10 {t(getRoomCountText(10))}
         </Typography>
       </Box>
     </Box>,
